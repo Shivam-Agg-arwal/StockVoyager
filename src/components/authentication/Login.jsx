@@ -13,34 +13,24 @@ export const Login = () => {
         formState: { errors },
     } = useForm();
 
-<<<<<<< HEAD
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post(
-                `${process.env.BASE_URL}/auth/login`,
-                {
-                    email: data.username, // Assuming you're using 'username' field for email
-                    password: data.password,
-                }
-            );
-=======
-  const onSubmit = async (data) => {
-    try {
-      console.log(process.env.LOGIN_API)
-      const response = await axios.post(`${process.env.LOGIN_API}`, {
-        email: data.username, // Assuming you're using 'username' field for email
-        password: data.password
-      });
->>>>>>> 384d854330134182c16b9608fef0822b65f07f5d
+            // const response = await axios.post(
+            //     `${process.env.BASE_URL}/auth/login`,
+            //     {
+            //         email: data.username, // Assuming you're using 'username' field for email
+            //         password: data.password,
+            //     }
+            // );
 
-            // If login is successful, redirect to dashboard or handle accordingly
-            console.log("Login successful");
-            console.log("User:", response.data.user);
-            console.log("Token:", response.data.token);
+            // // If login is successful, redirect to dashboard or handle accordingly
+            // console.log("Login successful");
+            // console.log("User:", response.data.user);
+            // console.log("Token:", response.data.token);
             // Redirect to dashboard or any other page
         } catch (error) {
             // If there's an error, display the error message
-            console.error("Login failed:", error.response.data.message);
+            // console.error("Login failed:", error.response.data.message);
         }
     };
 
