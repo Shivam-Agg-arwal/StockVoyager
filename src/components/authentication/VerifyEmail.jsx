@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import OTPInput from "react-otp-input";
+import OtpInput from "react-otp-input";
 import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const VerifyEmail = () => {
     const navigate = useNavigate();
     const [otp, setOtp] = useState('');
-    const [resendCount, setResendCount] = useState(0);
+    const {signupData}=useSelector((state)=>state.auth);
 
     const handleChange = (otp) => {
         setOtp(otp);
@@ -20,26 +21,14 @@ const VerifyEmail = () => {
         } else {
             console.error("Invalid OTP length");
         }
+        console.log(signupData)
     };
 
     const handleResendOTP = () => {
         // Handle resending OTP
-        setResendCount(resendCount + 1);
         // Logic to resend OTP
         console.log("Resending OTP...");
     };
-
-    const renderInput = (index, value, onChange) => {
-        return (
-            <input
-                key={index}
-                type="text"
-                defaultValue={value}
-                readOnly
-            />
-        );
-    };
-
     return (
         <div>
             <div>
@@ -50,14 +39,14 @@ const VerifyEmail = () => {
             </div>
 
             <div>
-                <OTPInput
-                    value={otp}
-                    onChange={handleChange}
-                    numInputs={6} // Assuming OTP length is 6 digits
-                    separator={<span>-</span>} // Example separator
-                    inputStyle="inputStyle"
-                    renderInput={renderInput} // Pass the custom renderInput function
-                />
+                <OtpInput
+						value={otp}
+						onChange={setOtp}
+						numInputs={6}
+						renderSeparator={<span> <pre>  </pre></span>}
+						renderInput={(props) => <input {...props} />}
+                        id="otpstyle"
+					/>
             </div>
 
             <div>
