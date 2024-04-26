@@ -18,7 +18,7 @@ const ForgotPassword = () => {
 
     const resendEmail = () => {
         // Implement resend email functionality here
-        console.log('Resending email...');
+        console.log('Resending email....');
     };
 
     return (
