@@ -1,27 +1,42 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import OtpInput from "react-otp-input";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
+import { authenticationEndpoints } from '../../api/api'
+import axios from "axios";
+
 
 const VerifyEmail = () => {
     const navigate = useNavigate();
     const [otp, setOtp] = useState('');
     const {signupData}=useSelector((state)=>state.auth);
 
-    const handleChange = (otp) => {
-        setOtp(otp);
-    };
+    const {
+        SIGNUP_API
+      } = authenticationEndpoints;
+    
 
-    const handleSubmit = () => {
+
+    const handleSubmit =async () => {
         // Handle submission of OTP
-        if (otp.length === 6) {
-            // Perform verification logic here
-            console.log("OTP submitted:", otp);
-        } else {
-            console.error("Invalid OTP length");
+        console.log("signupData",signupData);
+        const formData = new FormData();
+        formData.append('email', signupData.email);
+        formData.append('firstName', signupData.firstName);
+        formData.append('lastName', signupData.lastName);
+        formData.append('password', signupData.password);
+        formData.append('confirmPassword', signupData.confirmPassword);
+        formData.append('otp', otp);
+        console.log(...formData);
+        const response = await axios.post(SIGNUP_API, formData);
+        if(response.data.success){
+            navigate('/login');
+            toast.success('SignUp was successfull');
         }
-        console.log(signupData)
+        else{
+            toast.error('SignUp Failed');
+        }
     };
 
     const handleResendOTP = () => {

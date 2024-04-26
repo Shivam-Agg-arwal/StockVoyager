@@ -5,6 +5,7 @@ import axios from 'axios';
 import { authenticationEndpoints } from '../../api/api'
 import { useDispatch } from 'react-redux';
 import { setSignupData } from '../slices/authSlice';
+import toast from 'react-hot-toast';
 
 function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -24,12 +25,14 @@ function Signup() {
     console.log(response);
     if (response.data.success) {
       //mtlb otp bhjdia hai 
+      toast.success('A verificaation email has been sent')
       dispatch(setSignupData(data));
       console.log("data given to sign up data");
       navigate('/verifyotp');
     }
     else {
       console.log("due to some erorr we can t proceed");
+      toast.error('Technical error occured');
     }
   };
 
