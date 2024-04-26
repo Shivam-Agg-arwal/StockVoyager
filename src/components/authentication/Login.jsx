@@ -11,7 +11,8 @@ export const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(`${process.env.BASE_URL}/auth/login`, {
+      console.log(process.env.LOGIN_API)
+      const response = await axios.post(`${process.env.LOGIN_API}`, {
         email: data.username, // Assuming you're using 'username' field for email
         password: data.password
       });
@@ -40,6 +41,7 @@ export const Login = () => {
               <div className='flex flex-col mb-5'>
                 <label htmlFor="username" className='text-xs opacity-30'>Username</label>
                 <input
+                  name="username"
                   type="text"
                   id='username'
                   className='border-solid border-b-2 outline-none'
@@ -50,6 +52,7 @@ export const Login = () => {
               <div className='flex flex-col mb-3'>
                 <label htmlFor="password" className='text-xs opacity-30'>Password</label>
                 <input
+                  name="password"
                   type="password"
                   id='password'
                   className='border-solid border-b-2 outline-none'
@@ -60,6 +63,7 @@ export const Login = () => {
               <div className='flex justify-between items-center'>
                 <div className='flex items-center'>
                   <input
+                    name="rememberme"
                     type="checkbox"
                     id='rememberme'
                     className='mr-2 size-4'
