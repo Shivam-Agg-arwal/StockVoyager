@@ -1,12 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import {authenticationEndpoints} from '../../api/api'
 
 function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data); // You can handle form submission here
+  const{
+    SENDOTP_API
+  }=authenticationEndpoints;
+
+  const onSubmit = async (data) => {
+    console.log(SENDOTP_API);
+    console.log(data);
+    const formData=new FormData();
+    formData.append('email',data.email);
+    const response=await axios.post(SENDOTP_API,formData);
+    console.log(response);
+    
+
   };
 
   return (
