@@ -193,7 +193,7 @@ exports.login = async (req, res) => {
                 user,
                 token,
                 message: "Login was successfull",
-            });
+            }); 
         } else {
             //password dont match
             return res.status(401).json({

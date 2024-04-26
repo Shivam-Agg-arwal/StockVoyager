@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import axios from 'axios'; // Import Axios
 import { FaFacebook } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
@@ -8,8 +9,22 @@ import { FcGoogle } from "react-icons/fc";
 export const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data); // You can handle form submission here
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(`${process.env.BASE_URL}/auth/login`, {
+        email: data.username, // Assuming you're using 'username' field for email
+        password: data.password
+      });
+
+      // If login is successful, redirect to dashboard or handle accordingly
+      console.log('Login successful');
+      console.log('User:', response.data.user);
+      console.log('Token:', response.data.token);
+      // Redirect to dashboard or any other page
+    } catch (error) {
+      // If there's an error, display the error message
+      console.error('Login failed:', error.response.data.message);
+    }
   };
 
   return (
@@ -53,7 +68,6 @@ export const Login = () => {
                   <label htmlFor="rememberme" className='text-sm'>Remember Me</label>
                 </div>
                 <p className='underline hover:no-underline text-sm'><Link to="#">Forgot Password</Link></p>
-                {/* Use <Link> instead of <a> */}
               </div>
               <button type="submit" className='w-full h-14 my-8 bg-theme text-white rounded-md'>Log In</button>
             </form>
@@ -76,3 +90,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;
