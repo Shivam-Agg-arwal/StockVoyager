@@ -1,17 +1,12 @@
 import React from 'react';
-import {Login} from './components/Login';
-import Layout from './Layout.jsx'
-import Signup from './components/Signup.jsx'
-import ForgotPassword from './components/ForgotPassword.jsx'
-import ResetSuccess from './components/ResetSuccess.jsx'
-import VerifyEmail from './components/VerifyEmail.jsx'
+import {Login} from './components/authentication/Login';
+import Signup from './components/authentication/Signup.jsx'
+import ForgotPassword from './components/authentication/ForgotPassword.jsx'
+import ResetSuccess from './components/authentication/ResetSuccess.jsx'
+import VerifyEmail from './components/authentication/VerifyEmail.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 const router = createBrowserRouter([
-  {
-    path: '/login',
-    element: <Layout />
-  },
   {
     path: '/signup',
     element: <Signup />
@@ -27,7 +22,11 @@ const router = createBrowserRouter([
   {
     path: '/verifyotp',
     element: <VerifyEmail />
-  }
+  },
+  {
+    path: '/login',
+    element: <Login />
+  },
 ])
 
 export default function App() {
