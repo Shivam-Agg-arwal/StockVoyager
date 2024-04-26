@@ -2,33 +2,33 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-import {authenticationEndpoints} from '../../api/api'
+import { authenticationEndpoints } from '../../api/api'
 import { useDispatch } from 'react-redux';
 import { setSignupData } from '../slices/authSlice';
 
 function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const{
+  const {
     SENDOTP_API
-  }=authenticationEndpoints;
+  } = authenticationEndpoints;
 
   const onSubmit = async (data) => {
     console.log(SENDOTP_API);
     console.log(data);
-    const formData=new FormData();
-    formData.append('email',data.email);
-    const response=await axios.post(SENDOTP_API,formData);
+    const formData = new FormData();
+    formData.append('email', data.email);
+    const response = await axios.post(SENDOTP_API, formData);
     console.log(response);
-    if(response.data.success){
+    if (response.data.success) {
       //mtlb otp bhjdia hai 
       dispatch(setSignupData(data));
       console.log("data given to sign up data");
-      navigate('/verifyotp');  
+      navigate('/verifyotp');
     }
-    else{
+    else {
       console.log("due to some erorr we can t proceed");
     }
   };
