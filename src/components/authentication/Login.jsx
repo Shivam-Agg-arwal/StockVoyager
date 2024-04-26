@@ -34,58 +34,8 @@ export const Login = () => {
         }
     };
 
-<<<<<<< HEAD
     return (
         <div className="flex justify-center items-center flex-grow md:w-screen md:h-screen">
-=======
-  return (
-    <div className='flex justify-center items-center flex-grow md:w-screen md:h-screen'>
-      <div>
-        <div className='flex flex-col-reverse pt-20 pb-5 justify-center items-center md:flex-row md:px-10 md:py-7'>
-          <div className='px-6 md:px-12 lg:px-24 md:w-1/2'>
-            <div className='pb-9'>
-              <h1 className='text-3xl'>Sign in to <span className='font-medium'>StockNet</span></h1>
-              <p className='opacity-30'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt?s</p>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className='flex flex-col mb-5'>
-                <label htmlFor="username" className='text-xs opacity-30'>Username</label>
-                <input
-                  name="username"
-                  type="text"
-                  id='username'
-                  className='border-solid border-b-2 outline-none'
-                  {...register('username', { required: true })}
-                />
-                {errors.username && <p className='text-[#cc0000] text-sm'>Username is required.</p>}
-              </div>
-              <div className='flex flex-col mb-3'>
-                <label htmlFor="password" className='text-xs opacity-30'>Password</label>
-                <input
-                  name="password"
-                  type="password"
-                  id='password'
-                  className='border-solid border-b-2 outline-none'
-                  {...register('password', { required: true })}
-                />
-                {errors.password && <p className='text-[#cc0000] text-sm'>Password is required.</p>}
-              </div>
-              <div className='flex justify-between items-center'>
-                <div className='flex items-center'>
-                  <input
-                    name="rememberme"
-                    type="checkbox"
-                    id='rememberme'
-                    className='mr-2 size-4'
-                    {...register('rememberMe')}
-                  />
-                  <label htmlFor="rememberme" className='text-sm'>Remember Me</label>
-                </div>
-                <p className='underline hover:no-underline text-sm'><Link to="#">Forgot Password</Link></p>
-              </div>
-              <button type="submit" className='w-full h-14 my-8 bg-theme text-white rounded-md'>Log In</button>
-            </form>
->>>>>>> 384d854330134182c16b9608fef0822b65f07f5d
             <div>
                 <div className="flex flex-col-reverse pt-20 pb-5 justify-center items-center md:flex-row md:px-10 md:py-7">
                     <div className="px-6 md:px-12 lg:px-24 md:w-1/2">
@@ -110,6 +60,7 @@ export const Login = () => {
                                 <input
                                     type="text"
                                     id="username"
+									name="username"
                                     className="border-solid border-b-2 outline-none"
                                     {...register("username", {
                                         required: true,
@@ -131,6 +82,7 @@ export const Login = () => {
                                 <input
                                     type="password"
                                     id="password"
+                                    name="password"
                                     className="border-solid border-b-2 outline-none"
                                     {...register("password", {
                                         required: true,
@@ -147,6 +99,7 @@ export const Login = () => {
                                     <input
                                         type="checkbox"
                                         id="rememberme"
+                                        name="rememberme"
                                         className="mr-2 size-4"
                                         {...register("rememberMe")}
                                     />
