@@ -159,6 +159,8 @@ exports.login = async (req, res) => {
                 message: "Email or Password field is empty",
             });
         }
+        console.log(email);
+        console.log(password);
         //matching password if user exist
         const user = await User.findOne({ emailID: email })
             .populate("additionalDetails")
