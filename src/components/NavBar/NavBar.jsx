@@ -8,7 +8,7 @@ function NavBar() {
   return (
     <>
       <div className='flex justify-between'>
-        <div className='flex justify-center w-1/2'>
+        <div className='flex justify-between w-1/2 '>
           <div>LOGO</div>
           <div>Here is a search bar</div>
         </div>
