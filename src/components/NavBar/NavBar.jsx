@@ -4,17 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../slices/profileSlice';
 
 function NavBar() {
-  const dispatch = useDispatch();
-  const userData = useSelector(state => state.profile.user);
-
-  useEffect(() => {
-    // Simulating fetching user data from localStorage
-    const user = localStorage.getItem('user');
-    if (user) {
-      dispatch(setUser(JSON.parse(user)));
-    }
-  }, [dispatch]);
-
+  const {user}=useSelector((state)=>state.profile);
   return (
     <>
       <div className='flex justify-between'>
@@ -26,8 +16,10 @@ function NavBar() {
           <ul className="flex justify-evenly">
             <li>
               <NavLink to="/aboutme">
-                <img src={`${userData ? userData.image : ''}`} alt="profile" />
+                <img src={user.image} alt="profile" width={30} className='rounded-full' />
               </NavLink>
+              <div>{user.firstName}{" "}{user.lastName}</div>
+              <div>{user.emailID}</div>
             </li>
           </ul>
         </div>
