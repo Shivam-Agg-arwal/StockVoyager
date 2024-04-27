@@ -25,16 +25,11 @@ function NavBar() {
     <>
         <div className='flex justify-between'>
             <div className='flex justify-center w-1/2'>
-                Here is a search bar
+                <div>LOGO</div>
+                <div>Here is a search bar</div>
             </div>
             <div className='w-1/2'>
                 <ul className="flex justify-evenly">
-                    <li>
-                        <NavLink to="/"> Home </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard"> DashBoard </NavLink>
-                    </li> 
                     <li>
                         <NavLink to="/aboutme"> 
                             <img src={`${userData.image}`} alt="profile" />
