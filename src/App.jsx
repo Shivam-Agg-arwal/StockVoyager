@@ -13,6 +13,7 @@ import ProfileTab from './components/Dashboard/ProfileTab';
 import Portfolio from './components/Dashboard/Portfolio';
 import WatchList from './components/Dashboard/WatchList';
 import Settings from './components/Dashboard/Settings';
+import NotFound from './components/Pages.jsx/NotFound';
 
 export default function App() {
   const {user}=useSelector((state)=>state.profile);
@@ -27,12 +28,17 @@ export default function App() {
         <Route path="/verifyotp" element={<VerifyEmail />} />
         <Route path="/login" element={<Login />} />
 
+        {
+          user && 
         <Route element={<Dashboard />}>
           <Route path="/dashboard/profile" element={<ProfileTab />} />
           <Route path="/dashboard/portfolio" element={<Portfolio />} />
           <Route path="/dashboard/watchlist" element={<WatchList />} />
           <Route path="/dashboard/setting" element={<Settings />} />
         </Route>
+        }
+
+        <Route path='*' element={<NotFound/>}/>
       </Routes>
     </div>
   );
