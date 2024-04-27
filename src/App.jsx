@@ -13,7 +13,6 @@ import Dashboard from './components/Dashboard/Dashboard';
 
 export default function App() {
   return (
-    // <Router>
       <Routes>
         <Route path='/' element={<Signup/>}/>
         <Route path="/signup" element={<Signup />} />
@@ -32,6 +31,5 @@ export default function App() {
 
 				</Route>
       </Routes>
-    // </Router>
   );
 }
