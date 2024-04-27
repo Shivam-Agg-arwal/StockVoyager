@@ -27,7 +27,8 @@ export default function App() {
 
   return (
     <Router>
-      <Routes>
+        <NavBar />
+      <Routes> 
         <Route path='/' element={<Signup />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
