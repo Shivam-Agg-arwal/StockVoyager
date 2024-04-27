@@ -69,7 +69,7 @@ const ForgotPassword = () => {
                 </h2>
                 <p>
                     {!emailSent
-                        ? "Have no fear. We’ll email you instructions to reset your password. If you don't have access to your email, we can try account recovery."
+                        ? "Have no fear. Well email you instructions to reset your password. If you don't have access to your email, we can try account recovery."
                         : `We have sent the reset email to ${register.email}`}
                 </p>
             </div>
