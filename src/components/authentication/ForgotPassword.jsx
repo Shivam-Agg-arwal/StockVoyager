@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { authenticationEndpoints } from '../../api/api'
 
 const ForgotPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [emailSent, setEmailSent] = useState(false);
     const navigate = useNavigate();
+    const {
+        RESETPASSTOKEN_API,
+        RESETPASSWORD_API
+    } = authenticationEndpoints
 
     const submitHandler = async (data) => {
         try {
             // Call API to generate the reset token and send the email to the user
-            const tokenResponse = await axios.post("/api/v1/auth/resetPasswordToken", { email: data.email });
-
+            console.log('Email:', data.email);
+            const tokenResponse = await axios.post(RESETPASSTOKEN_API, { email: data.email });
+            console.log('here')
             if (tokenResponse.status === 200 && tokenResponse.data.success) {
                 // If the token reset is successful, proceed to update password
-                const passwordResponse = await axios.post("/api/v1/auth/resetPassword", {
+                const passwordResponse = await axios.post(RESETPASSWORD_API, {
                     password: data.password,
                     confirmPassword: data.confirmPassword,
                     token: tokenResponse.data.token
@@ -37,9 +43,22 @@ const ForgotPassword = () => {
         }
     };
 
-    const resendEmail = () => {
-        // Implement resend email functionality here
-        console.log('Resending email...');
+    const resendEmail = async () => {
+        try {
+            // Call API to resend the email
+            const response = await axios.post(RESETPASSTOKEN_API, { email: register.email });
+            
+            if (response.status === 200 && response.data.success) {
+                console.log('Resend Email Success:', response.data.message);
+                // Handle success, you might want to show a success message or perform other actions
+            } else {
+                console.log('Resend Email Error:', response.data.message);
+                // Handle error, you might want to show an error message or perform other actions
+            }
+        } catch (error) {
+            console.log('Error:', error);
+            // Handle error, you might want to show an error message or perform other actions
+        }
     };
 
     return (
@@ -51,7 +70,7 @@ const ForgotPassword = () => {
                 <p>
                     {!emailSent
                         ? "Have no fear. We’ll email you instructions to reset your password. If you don't have access to your email, we can try account recovery."
-                        : `We have sent the reset email to ${data.email}`}
+                        : `We have sent the reset email to ${register.email}`}
                 </p>
             </div>
 
@@ -93,7 +112,7 @@ const ForgotPassword = () => {
                     </div>
                 )}
             </div>
-            <div>
+            <div onClick={() => { navigate('/login') }}>
                 Back to login
             </div>
         </div>

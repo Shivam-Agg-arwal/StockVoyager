@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const { mailSender } = require("../utils/MailSender");
 const bcrypt = require("bcrypt");
+const crypto = require('crypto');
 
 //reset token
 exports.resetPasswordToken = async (req, res) => {
@@ -10,9 +11,9 @@ exports.resetPasswordToken = async (req, res) => {
         const { email } = req.body;
 
         //check if user exists or not
-
+        // console.log("here is error")
+        
         const user = await User.findOne({ emailID: email });
-
         if (!user) {
             return res.status(500).json({
                 success: false,
@@ -64,7 +65,7 @@ exports.resetPassword = async (req, res) => {
     try {
         //fetchign the data from body : token ko url s body m front -end dalega
         const { password, confirmPassword, token } = req.body;
-        console.log("ehre");
+
 
         if (password !== confirmPassword) {
             return res.status(500).json({
