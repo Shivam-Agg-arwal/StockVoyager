@@ -125,7 +125,7 @@ export const Login = () => {
 									</label>
 								</div>
 								<p className="underline hover:no-underline text-sm">
-									<Link to="#">Forgot Password</Link>
+									<Link to="/forgotpassword">Forgot Password</Link>
 								</p>
 							</div>
 							<button
