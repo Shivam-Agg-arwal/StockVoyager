@@ -14,6 +14,7 @@ import Portfolio from './components/Dashboard/Portfolio';
 import WatchList from './components/Dashboard/WatchList';
 import Settings from './components/Dashboard/Settings';
 import NotFound from './components/Pages.jsx/NotFound';
+import UpdatePassword from './components/authentication/UpdatePassword';
 
 export default function App() {
   const {user}=useSelector((state)=>state.profile);
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/resetsuccess" element={<ResetSuccess />} />
         {signupData && <Route path="/verifyotp" element={<VerifyEmail />} />}
         <Route path="/login" element={<Login />} />
+        <Route path="/update-password/:token" element={<UpdatePassword />} />
 
         {
           user && 
