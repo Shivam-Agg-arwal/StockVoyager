@@ -17,6 +17,7 @@ import NotFound from './components/Pages.jsx/NotFound';
 
 export default function App() {
   const {user}=useSelector((state)=>state.profile);
+  const {signupData}=useSelector((state)=>state.auth);
   return (
     <div>
       {user && <NavBar/>}
@@ -25,7 +26,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetsuccess" element={<ResetSuccess />} />
-        <Route path="/verifyotp" element={<VerifyEmail />} />
+        {signupData && <Route path="/verifyotp" element={<VerifyEmail />} />}
         <Route path="/login" element={<Login />} />
 
         {
