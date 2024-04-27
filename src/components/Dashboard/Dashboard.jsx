@@ -1,10 +1,13 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
+import Sidebar from './Sidebar'
 
-function Dashboard() {
+const Dashboard = () => {
   return (
-    <>
-        <h1 className='text-4xl'>THIS IS DASHBOARD</h1>
-    </>
+    <div className='flex flex-row w-full min-h-screen h-auto'>
+        <Sidebar/>
+        <Outlet/>
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios"; // Import Axios
 import { FaFacebook } from "react-icons/fa";
@@ -17,6 +17,8 @@ export const Login = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
+	const navigate=useNavigate();
 
 	const dispatch=useDispatch();
 
@@ -38,6 +40,7 @@ export const Login = () => {
 				dispatch(setUser(response.data.user));
 				localStorage.setItem("token", JSON.stringify(response.data.token))
 				localStorage.setItem("user", JSON.stringify(response.data.user))
+				navigate('/dashboard/profile');
 			}
 
 		} catch (error) {
