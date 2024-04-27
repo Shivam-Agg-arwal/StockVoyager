@@ -39,11 +39,22 @@ const VerifyEmail = () => {
         }
     };
 
-    const handleResendOTP = () => {
-        // Handle resending OTP
-        // Logic to resend OTP
-        console.log("Resending OTP...");
+    const handleResendOTP = async () => {
+        try {
+            const { email } = signupData; // Assuming signupData is accessible here
+            const response = await axios.post(SENDOTP_API, { email });
+            if (response.data.success) {
+                toast.success('OTP resent successfully');
+            } else {
+                toast.error('Failed to resend OTP');
+            }
+        } catch (error) {
+            console.error('Error occurred while resending OTP:', error);
+            toast.error('Failed to resend OTP');
+        }
     };
+
+    
     return (
         <div>
             <div>
