@@ -64,7 +64,6 @@ exports.signUp = async (req, res) => {
             email,
             password,
             confirmPassword,
-            phoneNumber,
             otp,
         } = req.body;
 
@@ -117,7 +116,7 @@ exports.signUp = async (req, res) => {
         const profilePayload = {
             gender: null,
             dateOfBirth: null,
-            phoneNumber,
+            phoneNumber:null,
             about: null,
         };
         //creating a profile id for the user
