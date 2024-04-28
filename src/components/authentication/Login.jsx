@@ -28,12 +28,13 @@ export const Login = () => {
 
 	const onSubmit = async (data) => {
 		try {
-			console.log(data);
+			// console.log(data);
 			const formData = new FormData();
 			formData.append('email', data.username);
 			formData.append('password', data.password);
 
 			const response=await axios.post(LOGIN_API,formData);
+			console.log(response);
 			if(response.data.success){
 				toast.success('Login was successfull');
 				dispatch(setToken(response.data.token));
@@ -42,9 +43,11 @@ export const Login = () => {
 				localStorage.setItem("user", JSON.stringify(response.data.user))
 				navigate('/dashboard/profile');
 			}
+			
 
 		} catch (error) {
 			toast.error('Login failed');
+			
 		}
 	};
 
