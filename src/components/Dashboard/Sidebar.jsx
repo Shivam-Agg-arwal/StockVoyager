@@ -3,6 +3,7 @@ import { MdDashboard } from "react-icons/md";
 import { RiStockLine } from "react-icons/ri";
 import { CiStopwatch } from "react-icons/ci";
 import { MdOutlineSettings } from "react-icons/md";
+import { SlWallet } from "react-icons/sl";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -66,6 +67,18 @@ const Sidebar = () => {
 							}}
 						>
 							<CiStopwatch />
+						</div>
+
+						<div
+							className={`${location.pathname === "/dashboard/wallet"
+									? "text-blue"
+									: "text-grey"
+								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
+							onClick={() => {
+								navigate("/dashboard/wallet");
+							}}
+						>
+							<SlWallet />
 						</div>
 
 						<div
