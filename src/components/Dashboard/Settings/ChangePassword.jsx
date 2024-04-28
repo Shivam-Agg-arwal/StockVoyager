@@ -1,16 +1,40 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoEyeOff, IoEye } from "react-icons/io5";
-import './../../../index.css'
+import axios from 'axios';
+import { updationEndpoints } from '../../../api/api';
+import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 const ChangePassword = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit,reset, formState: { errors } } = useForm();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const {token}=useSelector((state)=>state.auth);
 
-  const onSubmit = (data) => {
+  const {UPDATE_PASSWORD_API}=updationEndpoints;
+  const onSubmit =async (data) => {
     // Handle form submission, e.g., send data to backend
     console.log(data);
+    const loadingToast=toast.loading('Updating Password...');
+    try {
+			// console.log(data);
+			const formData = new FormData();
+			formData.append('newPassword', data.newPassword);
+			formData.append('oldPassword', data.currentPassword);
+			formData.append('token', token);
+
+			const response=await axios.post(UPDATE_PASSWORD_API,formData);
+			console.log(response);
+			if(response.data.success){
+				toast.success('Password was updated successfully');
+        reset();
+			}
+		} catch (error) {
+			toast.error('Updation failed');
+			
+		}
+    toast.dismiss(loadingToast);
   };
 
   return (
