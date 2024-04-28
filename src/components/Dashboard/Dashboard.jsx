@@ -4,7 +4,7 @@ import Sidebar from './Sidebar'
 
 const Dashboard = () => {
   return (
-    <div className='flex flex-row w-full min-h-screen h-auto '>
+    <div className='flex flex-row w-full min-h-screen h-auto'>
         <Sidebar/>
         <Outlet/>
     </div>
