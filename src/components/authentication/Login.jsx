@@ -108,22 +108,8 @@ export const Login = () => {
 									</p>
 								)}
 							</div>
-							<div className="flex justify-between items-center">
-								<div className="flex items-center">
-									<input
-										type="checkbox"
-										id="rememberme"
-										name="rememberme"
-										className="mr-2 size-4"
-										{...register("rememberMe")}
-									/>
-									<label
-										htmlFor="rememberme"
-										className="text-sm"
-									>
-										Remember Me
-									</label>
-								</div>
+							<div className="flex justify-end items-center">
+								
 								<p className="underline hover:no-underline text-sm">
 									<Link to="/forgotpassword">Forgot Password</Link>
 								</p>
