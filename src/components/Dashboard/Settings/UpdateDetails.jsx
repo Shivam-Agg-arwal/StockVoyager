@@ -53,7 +53,6 @@ const UpdateDetails = () => {
 
 	const onSubmit = async (data) => {
 		// Handle form submission, e.g., send data to backend
-		console.log(data);
 		if (shouldCall()) {
 			const loadingToast = toast.loading("Updating...");
 			try {
@@ -161,7 +160,6 @@ const UpdateDetails = () => {
 								: ""
 						}
 					>
-						{console.log(user.additionalDetails.gender)}
 						<option value="" disabled>
 							Select Gender
 						</option>
