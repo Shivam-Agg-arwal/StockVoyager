@@ -38,9 +38,11 @@ function Signup() {
 
   return (
     <>
-      <div className='flex justify-center items-center md:w-screen md:h-screen'>
-        <div className='flex items-center justify-center bg-light rounded-md w-1/2 h-full'>
-          <form onSubmit={handleSubmit(onSubmit)} className='flex items-center justify-center w-full h-1/2 px-5'>
+      <div className='flex justify-center items-center md:w-full md:h-screen'>
+        <div className='flex items-center justify-center bg-light rounded-md w-2/3 h-full flex-col'>
+          <h1 className='text-4xl mb-3'>Sign up Today!</h1>
+          <hr className="h-px my-1 bg-grey border-1 w-1/3" />
+          <form onSubmit={handleSubmit(onSubmit)} className='flex items-center justify-center w-fit h-fit py-5 px-5 rounded-xl'>
             <div>
               <div className='flex gap-4'>
                 <div className='flex flex-col text-md'>
@@ -79,7 +81,9 @@ function Signup() {
             </div>
           </form>
         </div>
-        <div className='w-1/2'></div>
+        <div className='w-1/3'>
+          <img src="./public/signup-img.jpg" alt="signup-img" className='md:h-screen md:w-full'/>
+        </div>
       </div>
     </>
   );

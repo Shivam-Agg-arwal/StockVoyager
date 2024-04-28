@@ -49,9 +49,9 @@ export const Login = () => {
 	};
 
 	return (
-		<div className="flex justify-center items-center flex-grow md:w-screen md:h-screen">
+		<div className="flex justify-center items-center md:w-full md:h-full">
 			<div>
-				<div className="flex flex-col-reverse pt-20 pb-5 justify-center items-center md:flex-row md:px-10 md:py-7">
+				<div className="flex flex-col-reverse pt-20 pb-5 justify-center items-center md:flex-row md:px-10 flex-grow">
 					<div className="px-6 md:px-12 lg:px-24 md:w-1/2">
 						<div className="pb-9">
 							<h1 className="text-3xl">
