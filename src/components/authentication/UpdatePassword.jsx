@@ -38,52 +38,58 @@ function UpdatePassword() {
 		toast.dismiss(loadingToast);
 	};
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
-			<div className="mb-4">
-				<label
-					htmlFor="newPassword"
-					className="block text-sm font-medium text-gray-900"
-				>
-					New Password
-				</label>
-				<input
-					type="password"
-					id="newPassword"
-					{...register("newPassword", { required: true })}
-					className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-				/>
-				{errors.newPassword && (
-					<span className="text-red-500">
-						New password is required
-					</span>
-				)}
+		<>
+			<div className="flex items-center justify-center w-full h-screen ">
+				
+				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-md mx-fit border p-14 rounded-lg">
+					<h1 className="text-3xl underline text-center">Update Password</h1>
+					<div className="mb-4">
+						<label
+							htmlFor="newPassword"
+							className="block font-medium text-xl"
+						>
+							New Password
+						</label>
+						<input
+							type="password"
+							id="newPassword"
+							{...register("newPassword", { required: true })}
+							className="shadow appearance-none border rounded w-full py-2 px-3 text-grey leading-tight focus:outline-none focus:shadow-outline"
+						/>
+						{errors.newPassword && (
+							<span className="text-red-500">
+								New password is required
+							</span>
+						)}
+					</div>
+					<div className="mb-4">
+						<label
+							htmlFor="confirmPassword"
+							className="block font-medium text-xl"
+						>
+							Confirm New Password
+						</label>
+						<input
+							type="password"
+							id="confirmPassword"
+							{...register("confirmPassword", { required: true })}
+							className="shadow appearance-none border rounded w-full py-2 px-3 text-grey leading-tight focus:outline-none focus:shadow-outline"
+						/>
+						{errors.confirmPassword && (
+							<span className="text-red-500">
+								Please confirm your new password
+							</span>
+						)}
+					</div>
+					<button
+						type="submit"
+						className="border-2 p-2 rounded-lg transition-colors hover:bg-grey"
+					>
+						Update Password
+					</button>
+				</form>
 			</div>
-			<div className="mb-4">
-				<label
-					htmlFor="confirmPassword"
-					className="block text-sm font-medium text-gray-900"
-				>
-					Confirm New Password
-				</label>
-				<input
-					type="password"
-					id="confirmPassword"
-					{...register("confirmPassword", { required: true })}
-					className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-				/>
-				{errors.confirmPassword && (
-					<span className="text-red-500">
-						Please confirm your new password
-					</span>
-				)}
-			</div>
-			<button
-				type="submit"
-				className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-			>
-				Update Password
-			</button>
-		</form>
+		</>
 	);
 }
 
