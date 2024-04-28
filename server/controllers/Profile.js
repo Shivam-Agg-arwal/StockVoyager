@@ -5,7 +5,6 @@ const {uploadImageToCloudinary}=require('../utils/ImageUploader')
 
 exports.updateDisplayPicture = async (req, res) => {
     try {
-        console.log("function m toh aya")
         const displayPicture = req.files.displayPicture;
         const userId = req.user.id
 
