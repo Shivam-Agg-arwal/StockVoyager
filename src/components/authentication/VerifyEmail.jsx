@@ -56,31 +56,34 @@ const VerifyEmail = () => {
 
     
     return (
-        <div>
-            <div>
-                <h2>Verify Email</h2>
-                <p>
-                    Enter the OTP sent to your email address to verify.
-                </p>
-            </div>
+        <div className="flex items-center justify-center h-screen w-full">
+            <div className="flex flex-col border-2 border-black p-5 gap-2">
+                <div className="flex flex-col gap-2">
+                    <h2 className="text-4xl underline text-center font-medium">Verify Email</h2>
+                    <p className="text-2xl font-medium">
+                        The verification code has been sent to you. Enter the code below
+                    </p>
+                </div>
 
-            <div>
+                <div className="text-lg">
                 <OtpInput
-						value={otp}
-						onChange={setOtp}
-						numInputs={6}
-						renderSeparator={<span> <pre>  </pre></span>}
-						renderInput={(props) => <input {...props} />}
-                        id="otpstyle"
-					/>
-            </div>
+                    value={otp}
+                    onChange={setOtp}
+                    numInputs={6}
+                    renderSeparator={<span> <pre>  </pre></span>}
+                    renderInput={(props) => <input {...props} className="border rounded-sm" />}
 
-            <div>
-                <button onClick={handleSubmit}>Verify</button>
-            </div>
+                    id="otpstyle"
+                />
+                </div>
 
-            <div>
-                <p>Didn't receive the OTP? <button onClick={handleResendOTP}>Resend OTP</button></p>
+                <div className="p-1">
+                    <button onClick={handleSubmit} className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey">Verify</button>
+                </div>
+
+                <div>
+                    <p>Didn't receive the OTP? <button onClick={handleResendOTP}><span className="font-bold underline hover:text-theme">Resend OTP</span></button></p>
+                </div>
             </div>
         </div>
     );
