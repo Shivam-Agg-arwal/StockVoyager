@@ -31,7 +31,7 @@ const Sidebar = () => {
 	return (
 		<div className="flex flex-col bg-white relative w-[60px] min-h-screen h-auto justify-between items-center border-grey border-r-2 md:py-4">
 			<div className="flex flex-col justify-evenly flex-grow max-h-56 ">
-				<div className="flex flex-col justify-between flex-grow">
+				<div className="flex flex-col justify-between flex-grow gap-6">
 					<div
 						className={`${location.pathname === "/dashboard/profile"
 								? "text-blue"

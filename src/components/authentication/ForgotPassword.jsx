@@ -40,12 +40,12 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div>
+        <div className="flex flex-col h-screen w-full justify-center items-center gap-8 text-center">
             <div>
-                <h2>
+                <h2 className="text-center text-3xl underline">
                     {!emailSent ? "Reset Your Password" : "Check Email"}
                 </h2>
-                <p>
+                <p className="text-lg">
                     {!emailSent
                         ? "Have no fear. We’ll email you instructions to reset your password. If you don't have access to your email, we can try account recovery."
                         : `We have sent the reset email to ${email}`}
@@ -55,25 +55,28 @@ const ForgotPassword = () => {
             <div>
                 {!emailSent ? (
                     <form onSubmit={submitHandler}>
-                        <label htmlFor="email">Email Address <sup className='text-pink-300'>*</sup></label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Enter your email address"
-                            required
-                        />
-                        <button type="submit" className="text-black bg-yellow-50 py-3 w-full font-bold rounded-lg mt-6">Reset Your Password</button>
+                        <div className="flex gap-3">
+                            <label className="font-bold text-lg " htmlFor="email">Email Address<sup>*</sup></label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter your email address"
+                                required
+                                className="border border-black rounded-md"
+                            />
+                        </div>
+                        <button type="submit" className="text-black bg-yellow-50 py-3 w-full font-bold rounded-lg">Reset Your Password</button>
                     </form>
                 ) : (
                     <div>
-                        <button onClick={()=>{sendMail()}}>Resend Email</button>
+                        <button className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey" onClick={()=>{sendMail()}}>Resend Email</button>
                     </div>
                 )}
             </div>
-            <div>
+            <div className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey">
                 Back to login
             </div>
         </div>

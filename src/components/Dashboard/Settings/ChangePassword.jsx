@@ -40,7 +40,7 @@ const ChangePassword = () => {
   return (
     <div>
       <h2 className="text-3xl mb-5 underline">Change Password</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3">
         <div>
           <label htmlFor="currentPassword" className="text-lg">Current Password</label>
           <div className="password-container">

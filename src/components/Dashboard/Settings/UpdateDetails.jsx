@@ -115,63 +115,67 @@ const UpdateDetails = () => {
 		<div>
 			<h2 className="text-3xl mb-5 underline">Update Details</h2>
 			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-				<div className="flex gap-3 items-start justify-start">
-					<label htmlFor="firstName" className="text-lg">First Name</label>
-					<input
-						type="text"
-						id="firstName"
-						{...register("firstName", {})}
-						placeholder={user.firstName ? user.firstName : ""}
-						className="border border-black rounded-lg"
-					/>
-					{errors.firstName && <span>This field is required</span>}
+				<div className="flex gap-2">
+					<div className="flex gap-3 items-start justify-start">
+						<label htmlFor="firstName" className="text-lg">First Name</label>
+						<input
+							type="text"
+							id="firstName"
+							{...register("firstName", {})}
+							placeholder={user.firstName ? user.firstName : ""}
+							className="border border-black rounded-lg"
+						/>
+						{errors.firstName && <span>This field is required</span>}
+					</div>
+					<div className="flex gap-3 items-start justify-start">
+						<label htmlFor="lastName" className="text-lg">Last Name</label>
+						<input
+							type="text"
+							id="lastName"
+							{...register("lastName", {})}
+							placeholder={user.lastName ? user.lastName : ""}
+							className="border border-black rounded-lg "
+						/>
+						{errors.lastName && <span>This field is required</span>}
+					</div>
 				</div>
-				<div className="flex gap-3 items-start justify-start">
-					<label htmlFor="lastName" className="text-lg">Last Name</label>
-					<input
-						type="text"
-						id="lastName"
-						{...register("lastName", {})}
-						placeholder={user.lastName ? user.lastName : ""}
-						className="border border-black rounded-lg "
-					/>
-					{errors.lastName && <span>This field is required</span>}
-				</div>
-				<div className="flex gap-3 items-start justify-start">
-					<label htmlFor="phoneNumber" className="text-lg">Phone Number</label>
-					<input
-						type="text"
-						id="phoneNumber"
-						{...register("phoneNumber", {})}
-						placeholder={
-							user.additionalDetails.phoneNumber
-								? user.additionalDetails.phoneNumber
-								: ""
-						}
-						className="border border-black rounded-lg "
-					/>
-					{errors.phoneNumber && <span>This field is required</span>}
-				</div>
-				<div className="flex gap-3 items-start justify-start">
-					<label htmlFor="gender" className="text-lg">Gender</label>
-					<select
-						id="gender"
-						{...register("gender", {})}
-						defaultValue={
-							user.additionalDetails.gender
-								? user.additionalDetails.gender
-								: ""
-						}
-						className="border border-black rounded-lg "
-					>
-						<option value="" disabled>
-							Select Gender
-						</option>
-						<option value="Male">Male</option>
-						<option value="Female">Female</option>
-						<option value="Other">Other</option>
-					</select>
-					{errors.gender && <span>This field is required</span>}
+				<div className="flex gap-2">
+					<div className="flex gap-3 items-start justify-start">
+						<label htmlFor="phoneNumber" className="text-lg">Phone Number</label>
+						<input
+							type="text"
+							id="phoneNumber"
+							{...register("phoneNumber", {})}
+							placeholder={
+								user.additionalDetails.phoneNumber
+									? user.additionalDetails.phoneNumber
+									: ""
+							}
+							className="border border-black rounded-lg "
+						/>
+						{errors.phoneNumber && <span>This field is required</span>}
+					</div>
+					<div className="flex gap-3 items-start justify-start">
+						<label htmlFor="gender" className="text-lg">Gender</label>
+						<select
+							id="gender"
+							{...register("gender", {})}
+							defaultValue={
+								user.additionalDetails.gender
+									? user.additionalDetails.gender
+									: ""
+							}
+							className="border border-black rounded-lg "
+						>
+							<option value="" disabled>
+								Select Gender
+							</option>
+							<option value="Male">Male</option>
+							<option value="Female">Female</option>
+							<option value="Other">Other</option>
+						</select>
+						{errors.gender && <span>This field is required</span>}
+					</div>
 				</div>
 				<div className="flex gap-3 items-start justify-start">
 					<label htmlFor="about" className="text-lg">About</label>
