@@ -63,7 +63,7 @@ const TransactionTable = () => {
     },[user])
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto my-4">
             <table className="table-auto min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                     <tr>

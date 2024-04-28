@@ -20,12 +20,12 @@ function WalletCard({ icon, balance }) {
     }
 
     return (
-        <div className="flex flex-col border-black border">
-            <div className="flex ">
-                <div>{selectedIcon}</div>
-                <div>{icon}</div>
+        <div className="flex flex-col gap-4 border-black border p-5 rounded-lg w-[33%]">
+            <div className="flex flex-row items-center gap-4">
+                <div className="text-lg text-blue font-bold">{selectedIcon}</div>
+                <div className="font-semibold">{icon}</div>
             </div>
-            <div>{balance}</div>
+            <div className="text-lg font-bold">{balance}</div>
         </div>
     );
 }
