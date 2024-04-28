@@ -10,7 +10,11 @@ const stockSchema=new mongoose.Schema({
         required:true,
         trim:true,
     },
-    price:{
+    quantity:{
+        type:Number,
+        require:true
+    },
+    total_price:{
         type:Number,
         required:true,
     },

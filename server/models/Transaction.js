@@ -14,7 +14,11 @@ const transactionSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    price:{
+    quantity:{
+        type:Number,
+        required:true,
+    },
+    totalPrice:{
         type:Number,
         required:true,
     },
@@ -22,6 +26,10 @@ const transactionSchema=new mongoose.Schema({
         type:Date,
         default:Date.now,
     },
+    orderType:{
+        type:String,
+        enum:["Buy","Sell"]
+    }
 
     //status buy / sell 
     
