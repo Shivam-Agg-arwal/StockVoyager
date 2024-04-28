@@ -36,7 +36,7 @@ function NavBar() {
         <div className='md:w-1/2 flex justify-center items-center md:justify-end'>
           <ul className="flex justify-end">
             <li className='flex gap-3 items-center justify-center'>
-              <NavLink to="/aboutme">
+              <NavLink to="/dashboard/profile">
                 <img src={user.image} alt="profile" width={30} className='rounded-full' />
               </NavLink>
               <div className='hidden md:inline'>
