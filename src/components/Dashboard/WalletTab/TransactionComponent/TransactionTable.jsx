@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const TransactionTable = () => {
-    const transactions = [
+    const [transactions,setTransactions] = useState([
         {
             id: 1,
             stockSymbol: "AAPL",
@@ -53,7 +54,13 @@ const TransactionTable = () => {
             orderDate: "2024-04-29",
         },
         // Add more entries as needed
-    ];
+    ]);
+
+    const {user}=useSelector((state)=>state.profile);
+
+    useEffect(()=>{
+        user.transactions.length>0?setTransactions(user.transactions):null;
+    },[user])
 
     return (
         <div className="overflow-x-auto">
