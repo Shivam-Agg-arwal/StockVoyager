@@ -15,6 +15,7 @@ import WatchList from './components/Dashboard/WatchList';
 import Settings from './components/Dashboard/Settings';
 import NotFound from './components/Pages.jsx/NotFound';
 import UpdatePassword from './components/authentication/UpdatePassword';
+import WalletTab from './components/Dashboard/WalletTab';
 
 export default function App() {
   const {user}=useSelector((state)=>state.profile);
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/dashboard/portfolio" element={<Portfolio />} />
           <Route path="/dashboard/watchlist" element={<WatchList />} />
           <Route path="/dashboard/setting" element={<Settings />} />
+          <Route path="/dashboard/wallet" element={<WalletTab />} />
         </Route>
         }
 
