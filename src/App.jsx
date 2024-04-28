@@ -21,7 +21,7 @@ export default function App() {
     const { user } = useSelector((state) => state.profile);
     const { signupData } = useSelector((state) => state.auth);
     return (
-        <div>
+        <div className="overflow-x-hidden">
             {user && <NavBar />}
             <Routes>
                 <Route path="/" element={<Signup />} />
