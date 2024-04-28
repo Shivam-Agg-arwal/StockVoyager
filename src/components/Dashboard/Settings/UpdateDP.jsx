@@ -59,21 +59,21 @@ const UpdateDP = () => {
     };
 
     return (
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-row gap-2 items-center w-full h-fit mt-2">
             <img
                 src={`${chosenImage ? chosenImage : user.image}`}
                 width={90}
                 className="rounded-full"
             />
             <div>
-                <div>Change Profile Picture</div>
+                <div className="mb-3 text-3xl">Change Profile Picture</div>
                 <div className="flex flex-row gap-2">
                     {file && (
                         <div
                             onClick={() => {
                                 handleUpdation();
                             }}
-                            className="cursor-pointer"
+                            className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
                         >
                             Update Image
                         </div>
@@ -82,7 +82,7 @@ const UpdateDP = () => {
                         <div>
                             <label
                                 htmlFor="uploadimage"
-                                className="cursor-pointer"
+                                className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
                             >
                                 Choose Image
                             </label>
@@ -100,7 +100,7 @@ const UpdateDP = () => {
                             onClick={() => {
                                 RemoveHandle();
                             }}
-                            className="cursor-pointer"
+                            className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
                         >
                             Remove
                         </button>

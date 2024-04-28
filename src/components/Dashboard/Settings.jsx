@@ -5,14 +5,16 @@ import UpdateDetails from "./Settings/UpdateDetails";
 
 const Settings = () => {
     return (
-        <div>
-            <h1 className="text-5xl w-screen h-screen flex justify-center items-center">
-                SETTINGS
-            </h1>
-
-            <UpdateDP />
-            <UpdateDetails />
-            <ChangePassword />
+        <div className="flex flex-col">
+            <div className="flex items-start p-5 border border-black w-screen">
+                <UpdateDP />
+            </div>
+            <div className="flex items-start p-5 border border-black w-screen">
+                <UpdateDetails />
+            </div>
+            <div className="flex items-start p-5 border border-black w-screen">
+                <ChangePassword />
+            </div>
         </div>
     );
 };
