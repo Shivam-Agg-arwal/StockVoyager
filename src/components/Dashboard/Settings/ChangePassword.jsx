@@ -39,15 +39,16 @@ const ChangePassword = () => {
 
   return (
     <div>
-      <h2>Change Password</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h2 className="text-3xl mb-5 underline">Change Password</h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
         <div>
-          <label htmlFor="currentPassword">Current Password</label>
+          <label htmlFor="currentPassword" className="text-lg">Current Password</label>
           <div className="password-container">
             <input
               type={showCurrentPassword ? "text" : "password"}
               id="currentPassword"
               {...register('currentPassword', { required: true })}
+              className="border border-black rounded-lg"
             />
             <button
               type="button"
@@ -60,12 +61,13 @@ const ChangePassword = () => {
           {errors.currentPassword && <span>This field is required</span>}
         </div>
         <div>
-          <label htmlFor="newPassword">New Password</label>
+          <label htmlFor="newPassword" className="text-lg">New Password</label>
           <div className="password-container">
             <input
               type={showNewPassword ? "text" : "password"}
               id="newPassword"
               {...register('newPassword', { required: true })}
+              className="border border-black rounded-lg"
             />
             <button
               type="button"
@@ -77,7 +79,7 @@ const ChangePassword = () => {
           </div>
           {errors.newPassword && <span>This field is required</span>}
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey">Submit</button>
       </form>
     </div>
   );

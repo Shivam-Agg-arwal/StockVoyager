@@ -113,30 +113,32 @@ const UpdateDetails = () => {
 
 	return (
 		<div>
-			<h2>Update Details</h2>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div>
-					<label htmlFor="firstName">First Name</label>
+			<h2 className="text-3xl mb-5 underline">Update Details</h2>
+			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+				<div className="flex gap-3 items-start justify-start">
+					<label htmlFor="firstName" className="text-lg">First Name</label>
 					<input
 						type="text"
 						id="firstName"
 						{...register("firstName", {})}
 						placeholder={user.firstName ? user.firstName : ""}
+						className="border border-black rounded-lg"
 					/>
 					{errors.firstName && <span>This field is required</span>}
 				</div>
-				<div>
-					<label htmlFor="lastName">Last Name</label>
+				<div className="flex gap-3 items-start justify-start">
+					<label htmlFor="lastName" className="text-lg">Last Name</label>
 					<input
 						type="text"
 						id="lastName"
 						{...register("lastName", {})}
 						placeholder={user.lastName ? user.lastName : ""}
+						className="border border-black rounded-lg "
 					/>
 					{errors.lastName && <span>This field is required</span>}
 				</div>
-				<div>
-					<label htmlFor="phoneNumber">Phone Number</label>
+				<div className="flex gap-3 items-start justify-start">
+					<label htmlFor="phoneNumber" className="text-lg">Phone Number</label>
 					<input
 						type="text"
 						id="phoneNumber"
@@ -146,11 +148,12 @@ const UpdateDetails = () => {
 								? user.additionalDetails.phoneNumber
 								: ""
 						}
+						className="border border-black rounded-lg "
 					/>
 					{errors.phoneNumber && <span>This field is required</span>}
 				</div>
-				<div>
-					<label htmlFor="gender">Gender</label>
+				<div className="flex gap-3 items-start justify-start">
+					<label htmlFor="gender" className="text-lg">Gender</label>
 					<select
 						id="gender"
 						{...register("gender", {})}
@@ -159,6 +162,7 @@ const UpdateDetails = () => {
 								? user.additionalDetails.gender
 								: ""
 						}
+						className="border border-black rounded-lg "
 					>
 						<option value="" disabled>
 							Select Gender
@@ -169,8 +173,8 @@ const UpdateDetails = () => {
 					</select>
 					{errors.gender && <span>This field is required</span>}
 				</div>
-				<div>
-					<label htmlFor="about">About</label>
+				<div className="flex gap-3 items-start justify-start">
+					<label htmlFor="about" className="text-lg">About</label>
 					<textarea
 						id="about"
 						{...register("about")}
@@ -179,9 +183,10 @@ const UpdateDetails = () => {
 								? user.additionalDetails.about
 								: ""
 						}
+						className="border border-black rounded-lg "
 					/>
 				</div>
-				<button type="submit">Submit</button>
+				<button type="submit" className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey">Submit</button>
 			</form>
 		</div>
 	);
