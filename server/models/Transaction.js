@@ -18,11 +18,15 @@ const transactionSchema=new mongoose.Schema({
         type:Number,
         required:true,
     },
-    totalPrice:{
+    price:{
         type:Number,
         required:true,
     },
-    time:{
+    tradeValue:{
+        type:Number,
+        required:true,
+    },
+    orderDate:{
         type:Date,
         default:Date.now,
     },
