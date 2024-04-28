@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IoEyeOff, IoEye } from "react-icons/io5";
-import './ChangePassword.css'; // Import CSS file for styling
+import './../../../index.css'
 
 const ChangePassword = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
