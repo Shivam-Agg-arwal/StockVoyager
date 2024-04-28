@@ -20,7 +20,7 @@ exports.updateDisplayPicture = async (req, res) => {
         { image: image.secure_url },
         { new: true }
         )
-        res.send({
+        return res.status(200).json({
         success: true,
         message: `Image Updated successfully`,
         data: updatedProfile,

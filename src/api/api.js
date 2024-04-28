@@ -9,7 +9,8 @@ export const authenticationEndpoints={
     RESETPASSTOKEN_API:BASE_URL+"/auth/resetPasswordToken",
 }
 
-//sab post type ki hai ye sari 
-
-
- 
+export const updationEndpoints={
+    UPDATE_DP_API:BASE_URL+"/profile/updateDisplayPicture",
+    UPDATE_DETAILS_API:BASE_URL+"/profile/updateProfile",
+    UPDATE_PASSWORD_API:BASE_URL+"/auth/changePassword",
+}
