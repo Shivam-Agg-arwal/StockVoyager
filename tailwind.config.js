@@ -11,7 +11,8 @@ export default {
       'light': '#F5F6FA',
       'black': '#000814',
       'blue' : '#0096FF',
-      'grey' : '#7393B3'
+      'grey' : '#7393B3',
+      'btnyellow' : '#fd0'
     },
     extend: {},
   },

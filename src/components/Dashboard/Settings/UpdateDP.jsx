@@ -62,18 +62,18 @@ const UpdateDP = () => {
         <div className="flex flex-row gap-2 items-center w-full h-fit mt-2">
             <img
                 src={`${chosenImage ? chosenImage : user.image}`}
-                width={90}
-                className="rounded-full"
+                width={90} height={90}
+                className="rounded-full border-black border-[1px] w-[90px] h-[90px]"
             />
             <div>
-                <div className="mb-3 text-3xl">Change Profile Picture</div>
+                <div className=" text-3xl font-semibold uppercase mb-5">Change Profile Picture</div>
                 <div className="flex flex-row gap-2">
                     {file && (
                         <div
                             onClick={() => {
                                 handleUpdation();
                             }}
-                            className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
+                            className="cursor-pointer w-fit h-fit p-2 bg-btnyellow rounded-md  font-bold hover:scale-95"
                         >
                             Update Image
                         </div>
@@ -82,7 +82,7 @@ const UpdateDP = () => {
                         <div>
                             <label
                                 htmlFor="uploadimage"
-                                className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
+                                className="cursor-pointer w-fit h-fit p-2 bg-btnyellow rounded-md font-bold hover:scale-95"
                             >
                                 Choose Image
                             </label>
@@ -100,7 +100,7 @@ const UpdateDP = () => {
                             onClick={() => {
                                 RemoveHandle();
                             }}
-                            className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
+                            className="cursor-pointer w-fit h-fit p-2 bg-btnyellow  rounded-md font-bold hover:scale-95"
                         >
                             Remove
                         </button>

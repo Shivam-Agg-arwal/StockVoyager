@@ -5,7 +5,7 @@ import UpdateDetails from "./Settings/UpdateDetails";
 
 const Settings = () => {
     return (
-        <div className="flex flex-col gap-3 p-5 w-screen">
+        <div className="flex flex-col gap-3 p-5 max-w-[1280px] w-11/12 mx-auto">
             <div className="flex items-start p-2 border-black bg-grey rounded-md ">
                 <UpdateDP />
             </div>
