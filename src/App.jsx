@@ -16,6 +16,7 @@ import Settings from "./components/Dashboard/Settings";
 import NotFound from "./components/Pages.jsx/NotFound";
 import UpdatePassword from "./components/authentication/UpdatePassword";
 import WalletTab from "./components/Dashboard/WalletTab";
+import Trading from "./components/Dashboard/TradeCenter/Trading";
 
 export default function App() {
     const { user } = useSelector((state) => state.profile);
@@ -58,6 +59,10 @@ export default function App() {
                         <Route
                             path="/dashboard/wallet"
                             element={<WalletTab />}
+                        />
+                        <Route
+                            path="/dashboard/tradeCenter"
+                            element={<Trading />}
                         />
                     </Route>
                 )}

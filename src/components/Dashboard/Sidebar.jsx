@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdDashboard } from "react-icons/md";
 import { RiStockLine } from "react-icons/ri";
 import { CiStopwatch } from "react-icons/ci";
+import { FaHandHoldingDollar } from "react-icons/fa6";
 import { MdOutlineSettings } from "react-icons/md";
 import { SlWallet } from "react-icons/sl";
 
@@ -11,6 +12,7 @@ import { setToken } from "../slices/authSlice";
 import { setUser } from "../slices/profileSlice";
 import ConfirmationModal from "../common/ConfirmationModal";
 import { VscSignOut } from "react-icons/vsc";
+
 import toast from "react-hot-toast";
 
 const Sidebar = () => {
@@ -34,8 +36,8 @@ const Sidebar = () => {
 				<div className="flex flex-col justify-between flex-grow gap-6">
 					<div
 						className={`${location.pathname === "/dashboard/profile"
-								? "text-blue"
-								: "text-grey"
+							? "text-blue"
+							: "text-grey"
 							} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
 						onClick={() => {
 							navigate("/dashboard/profile");
@@ -45,10 +47,22 @@ const Sidebar = () => {
 					</div>
 
 					<div className="flex flex-col gap-6">
+					
+						<div
+							className={`${location.pathname === "/dashboard/tradeCenter"
+								? "text-blue"
+								: "text-grey"
+								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
+							onClick={() => {
+								navigate("/dashboard/tradeCenter");
+							}}
+						>
+							<FaHandHoldingDollar />
+						</div>
 						<div
 							className={`${location.pathname === "/dashboard/portfolio"
-									? "text-blue"
-									: "text-grey"
+								? "text-blue"
+								: "text-grey"
 								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
 							onClick={() => {
 								navigate("/dashboard/portfolio");
@@ -59,8 +73,8 @@ const Sidebar = () => {
 
 						<div
 							className={`${location.pathname === "/dashboard/watchlist"
-									? "text-blue"
-									: "text-grey"
+								? "text-blue"
+								: "text-grey"
 								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
 							onClick={() => {
 								navigate("/dashboard/watchlist");
@@ -71,8 +85,8 @@ const Sidebar = () => {
 
 						<div
 							className={`${location.pathname === "/dashboard/wallet"
-									? "text-blue"
-									: "text-grey"
+								? "text-blue"
+								: "text-grey"
 								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
 							onClick={() => {
 								navigate("/dashboard/wallet");
@@ -83,8 +97,8 @@ const Sidebar = () => {
 
 						<div
 							className={`${location.pathname === "/dashboard/setting"
-									? "text-blue"
-									: "text-grey"
+								? "text-blue"
+								: "text-grey"
 								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
 							onClick={() => {
 								navigate("/dashboard/setting");
