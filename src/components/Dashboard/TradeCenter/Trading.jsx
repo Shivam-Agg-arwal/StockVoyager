@@ -65,10 +65,10 @@ const Trading = () => {
                             onClick={() => {
                                 printStock(entry);
                             }}
-                            className="p-2 rounded-lg border-black border-[1px] my-4 py-4 flex flex-row gap-4 items-center cursor-pointer"
+                            className="p-2 rounded-lg border-black border-[1px] my-4 py-4 flex flex-row gap-3 items-center cursor-pointer"
                         >
-                            <GiTakeMyMoney className="text-[#00FF00] text-lg"/>
-                            <div>
+                            <GiTakeMyMoney className="text-[#55a855] text-xl font-bold"/>
+                            <div className="italic font-bold">
                                 {entry.COMPANY_NAME}
                             </div>
                         </li>
