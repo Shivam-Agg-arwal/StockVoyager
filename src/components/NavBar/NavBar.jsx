@@ -37,11 +37,11 @@ function NavBar() {
           <ul className="flex justify-end">
             <li className='flex gap-3 items-center justify-center'>
               <NavLink to="/dashboard/profile">
-                <img src={user.image} alt="profile" width={40} className='rounded-full' />
+                <img src={user.image} alt="profile" width={40} className='rounded-full border-black border-[1px]' />
               </NavLink>
               <div className='hidden md:inline'>
-                <div>{user.firstName}{" "}{user.lastName}</div>
-                <div>{user.emailID}</div>
+                <div className='font-semibold'>{user.firstName}{" "}{user.lastName}</div>
+                <div className='italic text-xs'>{user.emailID}</div>
               </div>
             </li>
           </ul>
