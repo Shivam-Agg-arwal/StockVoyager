@@ -113,35 +113,35 @@ const UpdateDetails = () => {
 
 	return (
 		<div>
-			<h2 className="text-3xl mb-5 underline">Update Details</h2>
-			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-				<div className="flex gap-2">
-					<div className="flex gap-3 items-start justify-start">
-						<label htmlFor="firstName" className="text-lg">First Name</label>
+			<h2 className="text-3xl mb-5 uppercase font-semibold w-full">Update Details</h2>
+			<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 w-full">
+				<div className="flex gap-2 w-full">
+					<div className="flex  flex-col items-start justify-start w-1/2">
+						<label htmlFor="firstName" className="text-sm font-bold">First Name</label>
 						<input
 							type="text"
 							id="firstName"
 							{...register("firstName", {})}
 							placeholder={user.firstName ? user.firstName : ""}
-							className="border border-black rounded-lg"
+							className="border border-black rounded-lg px-2 py-1"
 						/>
 						{errors.firstName && <span>This field is required</span>}
 					</div>
-					<div className="flex gap-3 items-start justify-start">
-						<label htmlFor="lastName" className="text-lg">Last Name</label>
+					<div className="flex flex-col items-start justify-start w-1/2">
+						<label htmlFor="lastName" className="text-sm font-bold">Last Name</label>
 						<input
 							type="text"
 							id="lastName"
 							{...register("lastName", {})}
 							placeholder={user.lastName ? user.lastName : ""}
-							className="border border-black rounded-lg "
+							className="border border-black rounded-lg  px-2 py-1"
 						/>
 						{errors.lastName && <span>This field is required</span>}
 					</div>
 				</div>
 				<div className="flex gap-2">
-					<div className="flex gap-3 items-start justify-start">
-						<label htmlFor="phoneNumber" className="text-lg">Phone Number</label>
+					<div className="flex flex-col items-start justify-start">
+						<label htmlFor="phoneNumber" className="text-sm font-bold">Phone Number</label>
 						<input
 							type="text"
 							id="phoneNumber"
@@ -151,12 +151,12 @@ const UpdateDetails = () => {
 									? user.additionalDetails.phoneNumber
 									: ""
 							}
-							className="border border-black rounded-lg "
+							className="border border-black rounded-lg  px-2 py-1"
 						/>
 						{errors.phoneNumber && <span>This field is required</span>}
 					</div>
-					<div className="flex gap-3 items-start justify-start">
-						<label htmlFor="gender" className="text-lg">Gender</label>
+					<div className="flex flex-col items-start justify-start">
+						<label htmlFor="gender" className="text-sm font-bold ">Gender</label>
 						<select
 							id="gender"
 							{...register("gender", {})}
@@ -165,7 +165,7 @@ const UpdateDetails = () => {
 									? user.additionalDetails.gender
 									: ""
 							}
-							className="border border-black rounded-lg "
+							className="border border-black rounded-lg  px-2 py-1 "
 						>
 							<option value="" disabled>
 								Select Gender
@@ -177,20 +177,22 @@ const UpdateDetails = () => {
 						{errors.gender && <span>This field is required</span>}
 					</div>
 				</div>
-				<div className="flex gap-3 items-start justify-start">
-					<label htmlFor="about" className="text-lg">About</label>
+				<div className="flex flex-col items-start justify-start">
+					<label htmlFor="about" className="text-sm font-bold">About</label>
 					<textarea
 						id="about"
 						{...register("about")}
+						rows={3}
+						cols={30}
 						placeholder={
 							user.additionalDetails.about
 								? user.additionalDetails.about
 								: ""
 						}
-						className="border border-black rounded-lg "
+						className="border border-black rounded-lg px-2 py-1 w-full "
 					/>
 				</div>
-				<button type="submit" className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey">Submit</button>
+				<button type="submit" className="cursor-pointer w-fit h-fit p-2  bg-btnyellow  rounded-md font-bold hover:scale-95 transition-all duration-200">Submit</button>
 			</form>
 		</div>
 	);

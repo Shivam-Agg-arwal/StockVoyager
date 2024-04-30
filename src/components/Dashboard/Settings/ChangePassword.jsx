@@ -79,7 +79,7 @@ const ChangePassword = () => {
           </div>
           {errors.newPassword && <span>This field is required</span>}
         </div>
-        <button type="submit" className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey">Submit</button>
+        <button type="submit" className="cursor-pointer w-fit h-fit p-2  bg-btnyellow  rounded-md font-bold hover:scale-95">Submit</button>
       </form>
     </div>
   );
