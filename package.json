@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "server": "cd server && npm run dev",
     "priceStock":"python ./pyserver/apiFetchStock.py",
-    "dev": "concurrently -n \"client,server,details,price\" -c \"bgBlue,bgYellow,cyan,magenta\" \"npm start\" \"npm run server\" \"npm run priceStock\""
+    "dev": "concurrently -n \"client,server,python\" -c \"bgBlue,bgYellow,bgCyan\" \"npm start\" \"npm run server\" \"npm run priceStock\""
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.3",
