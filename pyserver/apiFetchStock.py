@@ -3,6 +3,7 @@ from nsepython import nse_eq
 from datetime import datetime, timedelta
 from nselib import capital_market
 from flask_cors import CORS
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
@@ -84,6 +85,25 @@ def get_indices():
         })
     return result   
 
+def filter_indices():
+    # Fetch data from capital_market
+    data = capital_market.market_watch_all_indices()
+    df = pd.DataFrame(data)
+
+    # List of desired index values
+    desired_indexes = ['NIFTY 50', 'NIFTY 100', 'NIFTY 200', 'NIFTY 500', 'NIFTY MIDCAP 50', 'NIFTY SMALLCAP 50', 'NIFTY MICROCAP 250', 'NIFTY BANK', 'NIFTY AUTO', 'NIFTY FMCG', 'NIFTY HEALTHCARE INDEX', 'NIFTY OIL & GAS']
+    
+    # Filter rows with desired index values
+    filtered_df = df[df['index'].isin(desired_indexes)]
+    
+    # Select desired columns
+    desired_columns = ['index', 'indexSymbol', 'last', 'variation', 'percentChange', 'yearHigh', 'yearLow', 'pe', 'oneYearAgo', 'oneMonthAgo', 'oneWeekAgo', 'pb', 'dy']
+    filtered_df = filtered_df[desired_columns]
+    
+    # Convert DataFrame to JSON
+    filtered_data = filtered_df.to_dict(orient='records')
+    
+    return filtered_data
 
 
 @app.route('/stock_current_price', methods=['POST'])
@@ -117,10 +137,15 @@ def prev_close_data():
         return jsonify({'error': 'Missing symbol parameter in the request'})
     
 
-@app.route('/get_indices', methods=['GET'])
+@app.route('/get_indices', methods=['POST'])
 def indices():
     response_data = get_indices()
     return jsonify(response_data)  
+
+@app.route('/filtered_indices', methods=['POST'])
+def filtered_indices():
+    filtered_data = filter_indices()
+    return jsonify(filtered_data)
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
