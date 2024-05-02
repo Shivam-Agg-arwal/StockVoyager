@@ -69,6 +69,19 @@ def get_price_volume_data(symbol):
     return {'previous_close': result}
 
 
+def get_indices():
+    data = capital_market.market_watch_all_indices()
+    last = data['last']
+    index_symbol = data['indexSymbol']
+    result = []
+    for sym, lst in zip(index_symbol, last):
+        result.append({
+            'last': int(lst),
+            'indexSymbol': sym
+        })
+    return result   
+
+
 
 @app.route('/stock_current_price', methods=['POST'])
 def stock_current_price():
@@ -79,6 +92,7 @@ def stock_current_price():
     else:
         return jsonify({'error': 'Symbol parameter is missing in the request'})
 
+
 @app.route('/stock_details', methods=['POST'])
 def stock_details():
     data = request.json
@@ -88,6 +102,7 @@ def stock_details():
     else:
         return jsonify({'error': 'Symbol parameter is missing in the request'})
     
+
 @app.route('/prev_close_data', methods=['POST'])
 def prev_close_data():
     data = request.json
@@ -97,6 +112,12 @@ def prev_close_data():
         return jsonify(response_data)
     else:
         return jsonify({'error': 'Missing symbol parameter in the request'})
+    
+
+@app.route('/get_indices', methods=['POST'])
+def indices():
+    response_data = get_indices()
+    return jsonify(response_data)  
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
