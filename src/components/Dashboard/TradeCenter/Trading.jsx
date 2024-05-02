@@ -3,12 +3,16 @@ import { symbolMapping } from "../../../data/Symbol";
 import { GiTakeMyMoney } from "react-icons/gi";
 import { useState } from "react";
 import { WiLightning } from "react-icons/wi";
+import { useNavigate } from "react-router-dom";
 
 const Trading = () => {
     const [searchQuery, setSearchQuery] = useState("");
+    const navigate=useNavigate();
 
     const printStock = (stock) => {
         console.log(stock);
+        navigate(`/dashboard/stockView/${stock.SYMBOL}`)
+        
     };
 
     // Filter entries based on the search query

@@ -17,6 +17,7 @@ import NotFound from "./components/Pages.jsx/NotFound";
 import UpdatePassword from "./components/authentication/UpdatePassword";
 import WalletTab from "./components/Dashboard/WalletTab";
 import Trading from "./components/Dashboard/TradeCenter/Trading";
+import StockView from "./components/Dashboard/StockView/StockView";
 
 export default function App() {
     const { user } = useSelector((state) => state.profile);
@@ -63,6 +64,10 @@ export default function App() {
                         <Route
                             path="/dashboard/tradeCenter"
                             element={<Trading />}
+                        />
+                        <Route
+                            path="/dashboard/stockView/:symbol"
+                            element={<StockView />}
                         />
                     </Route>
                 )}
