@@ -1,24 +1,21 @@
-async function fetchCurrentPrice(symbol) {
-  try {
-      const response = await fetch('http://127.0.0.1:3000/stock_current_price', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ symbol: symbol })
-      });
-      
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-      
-      const data = await response.json();
-      console.log(data);
-  } catch (error) {
-      console.error('Error:', error);
-  }
+export default async function fetchCurrentPrice(symbol) {
+    try {
+        const response = await fetch('http://127.0.0.1:3000/stock_current_price', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ symbol: symbol })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        return data; // Return the fetched data
+    } catch (error) {
+        console.error('Error:', error);
+        throw error; // Re-throw the error to handle it in the calling component
+    }
 }
-
-// Replace 'RELIANCE' with the desired stock symbol
-const symbol = 'RELIANCE';
-fetchCurrentPrice(symbol);

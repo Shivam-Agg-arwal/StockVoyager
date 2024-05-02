@@ -1,4 +1,5 @@
-async function fetchStockDetails(symbol) {
+// getStockDetails.js
+export default async function fetchStockDetails(symbol) {
     try {
         const response = await fetch('http://127.0.0.1:3000/stock_details', {
             method: 'POST',
@@ -12,13 +13,12 @@ async function fetchStockDetails(symbol) {
             throw new Error('Failed to fetch stock details');
         }
 
-        const data = await response.json();
-        console.log(data);
+        // Parse JSON data and return it
+        return await response.json();
     } catch (error) {
         console.error('Error:', error.message);
+        throw error; // Re-throw the error to handle it in the calling component
     }
 }
 
-// Replace 'RELIANCE' with the desired stock symbol
-const symbol = 'RELIANCE';
-fetchStockDetails(symbol);
+

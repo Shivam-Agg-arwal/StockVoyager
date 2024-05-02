@@ -1,4 +1,4 @@
-async function fetchIndices() {
+export default async function fetchIndices() {
     try {
         const response = await fetch('http://127.0.0.1:3000/get_indices', {
             method: 'POST',
@@ -9,16 +9,13 @@ async function fetchIndices() {
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok.');
+            throw new Error('Network response was not ok.'); 
         }
 
         const data = await response.json();
-        console.log(data);
-        // You can handle the data here, for example, update the UI
+        return data; // Return the fetched data
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
+        throw error; // Re-throw the error to handle it in the calling component
     }
 }
-
-// Call the fetchIndices function to initiate the request
-fetchIndices();

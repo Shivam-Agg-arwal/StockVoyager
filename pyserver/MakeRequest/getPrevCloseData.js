@@ -1,4 +1,4 @@
-async function fetchPrevCloseData(symbol) {
+export default async function fetchPrevCloseData(symbol) {
     try {
         const response = await fetch('http://127.0.0.1:3000/prev_close_data', {
             method: 'POST',
@@ -7,19 +7,15 @@ async function fetchPrevCloseData(symbol) {
             },
             body: JSON.stringify({ symbol: symbol })
         });
-
+ 
         if (!response.ok) {
             throw new Error('Failed to fetch previous close data');
         }
 
         const data = await response.json();
-        console.log(data);
-        // You can handle the data here, for example, update the UI
+        return data; // Return the fetched data
     } catch (error) {
         console.error('Error:', error.message);
+        throw error; // Re-throw the error to handle it in the calling component
     }
 }
-
-// Replace 'RELIANCE' with the desired stock symbol
-const symbol = 'RELIANCE';
-fetchPrevCloseData(symbol);

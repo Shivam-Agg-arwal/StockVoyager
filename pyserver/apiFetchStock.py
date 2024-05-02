@@ -2,8 +2,11 @@ from flask import Flask, request, jsonify
 from nsepython import nse_eq
 from datetime import datetime, timedelta
 from nselib import capital_market
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
+
 
 def get_stock_current_price(symbol):
     stock_data = nse_eq(symbol)
