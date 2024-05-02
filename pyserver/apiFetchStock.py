@@ -31,13 +31,21 @@ def get_stock_details(symbol):
         year_range_low = stock_data['priceInfo']['weekHighLow']['min']
         market_cap = stock_data['securityInfo']['issuedSize']
         average_vol = stock_data['preOpenMarket']['totalTradedVolume']
+        industry = stock_data['metadata']['industry']
+        pd_sector_pe = stock_data['metadata']['pdSectorPe']
+        face_value = stock_data['securityInfo']['faceValue']
+        issued_size = stock_data['securityInfo']['issuedSize']
         return {
             'companyName': company_name,
             'prevClose': prev_close,
             'dayRange': {'high': day_range_high, 'low': day_range_low},
             'yearRange': {'high': year_range_high, 'low': year_range_low},
             'marketCap': market_cap,
-            'averageVol': average_vol
+            'averageVol': average_vol,
+            'industry' : industry,
+            'pdSectorPe' : pd_sector_pe,
+            'faceValue' : face_value,
+            'issuedSize' : issued_size
         }
     else:
         return {'error': 'Failed to fetch stock information'}
