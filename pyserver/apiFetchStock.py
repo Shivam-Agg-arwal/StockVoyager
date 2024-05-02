@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify
 from nsepython import nse_eq
-import socket
 
 app = Flask(__name__)
 
-@app.route('/stock_info', methods=['GET'])
+@app.route('/stock_current_price', methods=['POST'])
 def get_stock_info():
-    symbol = request.args.get('symbol')
+    data = request.json
+    symbol = data.get('symbol')
     
     if symbol:
         stock_data = nse_eq(symbol)
@@ -28,5 +28,4 @@ def get_stock_info():
         return jsonify({'error': 'Symbol parameter is missing in the request'}), 400
 
 if __name__ == '__main__':
-    local_ip = socket.gethostbyname(socket.gethostname())
-    app.run(host=local_ip, port=5000, debug=True)
+    app.run(port=3000, debug=True)

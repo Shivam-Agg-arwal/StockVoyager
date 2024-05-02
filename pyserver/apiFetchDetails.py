@@ -34,9 +34,9 @@ def get_stock_info(symbol):
     else:
         return {'error': 'Failed to fetch stock information'}
 
-@app.route('/stock_info')
+@app.route('/stock_details', methods=['POST'])
 def stock_info():
-    symbol = request.args.get('symbol')
+    symbol = request.json.get('symbol')
     if symbol:
         info = get_stock_info(symbol)
         return jsonify(info)
@@ -44,4 +44,4 @@ def stock_info():
         return jsonify({'error': 'Symbol parameter is missing in the request'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=3000, debug=True)
