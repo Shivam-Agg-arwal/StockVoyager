@@ -80,6 +80,7 @@ function Signup() {
               </div>
             </div>
           </form>
+          <Link to='/login'>Already A user</Link>
         </div>
         <div className='w-1/3'>
           <img src="./public/signup-img.jpg" alt="signup-img" className='md:h-screen md:w-full'/>
