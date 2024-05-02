@@ -5,7 +5,7 @@ async function fetchCurrentPrice(symbol) {
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ symbol })
+          body: JSON.stringify({ symbol: symbol })
       });
       
       if (!response.ok) {
