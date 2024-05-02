@@ -117,7 +117,7 @@ def prev_close_data():
         return jsonify({'error': 'Missing symbol parameter in the request'})
     
 
-@app.route('/get_indices', methods=['POST'])
+@app.route('/get_indices', methods=['GET'])
 def indices():
     response_data = get_indices()
     return jsonify(response_data)  
