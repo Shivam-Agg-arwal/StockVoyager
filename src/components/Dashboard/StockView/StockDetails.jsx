@@ -10,7 +10,7 @@ const StockDetails = ({ symbol }) => {
     async function fetchData() {
       try {
         const data = await fetchStockDetails(symbol);
-        setStockDetails(data);
+        preprocessData(data);
       } catch (error) {
         setError(error.message);
       }
@@ -18,6 +18,25 @@ const StockDetails = ({ symbol }) => {
 
     fetchData();
   }, [symbol]); // Trigger the effect whenever the symbol changes
+
+  const preprocessData = (data) => {
+    // Flatten dayRange and yearRange objects
+    if (data.dayRange) {
+      const dayRange = data.dayRange;
+      data.dayRangeLow = dayRange.low;
+      data.dayRangeHigh = dayRange.high;
+      delete data.dayRange;
+    }
+
+    if (data.yearRange) {
+      const yearRange = data.yearRange;
+      data.yearRangeLow = yearRange.low;
+      data.yearRangeHigh = yearRange.high;
+      delete data.yearRange;
+    }
+
+    setStockDetails(data);
+  };
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -27,19 +46,31 @@ const StockDetails = ({ symbol }) => {
     return <div>Loading...</div>;
   }
 
+  const customHeadings = {
+    companyName: 'Company Name',
+    prevClose: 'Previous Close',
+    dayRangeLow: 'Day Range Low',
+    dayRangeHigh: 'Day Range High',
+    yearRangeLow: 'Year Range Low',
+    yearRangeHigh: 'Year Range High',
+    marketCap: 'Market Cap',
+    averageVol: 'Average Volume',
+    industry: 'Industry',
+    pdSectorPe: 'PD Sector PE',
+    faceValue: 'Face Value',
+    issuedSize: 'Issued Size'
+  };
+
   return (
     <>
-      <div className='flex flex-col border'>
-        <div className='border'>Stock Details</div>
-        <div>
-          <h2>Stock Details for {symbol}</h2>
-          <ul>
-            {Object.entries(stockDetails).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key}:</strong> {typeof value === 'object' ? JSON.stringify(value) : value}
-              </li>
-            ))}
-          </ul>
+      <div className='flex flex-col border p-3'>
+        <h1 className='text-2xl font-bold mb-3'>Stock Details</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {Object.entries(stockDetails).map(([key, value]) => (
+            <div key={key} className='text-lg'>
+              <strong>{customHeadings[key] || key}:</strong> {typeof value === 'object' ? JSON.stringify(value) : value}
+            </div>
+          ))}
         </div>
       </div>
     </>
