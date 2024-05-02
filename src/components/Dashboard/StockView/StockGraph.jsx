@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StockGraph = () => {
+const StockGraph = ({symbol}) => {
   return (
     <div>StockGraph</div>
   )

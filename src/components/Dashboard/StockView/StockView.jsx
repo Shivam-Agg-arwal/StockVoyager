@@ -12,13 +12,13 @@ const StockView = () => {
     <div className='flex flex-row gap-2 w-full'>
         {/* Left Side */}
         <div className=' flex flex-col'>
-            <StockTitle/>
-            <StockGraph/>
+            <StockTitle symbol={symbol}/>
+            <StockGraph symbol={symbol}/>
         </div>
         {/* Right Side */}
         <div className=''>
-            <StockDetails/>
-            <StockIndices/>
+            <StockDetails symbol={symbol}/>
+            <StockIndices symbol={symbol}/>
         </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StockDetails = () => {
+const StockDetails = ({symbol}) => {
   return (
     <div>StockDetails</div>
   )

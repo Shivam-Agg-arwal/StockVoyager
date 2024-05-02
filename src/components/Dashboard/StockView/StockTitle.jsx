@@ -1,8 +1,16 @@
 import React from 'react'
 
-const StockTitle = () => {
+const StockTitle = ({symbol}) => {
   return (
-    <div>StockTitle</div>
+    <div>
+        <div>
+            <img src=''/>
+        </div>
+        <div>
+            <div>{symbol}</div>
+        </div>
+
+    </div>
   )
 }
 

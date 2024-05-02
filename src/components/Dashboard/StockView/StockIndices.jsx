@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StockIndices = () => {
+const StockIndices = ({symbol}) => {
   return (
     <div>StockIndices</div>
   )
