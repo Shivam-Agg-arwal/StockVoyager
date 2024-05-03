@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import fetchCurrentPrice from '../../../pyserver/MakeRequest/getStockCurrentPrice';
+import { symbolMapping } from '../../data/Symbol';
 
 const wlist = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'ICICIBANK', 'SBIN', 'HINDUNILVR', 'AXISBANK', 'BAJFINANCE', 'MARUTI'];
 
@@ -16,7 +17,15 @@ const WatchList = () => {
 
         const promises = wlist.map(async (symbol) => {
           const data = await fetchCurrentPrice(symbol);
-          return { ...data, symbol: symbol };
+          // Round up the change and pChange values to two decimal places
+          const change = parseFloat(data.change).toFixed(2);
+          const pChange = parseFloat(data.pChange).toFixed(2);
+
+          // Find company name for symbol from symbolsData
+          const symbolData = symbolMapping.find((item) => item.SYMBOL === symbol);
+          const companyName = symbolData ? symbolData.COMPANY_NAME : '';
+
+          return { ...data, symbol: symbol, companyName: companyName, change: change, pChange: pChange };
         });
         const newData = await Promise.all(promises);
 
@@ -40,29 +49,38 @@ const WatchList = () => {
   };
 
   return (
-    <div className="w-1/2 mx-auto mt-5 border">
-      <div className="bg-white shadow-lg rounded">
-        <div className="flex justify-between bg-gray-200 font-bold px-4 py-2 border-2">
-          <div className="w-1/3 text-lg">Company</div>
-          <div className="w-1/3 text-lg">Value</div>
-          <div className="w-1/3 text-lg">Rise</div>
+    <div className="mx-auto w-1/2">
+      <div className="p-1 rounded-md border-black border-[1px] my-2 flex flex-col items-center">
+        <div className="font-bold text-3xl underline my-2 ">Watchlist</div>
+        <div className='w-full flex flex-col items-center'>
+          <table className='w-3/4'>
+            <thead>
+              <tr className="text-[#808080] text-left font-semibold text-lg">
+                <th className='text-center'>Company</th>
+                <th className='text-center'>Value</th>
+                <th className='text-center'>Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              {watchlistData.map((item, index) => (
+                <tr key={index} className="mb-8 border text-center">
+                  <td>
+                    <div className="font-bold">{item.symbol}</div>
+                    <div>{item.companyName}</div> {/* Display company name */}
+                  </td>
+                  <td>{item.lastPrice}</td>
+                  <td>
+                    <div className={`text-center font-bold ${parseFloat(item.pChange) > 0 ? "text-[#008000]" : parseFloat(item.pChange) < 0 ? "text-[#FF0000]" : "text-[#808080]"}`}>
+                      <div>{item.change}</div>
+                      <div>{item.pChange}</div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        {loading ? (
-          <div className="text-center py-4">Loading...</div>
-        ) : error ? (
-          <div className="text-red-600 text-center py-4">Error: {error}</div>
-        ) : (
-          <div>
-            {watchlistData.map((item, index) => (
-              <div key={index} className="flex justify-between border-b hover:bg-gray-100 px-4 py-2">
-                <div className="w-1/3">{item.symbol}</div>
-                <div className="w-1/3">{item.lastPrice}</div>
-                <div className="w-1/3">{item.pChange}</div>
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="text-center py-4 bg-theme">
+        <div className="text-center py-2 bg-theme w-3/4">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick={refreshData}
