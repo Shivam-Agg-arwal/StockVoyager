@@ -5,22 +5,11 @@ const stockSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    stockName:{
-        type:String,
-        required:true,
-        trim:true,
-    },
     quantity:{
         type:Number,
-        require:true
     },
     total_price:{
         type:Number,
-        required:true,
-    },
-    time:{
-        type:Date,
-        default:Date.now,
     },
 });
 

@@ -40,8 +40,7 @@ const userSchema=new mongoose.Schema({
         ref:'Stock'
     }],
     watchList:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Stock'
+        type:String,
     }],
     walletBalance:{
         type:Number,

@@ -6,10 +6,6 @@ const transactionSchema=new mongoose.Schema({
         ref:'User',
         required:true,
     },
-    stockName:{
-        type:String,
-        required:true,
-    },
     stockSymbol:{
         type:String,
         required:true,
@@ -33,7 +29,7 @@ const transactionSchema=new mongoose.Schema({
     orderType:{
         type:String,
         enum:["Buy","Sell"]
-    }
+    },
 
     //status buy / sell 
     
