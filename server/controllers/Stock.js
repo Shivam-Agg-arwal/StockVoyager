@@ -93,6 +93,7 @@ exports.buyStock = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Stock purchase successful",
+            data:userDetails
         });
     } catch (error) {
         // Handle errors
@@ -203,6 +204,7 @@ exports.sellStock = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Stock sell successful",
+            data:userDetails
         });
     } catch (error) {
         // Handle errors
