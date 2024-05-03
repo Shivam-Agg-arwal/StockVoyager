@@ -25,7 +25,7 @@ exports.buyStock = async (req, res) => {
         }
 
         // Fetch user details
-        const userDetails = await User.findById(userID).populate('portfolio');
+        const userDetails = await User.findById(userID).populate('portfolio').populate('transactions').populate('watchList');
         if (!userDetails) {
             return res.status(404).json({
                 success: false,
@@ -132,7 +132,7 @@ exports.sellStock = async (req, res) => {
         }
 
         // Fetch user details
-        const userDetails = await User.findById(userID).populate('portfolio');
+        const userDetails = await User.findById(userID).populate('portfolio').populate('transactions').populate('watchList');
         if (!userDetails) {
             return res.status(404).json({
                 success: false,
