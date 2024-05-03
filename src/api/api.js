@@ -14,3 +14,13 @@ export const updationEndpoints={
     UPDATE_DETAILS_API:BASE_URL+"/profile/updateProfile",
     UPDATE_PASSWORD_API:BASE_URL+"/auth/changePassword",
 }
+
+export const watchlistEndpoints={
+    ADD_TO_WATCHLIST_API:BASE_URL+"/watchlist/addToWatchlist",
+    REMOVE_FROM_WATCHLIST_API:BASE_URL+"/watchlist/removeFromWatchlist"
+}
+
+export const stockOperationsEndpoints={
+    BUY_STOCK_API:BASE_URL+"/stock/buyStock",
+    SELL_STOCK_API:BASE_URL,//ABHI BANUAUNGA
+}
