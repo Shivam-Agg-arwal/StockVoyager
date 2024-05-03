@@ -61,7 +61,7 @@ exports.buyStock = async (req, res) => {
                 stockInfo._id,
                 {
                     quantity: stockInfo.quantity + quantity,
-                    total_price: stockInfo.total_price + tradeamt,
+                    buy_cost: stockInfo.buy_cost + tradeamt,
                 },
                 { new: true }
             );
@@ -76,7 +76,7 @@ exports.buyStock = async (req, res) => {
             const newStock = await Stock.create({
                 stockSymbol: symbol,
                 quantity: quantity,
-                total_price: tradeamt,
+                buy_cost: tradeamt,
             });
 
             userDetails.portfolio.push(newStock._id);
@@ -167,7 +167,7 @@ exports.sellStock = async (req, res) => {
                     stockInfo._id,
                     {
                         quantity: stockInfo.quantity - quantity,
-                        total_price: stockInfo.total_price - tradeamt,
+                        buy_cost: stockInfo.buy_cost - tradeamt,
                     },
                     { new: true }
                 );

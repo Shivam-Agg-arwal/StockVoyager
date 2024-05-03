@@ -8,7 +8,10 @@ const stockSchema=new mongoose.Schema({
     quantity:{
         type:Number,
     },
-    total_price:{
+    buy_cost:{
+        type:Number,
+    },
+    current_price:{
         type:Number,
     },
 });
