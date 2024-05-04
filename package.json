@@ -9,7 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "server": "cd server && npm run dev",
-    "priceStock":"python ./pyserver/apiFetchStock.py",
+    "priceStock": "python ./pyserver/apiFetchStock.py",
     "dev": "concurrently -n \"client,server,python\" -c \"bgBlue,bgYellow,bgCyan\" \"npm start\" \"npm run server\" \"npm run priceStock\""
   },
   "dependencies": {
@@ -28,8 +28,7 @@
     "react-redux": "^9.1.1",
     "react-router-dom": "^6.23.0",
     "react-super-responsive-table": "^5.2.3",
-    "react-toastify": "^10.0.5",
-    "selenium-webdriver": "^4.20.0"
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
