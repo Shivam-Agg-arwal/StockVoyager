@@ -17,9 +17,9 @@ const wlist = [
 ];
 
 const WatchList = () => {
-  const {user}=useSelector((state)=>state.profile);
-  
-    const [watchlistData, setWatchlistData] = useState(user.watchList.length>0?user.watchList:wlist);
+    const { user } = useSelector((state) => state.profile);
+
+    const [watchlistData, setWatchlistData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -29,13 +29,12 @@ const WatchList = () => {
             setLoading(true);
             setError(null);
 
-            const promises = watchlistData.map(async (symbol) => {
+            const listToFetch = user.watchList.length > 0 ? user.watchList : wlist;
+            const promises = listToFetch.map(async (symbol) => {
                 const data = await fetchCurrentPrice(symbol);
-                // Round up the change and pChange values to two decimal places
                 const change = parseFloat(data.change).toFixed(2);
                 const pChange = parseFloat(data.pChange).toFixed(2);
 
-                // Find company name for symbol from symbolsData
                 const symbolData = symbolMapping.find(
                     (item) => item.SYMBOL === symbol
                 );
@@ -51,7 +50,6 @@ const WatchList = () => {
             });
             const newData = await Promise.all(promises);
 
-            // Sort the newData array based on "Rise" (pChange) value in decreasing order
             newData.sort(
                 (a, b) => parseFloat(b.pChange) - parseFloat(a.pChange)
             );
@@ -67,7 +65,7 @@ const WatchList = () => {
 
     useEffect(() => {
         fetchData();
-    }, [watchlistData]);
+    }, []);
 
     const refreshData = () => {
         fetchData();
@@ -90,16 +88,12 @@ const WatchList = () => {
                         </thead>
                         <tbody>
                             {watchlistData.map((item, index) => (
-                                <tr
-                                    key={index}
-                                    className="mb-8 border text-center"
-                                >
+                                <tr key={index} className="mb-8 border text-center">
                                     <td>
                                         <div className="font-bold">
                                             {item.symbol}
                                         </div>
                                         <div>{item.companyName}</div>{" "}
-                                        {/* Display company name */}
                                     </td>
                                     <td>{item.lastPrice}</td>
                                     <td>
