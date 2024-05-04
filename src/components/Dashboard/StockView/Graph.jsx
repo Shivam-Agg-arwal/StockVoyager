@@ -1,6 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import fetchPrevCloseData from "../../../../pyserver/MakeRequest/getPrevCloseData";
+import ApexCharts from 'apexcharts'
 
 class ApexChart extends React.Component {
   constructor(props) {
@@ -99,10 +100,10 @@ class ApexChart extends React.Component {
     try {
       const data = await fetchPrevCloseData(symbol);
       // Parse prevclose values as numbers
-      const seriesData = data.previous_close.map((item) => ({
-        x: item.timestamp * 1000,
-        y: typeof item.prevclose === 'string' ? parseFloat(item.prevclose.replace(",", "")) : item.prevclose, // Check if prevclose is a string before replacing commas
-      }));
+      const seriesData = data.previous_close.map((item) => ([
+        item.timestamp * 1000,
+        typeof item.prevclose === 'string' ? parseFloat(item.prevclose.replace(",", "")) : item.prevclose // Check if prevclose is a string before replacing commas
+      ]));
       // Update series data based on fetched data
       this.setState({
         series: [
@@ -111,12 +112,18 @@ class ApexChart extends React.Component {
           },
         ],
       });
+  
       // Update chart based on timeline
       this.updateData(timeline);
     } catch (error) {
       console.error("Error:", error.message);
       // Handle error
     }
+  }
+  
+
+  updateChart(startDate, endDate) {
+    ApexCharts.exec("area-datetime", "zoomX", startDate, endDate);
   }
 
   updateData(timeline) {
@@ -147,6 +154,16 @@ class ApexChart extends React.Component {
         this.updateChart(
           new Date(
             today.getFullYear() - 1,
+            today.getMonth(),
+            today.getDate()
+          ).getTime(),
+          today.getTime()
+        );
+        break;
+      case "three_year":
+        this.updateChart(
+          new Date(
+            today.getFullYear() - 3,
             today.getMonth(),
             today.getDate()
           ).getTime(),
@@ -195,9 +212,6 @@ class ApexChart extends React.Component {
     }
   }
 
-  updateChart(startDate, endDate) {
-    ApexCharts.exec("area-datetime", "zoomX", startDate, endDate);
-  }
 
   render() {
     return (
@@ -208,6 +222,7 @@ class ApexChart extends React.Component {
             <button
               className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
               onClick={() => this.updateData("one_week")}
+              
             >
               1W
             </button>
@@ -231,6 +246,12 @@ class ApexChart extends React.Component {
             </button>
             <button
               className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
+              onClick={() => this.updateData("three_year")}
+            >
+              3Y
+            </button>
+            <button
+              className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
               onClick={() => this.updateData("all")}
             >
               5Y
@@ -251,5 +272,7 @@ class ApexChart extends React.Component {
     );
   }
 }
+
+
 
 export default ApexChart;
