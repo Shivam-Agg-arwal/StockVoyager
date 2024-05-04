@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import fetchPrevCloseData from "../../../../pyserver/MakeRequest/getPrevCloseData";
-import ApexCharts from 'apexcharts'
+import ApexCharts from 'apexcharts';
 
 class ApexChart extends React.Component {
   constructor(props) {
@@ -78,6 +78,8 @@ class ApexChart extends React.Component {
         },
       },
       selection: "one_year",
+      isFiveYearButtonVisible: true,
+      isThreeYearButtonVisible: true,
     };
   }
 
@@ -112,7 +114,25 @@ class ApexChart extends React.Component {
           },
         ],
       });
-  
+
+      // Update x-axis minimum based on the earliest available data point
+      const minTimestamp = Math.min(...data.previous_close.map(item => item.timestamp)) * 1000;
+      const today = new Date();
+      const fiveYearsAgo = today.getTime() - 5 * 365 * 24 * 60 * 60 * 1000;
+      const min = Math.max(minTimestamp, fiveYearsAgo);
+
+      this.setState((prevState) => ({
+        options: {
+          ...prevState.options,
+          xaxis: {
+            ...prevState.options.xaxis,
+            min: min,
+          },
+        },
+        isFiveYearButtonVisible: (today.getFullYear() - 5) >= new Date(min).getFullYear(),
+        isThreeYearButtonVisible: (today.getFullYear() - 3) >= new Date(min).getFullYear(),
+      }));
+
       // Update chart based on timeline
       this.updateData(timeline);
     } catch (error) {
@@ -120,7 +140,7 @@ class ApexChart extends React.Component {
       // Handle error
     }
   }
-  
+
 
   updateChart(startDate, endDate) {
     ApexCharts.exec("area-datetime", "zoomX", startDate, endDate);
@@ -214,6 +234,7 @@ class ApexChart extends React.Component {
 
 
   render() {
+    const { isFiveYearButtonVisible, isThreeYearButtonVisible } = this.state;
     return (
       <div>
         <div id="chart">
@@ -222,7 +243,6 @@ class ApexChart extends React.Component {
             <button
               className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
               onClick={() => this.updateData("one_week")}
-              
             >
               1W
             </button>
@@ -244,18 +264,22 @@ class ApexChart extends React.Component {
             >
               1Y
             </button>
-            <button
-              className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-              onClick={() => this.updateData("three_year")}
-            >
-              3Y
-            </button>
-            <button
-              className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-              onClick={() => this.updateData("all")}
-            >
-              5Y
-            </button>
+            {isThreeYearButtonVisible && (
+              <button
+                className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
+                onClick={() => this.updateData("three_year")}
+              >
+                3Y
+              </button>
+            )}
+            {isFiveYearButtonVisible && (
+              <button
+                className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
+                onClick={() => this.updateData("all")}
+              >
+                5Y
+              </button>
+            )}
           </div>
           <div id="chart-timeline">
             <ReactApexChart
@@ -272,7 +296,5 @@ class ApexChart extends React.Component {
     );
   }
 }
-
-
 
 export default ApexChart;
