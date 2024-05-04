@@ -1,7 +1,7 @@
 import React from "react";
+import ApexCharts from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import fetchPrevCloseData from "../../../../pyserver/MakeRequest/getPrevCloseData";
-import ApexCharts from 'apexcharts';
 
 class ApexChart extends React.Component {
   constructor(props) {
@@ -9,7 +9,13 @@ class ApexChart extends React.Component {
 
     this.state = {
       symbol: props.symbol,
-      series: [],
+      series: [
+        {
+          data: [
+            [1327359600000, 30.95],
+          ],
+        },
+      ],
       options: {
         chart: {
           id: "area-datetime",
@@ -23,21 +29,21 @@ class ApexChart extends React.Component {
           yaxis: [
             {
               y: 30,
-              borderColor: "#999",
+              borderColor: "#999", //horizontal dark line colour:support line
               label: {
                 show: true,
                 text: "Support",
                 style: {
                   color: "#fff",
-                  background: "#00E396",
+                  background: "#00E396", //support button colour
                 },
               },
             },
           ],
           xaxis: [
             {
-              x: null,
-              borderColor: "#999",
+              x: new Date("14 Sep 2012").getTime(), //Rally line daate
+              borderColor: "#999", //rally line colour
               yAxisIndex: 0,
               label: {
                 show: true,
@@ -59,6 +65,7 @@ class ApexChart extends React.Component {
         },
         xaxis: {
           type: "datetime",
+          min: new Date("01 Mar 2012").getTime(),
           tickAmount: 6,
         },
         tooltip: {
@@ -74,12 +81,14 @@ class ApexChart extends React.Component {
             opacityTo: 0.9,
             stops: [0, 100],
           },
+          selection: "one_year",
+          isAllButtonVisible: false,
+          isThreeYearButtonVisible: false,
+          isFiveYearButtonVisible: false,
         },
       },
+
       selection: "one_year",
-      isAllButtonVisible: false,
-      isThreeYearButtonVisible: false,
-      isFiveYearButtonVisible: false,
     };
   }
 
@@ -101,11 +110,16 @@ class ApexChart extends React.Component {
     const { symbol } = this.state;
     try {
       const data = await fetchPrevCloseData(symbol);
+      if (!data || !data.previous_close) {
+        throw new Error("Data or previous_close array is missing or empty.");
+      }
       // Parse prevclose values as numbers
-      const seriesData = data.previous_close.map((item) => ([
+      const seriesData = data.previous_close.map((item) => [
         item.timestamp * 1000,
-        typeof item.prevclose === 'string' ? parseFloat(item.prevclose.replace(",", "")) : item.prevclose // Check if prevclose is a string before replacing commas
-      ]));
+        typeof item.prevclose === "string"
+          ? parseFloat(item.prevclose.replace(",", ""))
+          : item.prevclose, // Check if prevclose is a string before replacing commas
+      ]);
       // Update series data based on fetched data
       this.setState({
         series: [
@@ -116,8 +130,10 @@ class ApexChart extends React.Component {
       });
 
       // Update x-axis minimum based on the earliest available data point
-      const minTimestamp = Math.min(...data.previous_close.map(item => item.timestamp)) * 1000;
-      const maxTimestamp = Math.max(...data.previous_close.map(item => item.timestamp)) * 1000;
+      const minTimestamp =
+        Math.min(...data.previous_close.map((item) => item.timestamp)) * 1000;
+      const maxTimestamp =
+        Math.max(...data.previous_close.map((item) => item.timestamp)) * 1000;
 
       const today = new Date();
 
@@ -129,8 +145,10 @@ class ApexChart extends React.Component {
             min: minTimestamp,
           },
         },
-        isFiveYearButtonVisible: (today.getFullYear() - new Date(minTimestamp).getFullYear()) > 5,
-        isThreeYearButtonVisible: (today.getFullYear() - new Date(minTimestamp).getFullYear()) > 3,
+        isFiveYearButtonVisible:
+          today.getFullYear() - new Date(minTimestamp).getFullYear() > 5,
+        isThreeYearButtonVisible:
+          today.getFullYear() - new Date(minTimestamp).getFullYear() > 3,
         isAllButtonVisible: true,
       });
 
@@ -191,10 +209,7 @@ class ApexChart extends React.Component {
         );
         break;
       case "all":
-        this.updateChart(
-          this.state.options.xaxis.min,
-          today.getTime()
-        );
+        this.updateChart(this.state.options.xaxis.min, today.getTime());
         break;
       case "one_week":
         this.updateChart(
@@ -213,7 +228,7 @@ class ApexChart extends React.Component {
             today.getMonth(),
             today.getDate()
           ).getTime() -
-          24 * 60 * 60 * 1000,
+            24 * 60 * 60 * 1000,
           today.getTime()
         );
         break;
@@ -223,7 +238,11 @@ class ApexChart extends React.Component {
   }
 
   render() {
-    const { isAllButtonVisible, isThreeYearButtonVisible, isFiveYearButtonVisible } = this.state;
+    const {
+      isAllButtonVisible,
+      isThreeYearButtonVisible,
+      isFiveYearButtonVisible,
+    } = this.state;
     return (
       <div>
         <div id="chart">
