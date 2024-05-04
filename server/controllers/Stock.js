@@ -89,11 +89,14 @@ exports.buyStock = async (req, res) => {
         // Save user details
         await userDetails.save();
 
+
+        const updatedUser=await User.findById(userDetails._id).populate('portfolio').populate('transactions').populate('watchList');
+
         // Return success response
         res.status(200).json({
             success: true,
             message: "Stock purchase successful",
-            data:userDetails
+            data:updatedUser
         });
     } catch (error) {
         // Handle errors
@@ -200,11 +203,14 @@ exports.sellStock = async (req, res) => {
         // Save user details
         await userDetails.save();
 
+        const updatedUser=await User.findById(userDetails._id).populate('portfolio').populate('transactions').populate('watchList');
+
+
         // Return success response
         res.status(200).json({
             success: true,
             message: "Stock sell successful",
-            data:userDetails
+            data:updatedUser
         });
     } catch (error) {
         // Handle errors

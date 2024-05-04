@@ -33,10 +33,12 @@ exports.addToWatchlist = async (req, res) => {
             // Save the updated user details
             try {
                 await userDetails.save();
+                const updatedUser=await User.findById(userDetails._id).populate('portfolio').populate('transactions').populate('watchList');
+
                 return res.status(200).json({
                     success: true,
                     message: "Symbol added to watchlist",
-                    data: userDetails, // Optionally, you can send updated user details in the response
+                    data: updatedUser, // Optionally, you can send updated user details in the response
                 });
             } catch (error) {
                 return res.status(500).json({

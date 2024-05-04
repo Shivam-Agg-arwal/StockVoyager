@@ -36,7 +36,9 @@ const StockTitle = ({ symbol }) => {
 			const response=await axios.post(ADD_TO_WATCHLIST_API,formData);
             console.log(response);
 			if(response.data.success){
+                console.log(response.data.data);
                 dispatch(setUser(response.data.data));
+                localStorage.setItem('user', JSON.stringify(response.data.data));
                 toast.success('Addition success');
             }
             else{
@@ -60,6 +62,7 @@ const StockTitle = ({ symbol }) => {
             console.log(response);
 			if(response.data.success){
                 dispatch(setUser(response.data.data));
+                localStorage.setItem('user', JSON.stringify(response.data.data));
                 toast.success('Removal success');
             }
             else{
