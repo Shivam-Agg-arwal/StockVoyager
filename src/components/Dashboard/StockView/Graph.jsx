@@ -36,7 +36,7 @@ class ApexChart extends React.Component {
           ],
           xaxis: [
             {
-              x: new Date().getTime() - 5 * 365 * 24 * 60 * 60 * 1000, // Five years ago
+              x: null,
               borderColor: "#999",
               yAxisIndex: 0,
               label: {
@@ -59,7 +59,6 @@ class ApexChart extends React.Component {
         },
         xaxis: {
           type: "datetime",
-          min: new Date().getTime() - 5 * 365 * 24 * 60 * 60 * 1000, // Five years ago
           tickAmount: 6,
         },
         tooltip: {
@@ -78,8 +77,9 @@ class ApexChart extends React.Component {
         },
       },
       selection: "one_year",
-      isFiveYearButtonVisible: true,
-      isThreeYearButtonVisible: true,
+      isAllButtonVisible: false,
+      isThreeYearButtonVisible: false,
+      isFiveYearButtonVisible: false,
     };
   }
 
@@ -117,21 +117,22 @@ class ApexChart extends React.Component {
 
       // Update x-axis minimum based on the earliest available data point
       const minTimestamp = Math.min(...data.previous_close.map(item => item.timestamp)) * 1000;
-      const today = new Date();
-      const fiveYearsAgo = today.getTime() - 5 * 365 * 24 * 60 * 60 * 1000;
-      const min = Math.max(minTimestamp, fiveYearsAgo);
+      const maxTimestamp = Math.max(...data.previous_close.map(item => item.timestamp)) * 1000;
 
-      this.setState((prevState) => ({
+      const today = new Date();
+
+      this.setState({
         options: {
-          ...prevState.options,
+          ...this.state.options,
           xaxis: {
-            ...prevState.options.xaxis,
-            min: min,
+            ...this.state.options.xaxis,
+            min: minTimestamp,
           },
         },
-        isFiveYearButtonVisible: (today.getFullYear() - 5) >= new Date(min).getFullYear(),
-        isThreeYearButtonVisible: (today.getFullYear() - 3) >= new Date(min).getFullYear(),
-      }));
+        isFiveYearButtonVisible: (today.getFullYear() - new Date(minTimestamp).getFullYear()) > 5,
+        isThreeYearButtonVisible: (today.getFullYear() - new Date(minTimestamp).getFullYear()) > 3,
+        isAllButtonVisible: true,
+      });
 
       // Update chart based on timeline
       this.updateData(timeline);
@@ -140,7 +141,6 @@ class ApexChart extends React.Component {
       // Handle error
     }
   }
-
 
   updateChart(startDate, endDate) {
     ApexCharts.exec("area-datetime", "zoomX", startDate, endDate);
@@ -190,19 +190,9 @@ class ApexChart extends React.Component {
           today.getTime()
         );
         break;
-      case "ytd":
-        this.updateChart(
-          new Date(today.getFullYear(), 0, 1).getTime(),
-          today.getTime()
-        );
-        break;
       case "all":
         this.updateChart(
-          new Date(
-            today.getFullYear() - 5,
-            today.getMonth(),
-            today.getDate()
-          ).getTime(),
+          this.state.options.xaxis.min,
           today.getTime()
         );
         break;
@@ -223,7 +213,7 @@ class ApexChart extends React.Component {
             today.getMonth(),
             today.getDate()
           ).getTime() -
-            24 * 60 * 60 * 1000,
+          24 * 60 * 60 * 1000,
           today.getTime()
         );
         break;
@@ -232,9 +222,8 @@ class ApexChart extends React.Component {
     }
   }
 
-
   render() {
-    const { isFiveYearButtonVisible, isThreeYearButtonVisible } = this.state;
+    const { isAllButtonVisible, isThreeYearButtonVisible, isFiveYearButtonVisible } = this.state;
     return (
       <div>
         <div id="chart">
@@ -272,12 +261,12 @@ class ApexChart extends React.Component {
                 3Y
               </button>
             )}
-            {isFiveYearButtonVisible && (
+            {isAllButtonVisible && (
               <button
                 className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
                 onClick={() => this.updateData("all")}
               >
-                5Y
+                All
               </button>
             )}
           </div>
