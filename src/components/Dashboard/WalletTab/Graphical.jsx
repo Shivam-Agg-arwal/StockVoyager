@@ -337,7 +337,7 @@ class ApexChart extends React.Component {
           },
           tooltip: {
             x: {
-              format: 'dd MMM yyyy'
+              format: "dd MMM yyyy"
             }
           },
           fill: {
@@ -409,7 +409,7 @@ class ApexChart extends React.Component {
             'zoomX',
             new Date('23 Jan 2012').getTime(),
             new Date('27 Feb 2013').getTime()
-          )
+          ) 
           break
         default:
       }
