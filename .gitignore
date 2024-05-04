@@ -26,5 +26,6 @@ dist-ssr
 # vitualenv
 venv/
 
-#.env
-*.env
+# .env
+.env
+file.csv
