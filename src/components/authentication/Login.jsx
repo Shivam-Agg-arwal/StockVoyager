@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios"; // Import Axios
@@ -7,7 +7,7 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { authenticationEndpoints } from "../../api/api";
 import { setToken } from "../slices/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../slices/profileSlice";
 import toast from "react-hot-toast";
 
@@ -19,6 +19,14 @@ export const Login = () => {
 	} = useForm();
 
 	const navigate=useNavigate();
+
+	const {user}=useSelector((state)=>state.profile);
+
+	useEffect(()=>{
+		if(user){
+			navigate('/dashboard/profile');
+		}
+	},[])
 
 	const dispatch=useDispatch();
 

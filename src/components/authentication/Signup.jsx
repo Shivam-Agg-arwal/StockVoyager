@@ -6,11 +6,22 @@ import { authenticationEndpoints } from '../../api/api'
 import { useDispatch } from 'react-redux';
 import { setSignupData } from '../slices/authSlice';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  
+	const navigate=useNavigate();
+
+	const {user}=useSelector((state)=>state.profile);
+
+	useEffect(()=>{
+		if(user){
+			navigate('/dashboard/profile');
+		}
+	},[])
 
   const {
     SENDOTP_API
