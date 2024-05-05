@@ -8,6 +8,7 @@ import axios from "axios";
 import { setUser } from "../../slices/profileSlice";
 import BuyingModal from "./BuyingModal";
 import fetchCurrentPrice from "../../../../pyserver/MakeRequest/getStockCurrentPrice";
+import Loader from "../../Loader";
 
 const StockTitle = ({ symbol }) => {
     const { user } = useSelector((state) => state.profile);
@@ -15,10 +16,15 @@ const StockTitle = ({ symbol }) => {
     const {token}=useSelector((state)=>state.auth);
     const [buyingmodal,setbuyingmodal]=useState(null);
     const [stockPrice,setStockPrice]=useState(null);
+    const [loading,setLoading]=useState(false);
 
     const fetchPrice=async()=>{
+        setLoading(true);
+        console.log('changed to tru in title');
         const response=await fetchCurrentPrice(symbol);
         setStockPrice(response.lastPrice);
+        console.log('changed to false in title');
+        setLoading(false);
     }
 
     useEffect(()=>{
@@ -51,6 +57,7 @@ const StockTitle = ({ symbol }) => {
         }
         toast.dismiss(loadingToast);
     }
+
     
     const RemoveFromWatchlist=async()=>{
         const loadingToast=toast.loading("Removing from watchlist....");
@@ -74,6 +81,11 @@ const StockTitle = ({ symbol }) => {
             toast.error('Remove from Watchlist failed');
         }
         toast.dismiss(loadingToast);
+    }
+    
+
+    if(loading){
+        return (<div><Loader/></div>)
     }
     return (
         <div className="flex flex-row items-center justify-between bg-[#ffffffc7] rounded-md border-black border-[1px] p-4 w-[700px] m-4">

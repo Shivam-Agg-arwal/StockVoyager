@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import fetchCurrentPrice from "../../../pyserver/MakeRequest/getStockCurrentPrice";
 import { symbolMapping } from "../../data/Symbol";
 import { useSelector } from "react-redux";
+import Loader from '../Loader'
 
 const wlist = [
     "RELIANCE",
@@ -70,6 +71,10 @@ const WatchList = () => {
     const refreshData = () => {
         fetchData();
     };
+
+    if(loading){
+        return (<div className="flex flex-row items-center justify-between mx-auto"><Loader/></div>)
+    }
 
     return (
         <div className="mx-auto w-1/2">
