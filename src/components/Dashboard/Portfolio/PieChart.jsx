@@ -96,13 +96,17 @@ render() {
     const { options, labels, series, dataProcessed } = this.state;
   
     return (
-      <div className="donut" style={{ width: '550px', height: '550px' }}>
-        {dataProcessed && <Chart options={options} series={series} type="donut" />}
+      <div>
+        <h2 className='text-2xl text-center font-bold'>Industry Portfolio</h2>
+        <div className="donut" style={{ width: '600px', height: '550px' }}>
+          {dataProcessed && <Chart options={options} series={series} type="donut" />}
+        </div>
       </div>
     );
   }
   
-  }
+  
+}
   
   const mapStateToProps = (state) => ({
     user: state.profile.user
