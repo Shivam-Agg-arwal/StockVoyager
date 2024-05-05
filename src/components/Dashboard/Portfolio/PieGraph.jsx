@@ -1,8 +1,8 @@
 import React from 'react'
-
+import Donut from './PieChart.jsx'
 const PieGraph = () => {
   return (
-    <div>PieGraph</div>
+    <Donut />
   )
 }
 
