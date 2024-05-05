@@ -10,7 +10,7 @@ export const symbolMapping = [
     {
         SYMBOL: "360ONE",
         COMPANY_NAME: "360 ONE WAM LIMITED",
-    },
+    }, 
     {
         SYMBOL: "3IINFOLTD",
         COMPANY_NAME: "3i Infotech Limited",
