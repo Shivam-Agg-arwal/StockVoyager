@@ -1,8 +1,9 @@
 import React from 'react'
+import ApexChart from './Graph'
 
 const PortfolioGraph = () => {
   return (
-    <div>PortfolioGraph</div>
+    <ApexChart />
   )
 }
 
