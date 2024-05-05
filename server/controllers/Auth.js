@@ -58,14 +58,8 @@ exports.sendOTP = async (req, res) => {
 exports.signUp = async (req, res) => {
     try {
         //extract data from the body
-        const {
-            firstName,
-            lastName,
-            email,
-            password,
-            confirmPassword,
-            otp,
-        } = req.body;
+        const { firstName, lastName, email, password, confirmPassword, otp } =
+            req.body;
 
         //validating if all the fields are filled
         if (!firstName || !lastName || !email || !password || !otp) {
@@ -116,7 +110,7 @@ exports.signUp = async (req, res) => {
         const profilePayload = {
             gender: null,
             dateOfBirth: null,
-            phoneNumber:null,
+            phoneNumber: null,
             about: null,
         };
         //creating a profile id for the user
@@ -161,9 +155,14 @@ exports.login = async (req, res) => {
         console.log(email);
         console.log(password);
         //matching password if user exist
+
         const user = await User.findOne({ emailID: email })
             .populate("additionalDetails")
-            .exec();
+            .populate("portfolio")
+            .populate("transactions")
+            .populate("watchList")
+            .populate("portfolioGraph");
+
         if (!user) {
             return res.status(400).json({
                 success: false,
@@ -194,7 +193,7 @@ exports.login = async (req, res) => {
                 user,
                 token,
                 message: "Login was successfull",
-            }); 
+            });
         } else {
             //password dont match
             return res.status(401).json({
@@ -228,14 +227,7 @@ exports.changePassword = async (req, res) => {
         }
 
         console.log(oldPassword, "  ", newPassword);
-        //validation
-        // if(newPassword!==confirmPassword){
-        //     return res.status(500).json({
-        //         success:false,
-        //         message:"Confirm Password do not match ",
-        //     })
-        // }
-        //seeing if the old password is same
+        
         if (await bcrypt.compare(oldPassword, user.password)) {
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             const updatedDetails = await User.findOneAndUpdate(

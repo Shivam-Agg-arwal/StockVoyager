@@ -57,6 +57,10 @@ const userSchema=new mongoose.Schema({
     transactions:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Transaction'
+    }],
+    portfolioGraph:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'PortfolioGraphReading'
     }]
 });
 

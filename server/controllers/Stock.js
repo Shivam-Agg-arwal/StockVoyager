@@ -5,7 +5,7 @@ const User = require("../models/User");
 exports.buyStock = async (req, res) => {
     try {
         // Extract data from request body
-        const { symbol , cprice, quantity } = req.body;
+        const { symbol, cprice, quantity } = req.body;
         const userID = req.user.id;
 
         // Check if user ID is available
@@ -20,12 +20,18 @@ exports.buyStock = async (req, res) => {
         if (!symbol || !cprice || !quantity) {
             return res.status(400).json({
                 success: false,
-                message: "Either symbol, current price, or quantity was not found",
+                message:
+                    "Either symbol, current price, or quantity was not found",
             });
         }
 
         // Fetch user details
-        const userDetails = await User.findById(userID).populate('portfolio').populate('transactions').populate('watchList');
+        const userDetails = await User.findById(userID)
+            .populate("portfolio")
+            .populate("transactions")
+            .populate("watchList")
+            .populate("portfolioGraph");
+
         if (!userDetails) {
             return res.status(404).json({
                 success: false,
@@ -51,7 +57,9 @@ exports.buyStock = async (req, res) => {
         console.log(userDetails);
 
         // Check if the stock already exists in the user's portfolio
-        const stockInfo = userDetails.portfolio.find(stock => stock.stockSymbol === symbol);
+        const stockInfo = userDetails.portfolio.find(
+            (stock) => stock.stockSymbol === symbol
+        );
         const symbolExists = !!stockInfo;
         console.log(stockInfo);
 
@@ -67,7 +75,9 @@ exports.buyStock = async (req, res) => {
             );
 
             // Update user's array of stocks
-            const stockIndex = userDetails.portfolio.findIndex(stock => stock._id === updatedStock._id);
+            const stockIndex = userDetails.portfolio.findIndex(
+                (stock) => stock._id === updatedStock._id
+            );
             if (stockIndex !== -1) {
                 userDetails.portfolio[stockIndex] = updatedStock._id;
             }
@@ -89,14 +99,17 @@ exports.buyStock = async (req, res) => {
         // Save user details
         await userDetails.save();
 
-
-        const updatedUser=await User.findById(userDetails._id).populate('portfolio').populate('transactions').populate('watchList');
-
+        const updatedUser = await User.findById(userID)
+            .populate("additionalDetails")
+            .populate("portfolio")
+            .populate("transactions")
+            .populate("watchList")
+            .populate("portfolioGraph");
         // Return success response
         res.status(200).json({
             success: true,
             message: "Stock purchase successful",
-            data:updatedUser
+            data: updatedUser,
         });
     } catch (error) {
         // Handle errors
@@ -104,18 +117,15 @@ exports.buyStock = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Stock buying failed",
-            error: error.message
+            error: error.message,
         });
     }
 };
 
-
-
-
 exports.sellStock = async (req, res) => {
     try {
         // Extract data from request body
-        const { symbol , cprice, quantity } = req.body;
+        const { symbol, cprice, quantity } = req.body;
         const userID = req.user.id;
 
         // Check if user ID is available
@@ -130,12 +140,18 @@ exports.sellStock = async (req, res) => {
         if (!symbol || !cprice || !quantity) {
             return res.status(400).json({
                 success: false,
-                message: "Either symbol, current price, or quantity was not found",
+                message:
+                    "Either symbol, current price, or quantity was not found",
             });
         }
 
         // Fetch user details
-        const userDetails = await User.findById(userID).populate('portfolio').populate('transactions').populate('watchList');
+        const userDetails = await User.findById(userID)
+            .populate("portfolio")
+            .populate("transactions")
+            .populate("watchList")
+            .populate("portfolioGraph");
+
         if (!userDetails) {
             return res.status(404).json({
                 success: false,
@@ -160,12 +176,14 @@ exports.sellStock = async (req, res) => {
         userDetails.transactions.push(transactionDetails._id);
 
         // Check if the stock already exists in the user's portfolio
-        const stockInfo = userDetails.portfolio.find(stock => stock.stockSymbol === symbol);
+        const stockInfo = userDetails.portfolio.find(
+            (stock) => stock.stockSymbol === symbol
+        );
         const symbolExists = !!stockInfo;
         console.log(stockInfo);
 
         if (symbolExists) {
-            if(stockInfo.quantity>quantity){
+            if (stockInfo.quantity > quantity) {
                 // Update existing stock
                 const updatedStock = await Stock.findByIdAndUpdate(
                     stockInfo._id,
@@ -177,23 +195,25 @@ exports.sellStock = async (req, res) => {
                 );
 
                 // Update user's array of stocks
-                const stockIndex = userDetails.portfolio.findIndex(stock => stock._id === updatedStock._id);
+                const stockIndex = userDetails.portfolio.findIndex(
+                    (stock) => stock._id === updatedStock._id
+                );
                 if (stockIndex !== -1) {
                     userDetails.portfolio[stockIndex] = updatedStock._id;
                 }
-            }
-            else{
+            } else {
                 //barabar hai toh stock hi pop krde
-                userDetails.portfolio=userDetails.portfolio.filter((stock)=>stock._id!==stockInfo._id);
+                userDetails.portfolio = userDetails.portfolio.filter(
+                    (stock) => stock._id !== stockInfo._id
+                );
                 await Stock.findByIdAndDelete(stockInfo._id);
             }
         } else {
-            // Stock hi nhi h 
+            // Stock hi nhi h
             return res.status(500).json({
-                success:false,
-                message:"User dont have the stock to sell"
-            })
-            
+                success: false,
+                message: "User dont have the stock to sell",
+            });
         }
 
         // Update wallet balance and portfolio balance
@@ -203,14 +223,18 @@ exports.sellStock = async (req, res) => {
         // Save user details
         await userDetails.save();
 
-        const updatedUser=await User.findById(userDetails._id).populate('portfolio').populate('transactions').populate('watchList');
-
+        const updatedUser = await User.findById(userID)
+            .populate("additionalDetails")
+            .populate("portfolio")
+            .populate("transactions")
+            .populate("watchList")
+            .populate("portfolioGraph");
 
         // Return success response
         res.status(200).json({
             success: true,
             message: "Stock sell successful",
-            data:updatedUser
+            data: updatedUser,
         });
     } catch (error) {
         // Handle errors
@@ -218,10 +242,7 @@ exports.sellStock = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Stock selling failed",
-            error: error.message
+            error: error.message,
         });
     }
 };
-
-
-

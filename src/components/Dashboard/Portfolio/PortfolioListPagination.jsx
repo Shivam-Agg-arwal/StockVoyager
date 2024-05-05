@@ -40,9 +40,9 @@ const PortfolioListPagination = () => {
             </div>
             <div className='flex flex-row gap-2 items-center'>
                 <MdKeyboardDoubleArrowLeft onClick={()=>setPageNumber(1)} className='cursor-pointer'/>
-                <MdKeyboardArrowLeft onClick={()=>{setPageNumber(pageNo-1)}} className='cursor-pointer'/>
+                {pageNo!=1 && <MdKeyboardArrowLeft onClick={()=>{setPageNumber(pageNo-1)}} className='cursor-pointer'/>}
                 <div>{pageNo}</div>
-                <MdKeyboardArrowRight onClick={()=>{setPageNumber(pageNo+1)}} className='cursor-pointer'/>
+                {pageNo!=pages && <MdKeyboardArrowRight onClick={()=>{setPageNumber(pageNo+1)}} className='cursor-pointer'/>}
 
                 <MdKeyboardDoubleArrowRight onClick={()=>{setPageNumber(pages)}} className='cursor-pointer'/>
             </div>

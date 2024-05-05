@@ -31,23 +31,23 @@ const PortfolioListLine = ({ stock }) => {
 				</div>
 			</div>
 			<div>
-				{currentPrice?currentPrice.lastPrice.toFixed(2):"Loading..."}
+				{currentPrice?currentPrice.lastPrice.toFixed(1):"Loading..."}
 			</div>
 			<div>
-				{stock.buy_cost/stock.quantity}
+				{(stock.buy_cost/stock.quantity).toFixed(1)}
 			</div>
 			<div>
 				{stock.quantity}
 			</div>
 			<div>
-			{currentPrice?currentPrice.lastPrice*stock.quantity:"Loading..."}
+			{currentPrice?(currentPrice.lastPrice*stock.quantity).toFixed(1):"Loading..."}
 			</div>
 			<div>
-				{stock.buy_cost}
+				{stock.buy_cost.toFixed(1)}
 			</div>
 			<div>
 				{
-					currentPrice?profit:"Loading..."
+					currentPrice?profit.toFixed(1):"Loading..."
 
 				}
 			</div>

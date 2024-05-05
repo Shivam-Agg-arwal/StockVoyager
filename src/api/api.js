@@ -24,3 +24,7 @@ export const stockOperationsEndpoints={
     BUY_STOCK_API:BASE_URL+"/stock/buyStock",
     SELL_STOCK_API:BASE_URL+"/stock/sellStock"
 }
+
+export const graphEndpoints={
+    GRAPH_POINT_ADDITION_API:BASE_URL+"/graph/addToGraph"
+}

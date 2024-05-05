@@ -33,8 +33,14 @@ exports.addToWatchlist = async (req, res) => {
             // Save the updated user details
             try {
                 await userDetails.save();
-                const updatedUser=await User.findById(userDetails._id).populate('portfolio').populate('transactions').populate('watchList');
 
+                const updatedUser = await User.findById(userID)
+                    .populate("additionalDetails")
+                    .populate("portfolio")
+                    .populate("transactions")
+                    .populate("watchList")
+                    .populate("portfolioGraph");
+                    
                 return res.status(200).json({
                     success: true,
                     message: "Symbol added to watchlist",
@@ -59,11 +65,10 @@ exports.addToWatchlist = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Watchlist updated failed",
-            error:error
+            error: error,
         });
     }
 };
-
 
 //controller to remove a stock to the watchlist
 
@@ -93,15 +98,24 @@ exports.removeFromWatchlist = async (req, res) => {
         // Check if symbol already exists in watchlist
         if (userDetails.watchList.includes(symbol)) {
             // If not exists, add the symbol to the watchlist
-            userDetails.watchList = userDetails.watchList.filter(item => item !== symbol);
+            userDetails.watchList = userDetails.watchList.filter(
+                (item) => item !== symbol
+            );
 
             // Save the updated user details
             try {
                 await userDetails.save();
+
+                const updatedUser = await User.findById(userID)
+                    .populate("additionalDetails")
+                    .populate("portfolio")
+                    .populate("transactions")
+                    .populate("watchList")
+                    .populate("portfolioGraph");
                 return res.status(200).json({
                     success: true,
                     message: "Symbol removed to watchlist",
-                    data: userDetails, // Optionally, you can send updated user details in the response
+                    data: updatedUser, // Optionally, you can send updated user details in the response
                 });
             } catch (error) {
                 return res.status(500).json({
@@ -122,7 +136,7 @@ exports.removeFromWatchlist = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Watchlist updated failed",
-            error:error
+            error: error,
         });
     }
 };
