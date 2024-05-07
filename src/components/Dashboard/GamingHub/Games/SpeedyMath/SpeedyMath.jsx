@@ -11,6 +11,66 @@ const SpeedyMath = () => {
     const [optionState, setOptionState] = useState(new Array(3).fill(null));
     // /constt;
 
+
+    function numberToWords(num) {
+        const units = ['', 'thousand', 'lakh', 'crore']; // Add more as needed
+    
+        // Function to convert a three-digit number to words
+        function convertThreeDigit(num) {
+            const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+            const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+            const teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+    
+            let result = '';
+            if (num >= 100) {
+                result += ones[Math.floor(num / 100)] + ' hundred ';
+                num %= 100;
+            }
+            if (num >= 20) {
+                result += tens[Math.floor(num / 10)] + ' ';
+                num %= 10;
+            } else if (num >= 10) {
+                result += teens[num - 10];
+                num = 0;
+            }
+            if (num > 0) {
+                result += ones[num];
+            }
+            return result.trim();
+        }
+    
+        // Break the number into segments
+        const segments = [];
+        while (num > 0) {
+            segments.push(num % 1000);
+            num = Math.floor(num / 1000);
+        }
+    
+        // Convert each segment to words
+        let result = '';
+        for (let i = segments.length - 1; i >= 0; i--) {
+            const segment = segments[i];
+            if (segment !== 0) {
+                result += convertThreeDigit(segment) + ' ' + units[i] + ' ';
+            }
+        }
+
+        let sentence=result.trim();
+        const words = sentence.split(' ');
+        
+        // Capitalize the first letter of each word
+        const capitalizedWords = words.map(word => {
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        });
+    
+        // Join the words back into a sentence
+        return capitalizedWords.join(' ');
+    }
+    
+    // Example usage:
+    console.log(numberToWords(500032)); // Output: "5 lakh 32"
+    
+
     const lumpsumOptions = [
         1000, 5000, 10000, 20000, 25000, 50000, 75000, 100000, 200000, 250000,
         500000, 1000000, 2000000,
@@ -145,7 +205,7 @@ const SpeedyMath = () => {
                                     HandleClick(1, i);
                                 }}
                             >
-                                {Math.floor(finalValue)}
+                                {numberToWords(Math.floor(finalValue))}
                             </div>
                         );
                     } else {
@@ -159,7 +219,7 @@ const SpeedyMath = () => {
                                     optionState[i] ? "text-[#ff0000]" : ""
                                 }`}
                             >
-                                {Math.floor(optionMul[i] * finalValue)}
+                                {numberToWords(Math.floor(optionMul[i] * finalValue))}
                             </div>
                         );
                     }
