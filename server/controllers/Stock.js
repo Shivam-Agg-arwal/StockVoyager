@@ -6,6 +6,7 @@ exports.buyStock = async (req, res) => {
     try {
         // Extract data from request body
         const { symbol, cprice, quantity } = req.body;
+        console.log(quantity);
         const userID = req.user.id;
 
         // Check if user ID is available
@@ -54,25 +55,27 @@ exports.buyStock = async (req, res) => {
 
         // Add transaction to user
         userDetails.transactions.push(transactionDetails._id);
-        console.log(userDetails);
+        // console.log(userDetails);
 
         // Check if the stock already exists in the user's portfolio
         const stockInfo = userDetails.portfolio.find(
             (stock) => stock.stockSymbol === symbol
         );
         const symbolExists = !!stockInfo;
-        console.log(stockInfo);
+        // console.log(stockInfo);
 
         if (symbolExists) {
             // Update existing stock
             const updatedStock = await Stock.findByIdAndUpdate(
                 stockInfo._id,
                 {
-                    quantity: stockInfo.quantity + quantity,
-                    buy_cost: stockInfo.buy_cost + tradeamt,
+                    quantity: Number(stockInfo.quantity) + Number(quantity),
+                    buy_cost: Number(stockInfo.buy_cost) + Number(tradeamt),
                 },
                 { new: true }
             );
+            
+            console.log(updatedStock.quantity);
 
             // Update user's array of stocks
             const stockIndex = userDetails.portfolio.findIndex(
