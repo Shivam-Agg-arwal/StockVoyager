@@ -31,39 +31,32 @@ const StockIndices = ({ symbol }) => {
             changePercent: "-0.16%",
         },
     ];
+
     return (
-        <div className="p-4 rounded-md border-black border-[1px] my-2">
-            <div className="font-bold text-xl my-2">People Also Watch</div>
-            <div>
-                <table>
+        <div className="p-4 rounded-md my-2 shadow-md">
+            <div className="font-bold text-xl mb-2">People Also Watch</div>
+            <div className="overflow-x-auto">
+                <table className="w-full">
                     <thead>
-                        <tr className="text-[#808080] text-left font-semibold text-lg">
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Change</th>
+                        <tr className="text-left font-semibold text-lg">
+                            <th className="px-4 py-2">Name</th>
+                            <th className="px-4 py-2">Price</th>
+                            <th className="px-4 py-2">Change</th>
                         </tr>
                     </thead>
                     <tbody>
                         {stocks.map((stock) => (
-                            <tr key={stock.symbol}>
-                                <td>
-                                    <div className="font-bold">{stock.symbol}</div>
-                                    <div className="text-sm">{stock.companyName}</div>
+                            <tr key={stock.symbol} className="border-b border-grey">
+                                <td className="px-4 py-3">
+                                    <div className="font-bold text-left">{stock.symbol}</div>
+                                    <div className="text-sm text-left">{stock.companyName}</div>
                                 </td>
-                                <td>{stock.price}</td>
-                                <td
-                                    className={
-                                        stock.changePrice > 0
-                                            ? "text-[#008000]"
-                                            : stock.changePrice < 0
-                                            ? "text-[#FF0000]"
-                                            : "text-[#808080]"
-                                    }
-                                >
-                                    <div className="text-right">
-                                        <div className="font-bold">{stock.changePrice}</div>
-                                        <div className="text-xs">{stock.changePercent}</div>
+                                <td className="px-4 py-3">{stock.price}</td>
+                                <td className="px-4 py-3">
+                                    <div className={stock.changePrice > 0 ? "text-green font-bold" : stock.changePrice < 0 ? "text-red font-bold" : "text-gray-500"}>
+                                        {stock.changePrice}
                                     </div>
+                                    <div className="text-xs">{stock.changePercent}</div>
                                 </td>
                             </tr>
                         ))}

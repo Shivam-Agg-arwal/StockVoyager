@@ -295,7 +295,7 @@ class ApexChart extends React.Component {
               series={this.state.series}
               type="area"
               height={350}
-              width={500}
+              width={'100%'}
             />
           </div>
         </div>

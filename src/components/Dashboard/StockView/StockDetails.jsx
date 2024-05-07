@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import fetchStockDetails from "../../../../pyserver/MakeRequest/getStockDetails.js";
-import { useDispatch } from "react-redux";
 import Loader from "../../Loader.jsx";
 
 const StockDetails = ({ symbol }) => {
@@ -13,7 +12,7 @@ const StockDetails = ({ symbol }) => {
             try {
                 const data = await fetchStockDetails(symbol);
                 preprocessData(data);
-				console.log('changed to false in detail');
+                console.log('changed to false in detail');
             } catch (error) {
                 setError(error.message);
             }
@@ -42,11 +41,11 @@ const StockDetails = ({ symbol }) => {
     };
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div className="text-red-600">Error: {error}</div>;
     }
 
     if (!stockDetails) {
-        return <div><Loader/></div>;
+        return <Loader />;
     }
 
     const customHeadings = {
@@ -65,21 +64,23 @@ const StockDetails = ({ symbol }) => {
     };
 
     return (
-        <>
-            <div className="flex flex-col border p-3">
-                <h1 className="text-2xl font-bold mb-3">Stock Details</h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {Object.entries(stockDetails).map(([key, value]) => (
-                        <div key={key} className="text-lg">
-                            <strong>{customHeadings[key] || key}:</strong>{" "}
-                            {typeof value === "object"
-                                ? JSON.stringify(value)
-                                : value}
-                        </div>
-                    ))}
-                </div>
+        <div className=" rounded-lg shadow-lg p-6 bg-white">
+            <h1 className="text-3xl font-bold mb-6">Stock Details</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {Object.entries(stockDetails).map(([key, value]) => (
+                    <div key={key} className="text-lg">
+                        <strong className="font-semibold">
+                            {customHeadings[key] || key}:
+                        </strong>{" "}
+                        {typeof value === "object" ? (
+                            <span className="italic">{JSON.stringify(value)}</span>
+                        ) : (
+                            <span>{value}</span>
+                        )}
+                    </div>
+                ))}
             </div>
-        </>
+        </div>
     );
 };
 

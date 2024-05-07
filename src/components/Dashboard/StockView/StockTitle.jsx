@@ -88,7 +88,7 @@ const StockTitle = ({ symbol }) => {
         return (<div><Loader/></div>)
     }
     return (
-        <div className="flex flex-row items-center justify-between bg-[#ffffffc7] rounded-md border-black border-[1px] p-4 w-[700px] m-4">
+        <div className="flex flex-row items-center justify-between p-4 rounded-md my-2 shadow-md w-full">
             <div>
                 <div>
                     <img src="" />
