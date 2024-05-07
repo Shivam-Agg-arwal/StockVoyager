@@ -7,8 +7,7 @@ const WordSearch = () => {
   const [grid, setGrid] = useState([]);
   const [initialGridSet, setInitialGridSet] = useState(false);
   const [foundWords, setFoundWords] = useState([]);
-
-  let selectedWords = [];
+  const [selectedWords, setSelectedWords] = useState([]);
 
   // Generate the initial grid with random letters
   useEffect(() => {
@@ -28,10 +27,33 @@ const WordSearch = () => {
     }
   }, [initialGridSet]);
 
+  // Generate selected words once
+  useEffect(() => {
+    const generateSelectedWords = () => {
+      const selected = [];
+      while (selected.length < 10) {
+        const randomIndex = Math.floor(Math.random() * words.length);
+        const word = words[randomIndex];
+        if (!selected.includes(word)) {
+          selected.push(word);
+        }
+      }
+      setSelectedWords(selected);
+      console.log(selected)
+    };
+
+    generateSelectedWords();
+  }, []);
+
   // Function to check if word exists in the grid
   const checkWord = () => {
     if (!searchWord) {
       setMessage("Please enter a word to search.");
+      return;
+    }
+
+    if(!selectedWords.includes(searchWord.toUpperCase())){
+      setMessage(`Word "${searchWord}" is not a stock term.`);
       return;
     }
 
@@ -114,19 +136,10 @@ const WordSearch = () => {
   const setWords = () => {
     // Get selected words
     let newGrid = grid;
-    while (selectedWords.length < 10) {
-      let randomIndex = Math.floor(Math.random() * words.length);
-      let word = words[randomIndex];
-      if (!selectedWords.includes(word)) {
-        selectedWords.push(word);
-      }
-    }
-
-    console.log(selectedWords);
 
     let dict = {};
 
-    selectedWords.map((word) => {
+    selectedWords.forEach((word) => {
       let direction = Math.random() < 0.5 ? "horizontal" : "vertical";
 
       if (direction === "horizontal") {
@@ -147,8 +160,6 @@ const WordSearch = () => {
             }
           }
         }
-
-        // We will come here only if we found the right row and col
 
         // Making every key true
         for (let i = 0; i < word.length; i++) {
@@ -179,8 +190,6 @@ const WordSearch = () => {
           }
         }
 
-        // We will come here only if we found the right row and col
-
         // Making every key true
         for (let i = 0; i < word.length; i++) {
           let rowIndex = row + i;
@@ -191,9 +200,9 @@ const WordSearch = () => {
           dict[key] = true;
         }
       }
-
-      setGrid(newGrid);
     });
+
+    setGrid(newGrid);
   };
 
   // Handle key press event
@@ -225,11 +234,10 @@ const WordSearch = () => {
         onChange={(e) =>
           setSearchWord(e.target.value.replace(/[^A-Za-z]/g, "").toUpperCase())
         }
-        onKeyPress={handleKeyPress} // Call handleKeyPress function on key press
+        onKeyPress={handleKeyPress}
         placeholder="Enter a word to search"
         className="mt-4 px-2 py-1 border-4 border-black"
       />
-
       <button
         onClick={checkWord}
         className="mt-2 px-4 py-2 bg-theme text-white rounded-md"
