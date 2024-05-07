@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import PortfolioListLine from './PortfolioListLine';
-import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight, MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 const PortfolioListPagination = () => {
     const { user } = useSelector((state) => state.profile);
@@ -14,19 +11,19 @@ const PortfolioListPagination = () => {
     const [pageNo, setPageNumber] = useState(1);
     const [startIndex, setStartIndex] = useState(0);
     const [endIndex, setEndIndex] = useState(10);
-    const [portfolioList,setPortfolioList]=useState([]);
+    const [portfolioList, setPortfolioList] = useState([]);
 
     useEffect(() => {
         const newStartIndex = (pageNo - 1) * 10;
         const newEndIndex = Math.min(pageNo * 10, portfolio.length);
         setStartIndex(newStartIndex);
         setEndIndex(newEndIndex);
-        const newportfolioList=portfolio.slice(newStartIndex,newEndIndex);
+        const newportfolioList = portfolio.slice(newStartIndex, newEndIndex);
         setPortfolioList(newportfolioList);
     }, [pageNo, portfolio]);
 
     if (pages === 0) {
-        return (<div>Currently your portfolio is empty. Go and trade some stocks.</div>);
+        return (<div style={{ color: '#666' }}>Currently your portfolio is empty. Go and trade some stocks.</div>);
     }
 
     return (
@@ -38,16 +35,15 @@ const PortfolioListPagination = () => {
                     ))
                 }
             </div>
-            <div className='flex flex-row gap-2 items-center'>
-                <MdKeyboardDoubleArrowLeft onClick={()=>setPageNumber(1)} className='cursor-pointer'/>
-                {pageNo!=1 && <MdKeyboardArrowLeft onClick={()=>{setPageNumber(pageNo-1)}} className='cursor-pointer'/>}
+            <div className='flex flex-row gap-2 items-center' style={{ color: '#666' }}>
+                <MdKeyboardDoubleArrowLeft onClick={() => setPageNumber(1)} className='cursor-pointer'/>
+                {pageNo !== 1 && <MdKeyboardArrowLeft onClick={() => { setPageNumber(pageNo - 1) }} className='cursor-pointer'/>}
                 <div>{pageNo}</div>
-                {pageNo!=pages && <MdKeyboardArrowRight onClick={()=>{setPageNumber(pageNo+1)}} className='cursor-pointer'/>}
-
-                <MdKeyboardDoubleArrowRight onClick={()=>{setPageNumber(pages)}} className='cursor-pointer'/>
+                {pageNo !== pages && <MdKeyboardArrowRight onClick={() => { setPageNumber(pageNo + 1) }} className='cursor-pointer'/>}
+                <MdKeyboardDoubleArrowRight onClick={() => { setPageNumber(pages) }} className='cursor-pointer'/>
             </div>
         </div>
     );
 };
 
-export default PortfolioListPagination;
+export default PortfolioListPagination; 

@@ -1,29 +1,31 @@
-import React from 'react'
-import PortfolioGraph from './Portfolio/PortfolioGraph'
-import PieGraph from './Portfolio/PieGraph'
-import PortfolioList from './Portfolio/PortfolioList'
-// import ApexChart from './WalletTab/Graphical'
-// import Loader from '../Loader'
+import React from 'react';
+import PortfolioGraph from './Portfolio/PortfolioGraph';
+import PieGraph from './Portfolio/PieGraph';
+import PortfolioList from './Portfolio/PortfolioList';
 
 const Portfolio = () => {
+  const blueColor = '#2B6CB0';
+  const lightBlueColor = '#BEE3F8';
+
   return (
-    <div>
-      <h1 className='text-4xl font-bold text-black capitalize'>PORTFOLIO</h1>
-      <div className='flex flex-row gap-2'>
-        <div>
-          <PortfolioGraph/>
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl font-bold text-black capitalize mb-6 text-center">Portfolio</h1>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white shadow-lg rounded-lg p-6 h-fit" style={{ backgroundColor: lightBlueColor }}>
+          <h2 className="text-2xl font-bold text-black mb-4">Portfolio Performance</h2>
+          <PortfolioGraph />
         </div>
-        <div>
-          <PieGraph/>
+        <div className="bg-white shadow-lg rounded-lg p-6" style={{ backgroundColor: lightBlueColor }}>
+          <h2 className="text-2xl font-bold text-black mb-4">Portfolio Allocation</h2>
+          <PieGraph />
         </div>
       </div>
-      <div>
-        <PortfolioList/>
+      <div className="mt-8">
+        <h2 className="text-2xl font-bold text-black mb-4">Portfolio List</h2>
+        <PortfolioList />
       </div>
-
     </div>
+  );
+};
 
-  )
-}
-
-export default Portfolio
+export default Portfolio;

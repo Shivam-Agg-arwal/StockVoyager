@@ -150,12 +150,12 @@ class ApexChart extends Component {
 
         if (error) {
             return <div>Error: {error}</div>;
-        }
+        } 
 
         return (
             <div>
                 <h2 className="text-2xl text-center font-bold">Portfolio Performance</h2>
-                <div className="chart-container" style={{ width: "700px", height: "550px", margin: "auto" }}>
+                <div className="chart-container" style={{ width: "100%", height: "120%", margin: "auto" }}>
                     <ReactApexChart options={this.state.options} series={this.state.series} type="area" height={350} />
                 </div>
             </div>

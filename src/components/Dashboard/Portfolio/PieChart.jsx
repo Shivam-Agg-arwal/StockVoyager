@@ -113,7 +113,7 @@ class Donut extends Component {
     return (
       <div>
         <h2 className="text-2xl text-center font-bold">Industry Portfolio</h2>
-        <div className="donut" style={{ width: "600px", height: "550px" }}>
+        <div className="donut" style={{ width: "100%", height: "130%" }}>
           {dataProcessed && (
             <Chart options={options} series={series} type="donut" />
           )}
