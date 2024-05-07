@@ -18,6 +18,11 @@ import UpdatePassword from "./components/authentication/UpdatePassword";
 import WalletTab from "./components/Dashboard/WalletTab";
 import Trading from "./components/Dashboard/TradeCenter/Trading";
 import StockView from "./components/Dashboard/StockView/StockView";
+import GamingHub from "./components/Dashboard/GamingHub/GamingHub";
+import SpeedyMath from "./components/Dashboard/GamingHub/Games/SpeedyMath/SpeedyMath";
+import FinancialQuiz from "./components/Dashboard/GamingHub/Games/FinancialQuiz/FinancialQuiz";
+import WhoGetsMore from "./components/Dashboard/GamingHub/Games/WhoGetsMore/WhoGetsMore";
+import WordSearch from "./components/Dashboard/GamingHub/Games/WordSearch/WordSearch";
 
 export default function App() {
     const { user } = useSelector((state) => state.profile);
@@ -45,6 +50,32 @@ export default function App() {
                             path="/dashboard/profile"
                             element={<ProfileTab />}
                         />
+                        <Route
+                            path="/dashboard/gamingHub"
+                            element={<GamingHub />}
+                        />
+                        
+                        <Route
+                            path="/dashboard/gamingHub/speedyMath"
+                            element={<SpeedyMath />}
+                        />
+                        
+                        <Route
+                            path="/dashboard/gamingHub/financialQuiz"
+                            element={<FinancialQuiz />}
+                        />
+                        
+                        <Route
+                            path="/dashboard/gamingHub/whoGetsMore"
+                            element={<WhoGetsMore />}
+                        />
+                        
+                        <Route
+                            path="/dashboard/gamingHub/wordSearch"
+                            element={<WordSearch />}
+                        />
+                        
+
                         <Route
                             path="/dashboard/portfolio"
                             element={<Portfolio />}

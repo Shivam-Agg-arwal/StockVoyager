@@ -5,6 +5,7 @@ import { CiStopwatch } from "react-icons/ci";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { MdOutlineSettings } from "react-icons/md";
 import { SlWallet } from "react-icons/sl";
+import { GiGamepad } from "react-icons/gi";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -93,6 +94,17 @@ const Sidebar = () => {
 							}}
 						>
 							<SlWallet />
+						</div>
+						<div
+							className={`${location.pathname === "/dashboard/gamingHub"
+								? "text-blue"
+								: "text-grey"
+								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
+							onClick={() => {
+								navigate("/dashboard/gamingHub");
+							}}
+						>
+							<GiGamepad />
 						</div>
 
 						<div
