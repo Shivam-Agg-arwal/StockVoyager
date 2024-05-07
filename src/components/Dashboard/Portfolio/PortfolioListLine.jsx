@@ -46,8 +46,8 @@ const PortfolioListLine = ({ stock }) => {
                 {currentPrice ? profit.toFixed(1) : "Loading..."}
             </div>
             <div className="col-span-1 flex justify-end gap-2"> {/* Use justify-end to align BUY and SELL to the right */}
-                <div className="text-lg text-blue-500">BUY</div>
-                <div className="text-lg text-red-500">SELL</div>
+                <div className="text-lg text-theme cursor-pointer">BUY</div>
+                <div className="text-lg text-theme cursor-pointer">SELL</div>
             </div>
         </div>
     )

@@ -72,44 +72,41 @@ const WatchList = () => {
         fetchData();
     };
 
-    if(loading){
-        return (<div className="flex flex-row items-center justify-between mx-auto"><Loader/></div>)
+    if (loading) {
+        return (<div className="flex items-center justify-center h-screen"><Loader /></div>)
     }
 
     return (
-        <div className="mx-auto w-1/2">
-            <div className="p-1 rounded-md border-black border-[1px] my-2 flex flex-col items-center">
-                <div className="font-bold text-3xl underline my-2 ">
-                    Watchlist
-                </div>
-                <div className="w-full flex flex-col items-center">
-                    <table className="w-3/4">
+        <div className="w-full min-h-screen bg-gradient-to-b from-blue-300 to-blue-500 py-8">
+            <div className="mx-auto max-w-lg">
+                <div className="p-4 rounded-md bg-white shadow-md my-4 flex flex-col items-center">
+                    <div className="font-bold text-2xl underline mb-4">
+                        Watchlist
+                    </div>
+                    <table className="w-full">
                         <thead>
-                            <tr className="text-[#808080] text-left font-semibold text-lg">
-                                <th className="text-center">Company</th>
-                                <th className="text-center">Value</th>
-                                <th className="text-center">Change</th>
+                            <tr className="text-gray-700 text-left font-semibold text-lg">
+                                <th className="px-4 py-2 text-center">Company</th>
+                                <th className="px-4 py-2 text-center">Value</th>
+                                <th className="px-4 py-2 text-center">Change</th>
                             </tr>
                         </thead>
                         <tbody>
                             {watchlistData.map((item, index) => (
-                                <tr key={index} className="mb-8 border text-center">
-                                    <td>
-                                        <div className="font-bold">
-                                            {item.symbol}
-                                        </div>
-                                        <div>{item.companyName}</div>{" "}
+                                <tr key={index} className="border-b text-center">
+                                    <td className="px-4 py-2">
+                                        <div className="font-semibold">{item.symbol}</div>
+                                        <div className="text-sm">{item.companyName}</div>{" "}
                                     </td>
-                                    <td>{item.lastPrice}</td>
-                                    <td>
+                                    <td className="px-4 py-2">{item.lastPrice}</td>
+                                    <td className="px-4 py-2">
                                         <div
-                                            className={`text-center font-bold ${
+                                            className={`font-semibold ${
                                                 parseFloat(item.pChange) > 0
-                                                    ? "text-[#008000]"
-                                                    : parseFloat(item.pChange) <
-                                                      0
-                                                    ? "text-[#FF0000]"
-                                                    : "text-[#808080]"
+                                                    ? "text-green"
+                                                    : parseFloat(item.pChange) < 0
+                                                    ? "text-red"
+                                                    : "text-superred"
                                             }`}
                                         >
                                             <div>{item.change}</div>
@@ -120,14 +117,14 @@ const WatchList = () => {
                             ))}
                         </tbody>
                     </table>
-                </div>
-                <div className="text-center py-2 bg-theme w-3/4">
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={refreshData}
-                    >
-                        Refresh
-                    </button>
+                    <div className="text-center py-4">
+                        <button
+                            className="bg-theme hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
+                            onClick={refreshData}
+                        >
+                            Refresh
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

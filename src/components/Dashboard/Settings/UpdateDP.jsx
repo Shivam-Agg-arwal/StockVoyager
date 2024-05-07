@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { WiDayCloudy } from "react-icons/wi";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -13,8 +12,8 @@ const UpdateDP = () => {
     const [file, setFile] = useState(null);
 
     const { UPDATE_DP_API } = updationEndpoints;
-
     const { token } = useSelector((state) => state.auth);
+
     const handleFileInputChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -27,16 +26,15 @@ const UpdateDP = () => {
             reader.readAsDataURL(file);
         }
     };
+
     const handleUpdation = async () => {
         const loadingToast = toast.loading("Updating Display Picture...");
         try {
             const formData = new FormData();
             formData.append("token", token);
             formData.append("displayPicture", file);
-            // console.log('calling');
 
             const response = await axios.post(UPDATE_DP_API, formData);
-            console.log(response);
             if (response.data.success) {
                 toast.success("Updated successfully");
                 dispatch(setUser(response.data.data));
@@ -44,45 +42,43 @@ const UpdateDP = () => {
                     "user",
                     JSON.stringify(response.data.data)
                 );
-                RemoveHandle();
+                removeHandle();
             }
         } catch (error) {
             toast.error("Updation failed");
-            console.log("error ");
+            console.log(error);
         }
         toast.dismiss(loadingToast);
     };
 
-    const RemoveHandle = () => {
+    const removeHandle = () => {
         setFile(null);
         setChosenImage(null);
     };
 
     return (
-        <div className="flex flex-row gap-2 items-center w-full h-fit mt-2">
+        <div className="flex items-center w-full mt-4">
             <img
-                src={`${chosenImage ? chosenImage : user.image}`}
-                width={90} height={90}
-                className="rounded-full border-black border-[1px] w-[90px] h-[90px]"
+                src={chosenImage ? chosenImage : user.image}
+                alt="Profile"
+                className="rounded-full border border-black w-24 h-24 mr-4"
             />
             <div>
-                <div className=" text-3xl font-semibold uppercase mb-5">Change Profile Picture</div>
-                <div className="flex flex-row gap-2">
+                <h2 className="text-2xl font-semibold mb-2">Change Profile Picture</h2>
+                <div className="flex gap-2">
                     {file && (
-                        <div
-                            onClick={() => {
-                                handleUpdation();
-                            }}
-                            className="cursor-pointer w-fit h-fit p-2 bg-btnyellow rounded-md  font-bold hover:scale-95"
+                        <button
+                            onClick={handleUpdation}
+                            className="w-fit p-2 bg-theme text-white rounded-md font-bold hover:scale-95 transition-all duration-200"
                         >
                             Update Image
-                        </div>
+                        </button>
                     )}
                     {!file && (
-                        <div>
+                        <>
                             <label
                                 htmlFor="uploadimage"
-                                className="cursor-pointer w-fit h-fit p-2 bg-btnyellow rounded-md font-bold hover:scale-95"
+                                className="w-fit p-2 bg-theme text-white rounded-md font-bold hover:scale-95 transition-all duration-200 cursor-pointer"
                             >
                                 Choose Image
                             </label>
@@ -93,14 +89,12 @@ const UpdateDP = () => {
                                 onChange={handleFileInputChange}
                                 accept="image/*"
                             />
-                        </div>
+                        </>
                     )}
                     {file && (
                         <button
-                            onClick={() => {
-                                RemoveHandle();
-                            }}
-                            className="cursor-pointer w-fit h-fit p-2 bg-btnyellow  rounded-md font-bold hover:scale-95"
+                            onClick={removeHandle}
+                            className="w-fit p-2 bg-theme text-white rounded-md font-bold hover:scale-95 transition-all duration-200"
                         >
                             Remove
                         </button>
