@@ -4,6 +4,9 @@ import { transactionEndpoints } from "../../../../api/api";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { setUser } from "../../../slices/profileSlice";
+import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight, MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { formatDateWithOffset } from "../../../../utils/dateFormatter";
+
 
 const TransactionTable = () => {
     const [transactions,setTransactions] = useState([
@@ -61,6 +64,13 @@ const TransactionTable = () => {
     ]);
 
     const {DELETE_TRANSACTION_API}=transactionEndpoints;
+    const [page,setPage]=useState(1);
+    const pageSize=4;
+
+    const [totalPages,setTotalPages]=useState(0);
+
+
+
 
     const {user}=useSelector((state)=>state.profile);
     const {token}=useSelector((state)=>state.auth);
@@ -88,7 +98,13 @@ const TransactionTable = () => {
 
     useEffect(()=>{
         user.transactions.length>0?setTransactions(user.transactions):null;
+        setTransactions(prevArray => [...prevArray].reverse());
+        setTotalPages(Math.ceil(transactions.length/pageSize));
+        console.log((Math.ceil(transactions.length/pageSize)));
     },[user])
+
+    
+      
 
     return (
         <div className="overflow-x-auto my-4">
@@ -105,7 +121,7 @@ const TransactionTable = () => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {transactions.map((transaction) => {
+                    {transactions.slice((page-1)*pageSize, Math.min(page*pageSize, transactions.length)).map((transaction) => {
                         return (
                             <tr key={transaction.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -116,7 +132,7 @@ const TransactionTable = () => {
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.quantity}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.price}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.tradeValue}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">{transaction.orderDate}</td>
+                                <td className="px-6 py-4 whitespace-nowrap">{formatDateWithOffset(transaction.orderDate)}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <button className="text-red-600 hover:text-red-900 cursor-pointer" onClick={()=>deleteTransaction(transaction._id)}>Delete</button>
                                 </td>
@@ -125,6 +141,13 @@ const TransactionTable = () => {
                     })}
                 </tbody>
             </table>
+            <div className="flex flex-row gap-2 items-center">
+                <MdKeyboardDoubleArrowLeft onClick={()=>setPage(1)}  className="cursor-pointer"/>
+                { page!=1 && <MdKeyboardArrowLeft onClick={()=>setPage(page-1)} className="cursor-pointer"/>}
+                <div>{page}</div>
+                { page!=totalPages && <MdKeyboardArrowRight onClick={()=>setPage(page+1)} className="cursor-pointer"/>}
+                <MdKeyboardDoubleArrowRight onClick={()=>setPage(totalPages)} className="cursor-pointer"/>
+            </div>
         </div>
     );
 };
