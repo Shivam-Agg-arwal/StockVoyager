@@ -190,6 +190,54 @@ const checkWord = () => {
     }
   };
 
+  const handleSolutionButtonClick = () => {
+    // This function will be called when the solution button in the SlidingPanel component is clicked
+    console.log("Solution button clicked");
+  
+    // Mark all solution words in the grid
+    const updatedGrid = [...grid];
+    selectedWords.forEach(({ word }) => {
+      for (let row = 0; row < 16; row++) {
+        for (let col = 0; col < 16; col++) {
+          // Check horizontally
+          if (col + word.length <= 16) {
+            const horizontalWord = updatedGrid[row].slice(col, col + word.length).join("");
+            if (horizontalWord === word) {
+              for (let i = col; i < col + word.length; i++) {
+                updatedGrid[row][i] = (
+                  <div className="bg-theme text-white h-full w-full text-center">
+                    {updatedGrid[row][i]}
+                  </div>
+                );
+              }
+            }
+          }
+  
+          // Check vertically
+          if (row + word.length <= 16) {
+            let verticalWord = "";
+            for (let i = row; i < row + word.length; i++) {
+              verticalWord += updatedGrid[i][col];
+            }
+            if (verticalWord === word) {
+              for (let i = row; i < row + word.length; i++) {
+                updatedGrid[i][col] = (
+                  <div className="bg-theme text-white h-full w-full text-center">
+                    {updatedGrid[i][col]}
+                  </div>
+                );
+              }
+            }
+          }
+        }
+      }
+    });
+  
+    setGrid(updatedGrid); // Update the grid state with marked solution words
+    setMessage('The Game is finished!!!')
+  };
+  
+
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen ">
       <h1 className="text-3xl mb-3">STOCK WORD SEARCH</h1>
@@ -229,7 +277,10 @@ const checkWord = () => {
         </button>
         {message && <p className="mt-2 text-red">{message}</p>}
       </div>
-      <SlidingPanel words={selectedWords}/>
+      <SlidingPanel 
+        words={selectedWords}
+        onSolutionButtonClick={handleSolutionButtonClick}
+        />
       </div>
 
     </div>
