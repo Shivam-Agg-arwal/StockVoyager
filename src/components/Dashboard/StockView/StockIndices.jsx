@@ -1,36 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { stockOperationsEndpoints } from "../../../api/api";
+import fetchCurrentPrice from "../../../../pyserver/MakeRequest/getStockCurrentPrice";
 
 const StockIndices = ({ symbol }) => {
-    const stocks = [
+    const [stocks,setStocks]=useState([
         {
-            symbol: "AAPL",
-            companyName: "Apple Inc.",
-            price: 145.12,
-            changePrice: -1.23,
-            changePercent: "-0.84%",
+            symbol: "RELIANCE",
+            companyName: "Reliance Industries Ltd.",
+            price: 0,
+            changePrice: 0,
+            changePercent: 0,
         },
         {
-            symbol: "GOOGL",
-            companyName: "Alphabet Inc.",
-            price: 2779.39,
-            changePrice: 12.56,
-            changePercent: "+0.45%",
+            symbol: "ONGC",
+            companyName: " Oil & Natural Gas Corporation",
+            price: 0,
+            changePrice:0,
+            changePercent: 0,
         },
         {
-            symbol: "MSFT",
-            companyName: "Microsoft Corporation",
-            price: 261.15,
-            changePrice: 2.78,
-            changePercent: "+1.08%",
+            symbol: "TATASTEEL",
+            companyName: "Tata Steel Ltd.",
+            price: 0,
+            changePrice:0,
+            changePercent: 0,
         },
         {
-            symbol: "AMZN",
-            companyName: "Amazon.com, Inc.",
-            price: 3444.28,
-            changePrice: -5.67,
-            changePercent: "-0.16%",
+            symbol: "SBIN",
+            companyName: "State Bank Of India",
+            price: 0,
+            changePrice:0,
+            changePercent: 0,
         },
-    ];
+    ]);
+    useEffect(() => {
+        const findCurrValue = async () => {
+            const updatedStocks = await Promise.all(stocks.map(async (stock) => {
+                const response = await fetchCurrentPrice(stock.symbol);
+                return {
+                    ...stock,
+                    price: response.lastPrice.toFixed(2),
+                    changePercent: response.pChange.toFixed(2),
+                    changePrice: response.change.toFixed(2)
+                };
+            }));
+    
+            console.log(updatedStocks);
+            setStocks(updatedStocks);
+            // Now you can update the state with the updatedStocks or perform any other actions
+        };
+    
+        findCurrValue();
+    }, []);
+    
 
     return (
         <div className="p-4 rounded-md my-2 shadow-md">
@@ -52,11 +74,13 @@ const StockIndices = ({ symbol }) => {
                                     <div className="text-sm text-left">{stock.companyName}</div>
                                 </td>
                                 <td className="px-4 py-3">{stock.price}</td>
-                                <td className="px-4 py-3">
-                                    <div className={stock.changePrice > 0 ? "text-green font-bold" : stock.changePrice < 0 ? "text-red font-bold" : "text-gray-500"}>
-                                        {stock.changePrice}
+                                <td className="px-4 py-3 ">
+                                    <div className={stock.changePrice > 0 ? "text-[#53a853] font-bold" : stock.changePrice < 0 ? "text-red font-bold" : "text-gray-500"}>
+                                        <div >
+                                            {stock.changePrice}
+                                        </div>
+                                        <div className="text-xs">{stock.changePercent}%</div>
                                     </div>
-                                    <div className="text-xs">{stock.changePercent}</div>
                                 </td>
                             </tr>
                         ))}
