@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const SlidingPanel = ({ words }) => {
+const SlidingPanel = ({ words, onSolutionButtonClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
   const [hints, setHints] = useState({});
@@ -48,7 +48,8 @@ const SlidingPanel = ({ words }) => {
   const toggleSolution = () => {
     // Only toggle solution if the sidebar is open
     if (isOpen) {
-      setShowSolution(prevShowSolution => !prevShowSolution);
+      setShowSolution((prevShowSolution) => !prevShowSolution);
+      onSolutionButtonClick(); // Call the onSolutionButtonClick function
     }
   };
 
