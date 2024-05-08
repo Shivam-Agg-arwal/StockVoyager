@@ -1,21 +1,14 @@
 import React from "react";
-import ApexCharts from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 import fetchPrevCloseData from "../../../../pyserver/MakeRequest/getPrevCloseData";
+import fetchCurrentPrice from "../../../../pyserver/MakeRequest/getStockCurrentPrice";
 
 class ApexChart extends React.Component {
-  constructor(props) {
-    super(props);
-
+  constructor({ symbol }) {
+    super();
     this.state = {
-      symbol: props.symbol,
-      series: [
-        {
-          data: [
-            [1327359600000, 30.95],
-          ],
-        },
-      ],
+      symbol,
+      series: [{ data: [] }],
       options: {
         chart: {
           id: "area-datetime",
@@ -29,21 +22,21 @@ class ApexChart extends React.Component {
           yaxis: [
             {
               y: 30,
-              borderColor: "#999", //horizontal dark line colour:support line
+              borderColor: "#999",
               label: {
                 show: true,
                 text: "Support",
                 style: {
                   color: "#fff",
-                  background: "#00E396", //support button colour
+                  background: "#00E396",
                 },
               },
             },
           ],
           xaxis: [
             {
-              x: new Date("14 Sep 2012").getTime(), //Rally line daate
-              borderColor: "#999", //rally line colour
+              x: new Date("14 Sep 2012").getTime(),
+              borderColor: "#999",
               yAxisIndex: 0,
               label: {
                 show: true,
@@ -87,22 +80,20 @@ class ApexChart extends React.Component {
           isFiveYearButtonVisible: false,
         },
       },
-
       selection: "one_year",
     };
   }
 
   async componentDidMount() {
-    // Fetch data when component mounts
     await this.fetchDataAndUpdateState(this.state.selection);
-    // Set a timer to refresh data every 15 minutes
+    this.fetchCurrentStockPrice();
     this.refreshDataTimer = setInterval(() => {
       this.fetchDataAndUpdateState(this.state.selection);
+      this.fetchCurrentStockPrice();
     }, 15 * 60 * 1000);
   }
 
   componentWillUnmount() {
-    // Clear the timer when component unmounts
     clearInterval(this.refreshDataTimer);
   }
 
@@ -113,31 +104,16 @@ class ApexChart extends React.Component {
       if (!data || !data.previous_close) {
         throw new Error("Data or previous_close array is missing or empty.");
       }
-      // Parse prevclose values as numbers
       const seriesData = data.previous_close.map((item) => [
         item.timestamp * 1000,
         typeof item.prevclose === "string"
           ? parseFloat(item.prevclose.replace(",", ""))
-          : item.prevclose, // Check if prevclose is a string before replacing commas
+          : item.prevclose,
       ]);
-      // Update series data based on fetched data
-      this.setState({
-        series: [
-          {
-            data: seriesData,
-          },
-        ],
-      });
-
-      // Update x-axis minimum based on the earliest available data point
-      const minTimestamp =
-        Math.min(...data.previous_close.map((item) => item.timestamp)) * 1000;
-      const maxTimestamp =
-        Math.max(...data.previous_close.map((item) => item.timestamp)) * 1000;
-
+      const minTimestamp = Math.min(...data.previous_close.map((item) => item.timestamp)) * 1000;
       const today = new Date();
-
-      this.setState({
+      const newState = {
+        series: [{ data: seriesData }],
         options: {
           ...this.state.options,
           xaxis: {
@@ -145,18 +121,23 @@ class ApexChart extends React.Component {
             min: minTimestamp,
           },
         },
-        isFiveYearButtonVisible:
-          today.getFullYear() - new Date(minTimestamp).getFullYear() > 5,
-        isThreeYearButtonVisible:
-          today.getFullYear() - new Date(minTimestamp).getFullYear() > 3,
+        isFiveYearButtonVisible: today.getFullYear() - new Date(minTimestamp).getFullYear() > 5,
+        isThreeYearButtonVisible: today.getFullYear() - new Date(minTimestamp).getFullYear() > 3,
         isAllButtonVisible: true,
-      });
-
-      // Update chart based on timeline
+      };
+      this.setState(newState);
       this.updateData(timeline);
     } catch (error) {
       console.error("Error:", error.message);
-      // Handle error
+    }
+  }
+
+  async fetchCurrentStockPrice() {
+    try {
+      const currentPrice = await fetchCurrentPrice(this.state.symbol);
+      this.setState({ currentPrice });
+    } catch (error) {
+      console.error("Error fetching current price:", error);
     }
   }
 
@@ -166,136 +147,109 @@ class ApexChart extends React.Component {
 
   updateData(timeline) {
     const today = new Date();
-
     switch (timeline) {
       case "one_month":
-        this.updateChart(
-          new Date(
-            today.getFullYear(),
-            today.getMonth() - 1,
-            today.getDate()
-          ).getTime(),
-          today.getTime()
-        );
+        this.updateChart(new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()).getTime(), today.getTime());
         break;
       case "six_months":
-        this.updateChart(
-          new Date(
-            today.getFullYear(),
-            today.getMonth() - 6,
-            today.getDate()
-          ).getTime(),
-          today.getTime()
-        );
+        this.updateChart(new Date(today.getFullYear(), today.getMonth() - 6, today.getDate()).getTime(), today.getTime());
         break;
       case "one_year":
-        this.updateChart(
-          new Date(
-            today.getFullYear() - 1,
-            today.getMonth(),
-            today.getDate()
-          ).getTime(),
-          today.getTime()
-        );
+        this.updateChart(new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()).getTime(), today.getTime());
         break;
       case "three_year":
-        this.updateChart(
-          new Date(
-            today.getFullYear() - 3,
-            today.getMonth(),
-            today.getDate()
-          ).getTime(),
-          today.getTime()
-        );
+        this.updateChart(new Date(today.getFullYear() - 3, today.getMonth(), today.getDate()).getTime(), today.getTime());
         break;
       case "all":
         this.updateChart(this.state.options.xaxis.min, today.getTime());
         break;
       case "one_week":
-        this.updateChart(
-          new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate() - 7
-          ).getTime(),
-          today.getTime()
-        );
+        this.updateChart(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).getTime(), today.getTime());
         break;
       case "one_day":
-        this.updateChart(
-          new Date(
-            today.getFullYear(),
-            today.getMonth(),
-            today.getDate()
-          ).getTime() -
-            24 * 60 * 60 * 1000,
-          today.getTime()
-        );
+        this.updateChart(new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() - 24 * 60 * 60 * 1000, today.getTime());
         break;
       default:
         break;
     }
   }
 
+  renderButtons() {
+    const { isAllButtonVisible, isThreeYearButtonVisible } = this.state;
+    return (
+      <div className="toolbar text-sm flex justify-center">
+        <button
+          className="m-1 bg-theme px-2 rounded-md text-sm hover:opacity-70"
+          onClick={() => this.updateData("one_week")}
+        >
+          1W
+        </button>
+        <button
+          className="m-1 bg-theme px-2 rounded-md text-sm hover:opacity-70"
+          onClick={() => this.updateData("one_month")}
+        >
+          1M
+        </button>
+        <button
+          className="m-1 bg-theme px-2 rounded-md text-sm hover:opacity-70"
+          onClick={() => this.updateData("six_months")}
+        >
+          6M
+        </button>
+        <button
+          className="m-1 bg-theme px-2 rounded-md text-sm hover:opacity-70"
+          onClick={() => this.updateData("one_year")}
+        >
+          1Y
+        </button>
+        {isThreeYearButtonVisible && (
+          <button
+            className="m-1 bg-theme px-2 rounded-md text-sm hover:opacity-70"
+            onClick={() => this.updateData("three_year")}
+          >
+            3Y
+          </button>
+        )}
+        {isAllButtonVisible && (
+          <button
+            className="m-1 bg-theme px-2 rounded-md text-sm hover:opacity-70"
+            onClick={() => this.updateData("all")}
+          >
+            All
+          </button>
+        )}
+      </div>
+    );
+  }
+
   render() {
-    const {
-      isAllButtonVisible,
-      isThreeYearButtonVisible,
-      isFiveYearButtonVisible,
-    } = this.state;
+    const { currentPrice } = this.state;
     return (
       <div>
-        <div id="chart">
-          <div className="toolbar text-sm">
-            {/* Buttons for selecting timeline */}
-            <button
-              className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-              onClick={() => this.updateData("one_week")}
-            >
-              1W
-            </button>
-            <button
-              className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-              onClick={() => this.updateData("one_month")}
-            >
-              1M
-            </button>
-            <button
-              className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-              onClick={() => this.updateData("six_months")}
-            >
-              6M
-            </button>
-            <button
-              className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-              onClick={() => this.updateData("one_year")}
-            >
-              1Y
-            </button>
-            {isThreeYearButtonVisible && (
-              <button
-                className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-                onClick={() => this.updateData("three_year")}
-              >
-                3Y
-              </button>
-            )}
-            {isAllButtonVisible && (
-              <button
-                className="m-3 bg-theme px-3 rounded-md text-lg hover:text-xl"
-                onClick={() => this.updateData("all")}
-              >
-                All
-              </button>
-            )}
+        {this.renderButtons()}
+        {currentPrice && (
+          <div className="flex justify-start ml-5">
+            <div className="text-start">
+              <div className="font-bold">{currentPrice.lastPrice.toFixed(2)}</div>
+              <div className="flex gap-3">
+                <div className={currentPrice.pChange < 0 ? "text-red" : "text-green"}>
+                  {currentPrice.pChange.toFixed(2)}
+                </div>
+                <div className={currentPrice.change < 0 ? "text-red" : "text-green"}>
+                  {currentPrice.change.toFixed(2)}
+                </div>
+              </div>
+            </div>
           </div>
+        )}
+        <div id="chart">
           <div id="chart-timeline">
             <ReactApexChart
               options={this.state.options}
               series={this.state.series}
               type="area"
               height={350}
-              width={'100%'}
+              width={"100%"}
             />
           </div>
         </div>

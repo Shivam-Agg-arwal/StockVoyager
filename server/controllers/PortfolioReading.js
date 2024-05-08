@@ -8,7 +8,7 @@ exports.addToGraph = async (req, res) => {
         //get data from body
         const { curr_value,buy_value } = req.body;
         const userID = req.user.id;
-
+ 
         if (!userID) {
             return res.status(500).json({
                 success: false,
