@@ -44,12 +44,14 @@ const UpdateDetails = () => {
         formData.append("token", token);
 
         const response = await axios.post(UPDATE_DETAILS_API, formData);
+        console.log(response);
         if (response.data.success) {
           toast.success("Updation was successful");
-          dispatch(setUser(response.data.updatedUserDetails));
+          
+          dispatch(setUser(response.data.data));
           localStorage.setItem(
             "user",
-            JSON.stringify(response.data.updatedUserDetails)
+            JSON.stringify(response.data.data)
           );
         }
       } catch (error) {

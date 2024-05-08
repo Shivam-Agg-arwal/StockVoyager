@@ -192,7 +192,7 @@ exports.sellStock = async (req, res) => {
                     stockInfo._id,
                     {
                         quantity: stockInfo.quantity - quantity,
-                        buy_cost: stockInfo.buy_cost - tradeamt,
+                        buy_cost: stockInfo.buy_cost *((stockInfo.quantity-quantity)/stockInfo.quantity),
                     },
                     { new: true }
                 );

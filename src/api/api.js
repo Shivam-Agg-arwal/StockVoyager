@@ -28,3 +28,7 @@ export const stockOperationsEndpoints={
 export const graphEndpoints={
     GRAPH_POINT_ADDITION_API:BASE_URL+"/graph/addToGraph"
 }
+
+export const transactionEndpoints={
+    DELETE_TRANSACTION_API:BASE_URL+"/transaction/deleteTransaction"
+} 
