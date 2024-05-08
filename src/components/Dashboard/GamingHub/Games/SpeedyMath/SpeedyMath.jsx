@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import InvestmentGraph from "./InvestmentGraph";
 
 const SpeedyMath = () => {
     const [time, setTime] = useState(null);
@@ -9,6 +10,8 @@ const SpeedyMath = () => {
     const [finalValue, setFinalValue] = useState(null);
     const [answerFound, setAnswerFound] = useState(null);
     const [optionState, setOptionState] = useState(new Array(3).fill(null));
+
+    const [Investment,setInvestment]=useState(0);
     // /constt;
 
 
@@ -90,9 +93,11 @@ const SpeedyMath = () => {
 		if (isSIP) {
 			const n=years*12;
 			const r=rpa/1200.0;
+            setInvestment(n*principal);
 			const amt=principal*((Math.pow(1+r,n)-1)/r)*(1+r);
 			return amt;
 		} else {
+            setInvestment(principal);
 			return principal * Math.pow(1 + rpa / 100, years);
 		}
 	}
@@ -224,6 +229,9 @@ const SpeedyMath = () => {
                         );
                     }
                 })}
+            </div>
+            <div>
+                {answerFound && <InvestmentGraph Investment={Investment} Interest={finalValue-Investment}/>}
             </div>
 
             <div
