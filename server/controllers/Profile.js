@@ -19,7 +19,7 @@ exports.updateDisplayPicture = async (req, res) => {
             { image: image.secure_url }
         );
 
-        const updatedUser = await User.findById(userID)
+        const updatedUser = await User.findById(userId)
             .populate("additionalDetails")
             .populate("portfolio")
             .populate("transactions")
@@ -96,7 +96,7 @@ exports.updateProfile = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            updatedUser,
+            data:updatedUser,
         });
     } catch (error) {
         console.log("profile updattion failed", error);

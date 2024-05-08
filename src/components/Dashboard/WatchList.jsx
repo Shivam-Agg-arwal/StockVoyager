@@ -3,6 +3,7 @@ import fetchCurrentPrice from "../../../pyserver/MakeRequest/getStockCurrentPric
 import { symbolMapping } from "../../data/Symbol";
 import { useSelector } from "react-redux";
 import Loader from '../Loader'
+import { useNavigate } from "react-router-dom";
 
 const wlist = [
     "RELIANCE",
@@ -23,6 +24,7 @@ const WatchList = () => {
     const [watchlistData, setWatchlistData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate=useNavigate();
 
     const fetchData = async () => {
         console.log("calling");
@@ -93,7 +95,7 @@ const WatchList = () => {
                         </thead>
                         <tbody>
                             {watchlistData.map((item, index) => (
-                                <tr key={index} className="border-b text-center">
+                                <tr key={index} className="border-b text-center cursor-pointer" onClick={()=>{navigate(`/dashboard/stockView/${item.symbol}`)}}>
                                     <td className="px-4 py-2">
                                         <div className="font-semibold">{item.symbol}</div>
                                         <div className="text-sm">{item.companyName}</div>{" "}

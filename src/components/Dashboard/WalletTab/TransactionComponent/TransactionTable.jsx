@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { transactionEndpoints } from "../../../../api/api";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { setUser } from "../../../slices/profileSlice";
 
 const TransactionTable = () => {
     const [transactions,setTransactions] = useState([
@@ -56,7 +60,31 @@ const TransactionTable = () => {
         // Add more entries as needed
     ]);
 
+    const {DELETE_TRANSACTION_API}=transactionEndpoints;
+
     const {user}=useSelector((state)=>state.profile);
+    const {token}=useSelector((state)=>state.auth);
+    const dispatch=useDispatch();
+
+    const deleteTransaction=async(id)=>{
+        const loadingToast=toast.loading("Deleting Transaction...");
+        try{
+            const formData=new FormData();
+            formData.append("token",token);
+            formData.append("transactionID",id);
+            const response=await axios.post(DELETE_TRANSACTION_API,formData);
+            if(response.data.success){
+                dispatch(setUser(response.data.data));
+                localStorage.setItem("user",JSON.stringify(response.data.data));
+                toast.success("Transaction Deleted Successfully");
+            }
+        }
+        catch(error){
+            console.log("Error occured while deleting the transaction  ",error)
+            toast.error("Transaction deletion failed");
+        }
+        toast.dismiss(loadingToast);
+    }
 
     useEffect(()=>{
         user.transactions.length>0?setTransactions(user.transactions):null;
@@ -90,7 +118,7 @@ const TransactionTable = () => {
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.tradeValue}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">{transaction.orderDate}</td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                    <button className="text-red-600 hover:text-red-900">Delete</button>
+                                    <button className="text-red-600 hover:text-red-900 cursor-pointer" onClick={()=>deleteTransaction(transaction._id)}>Delete</button>
                                 </td>
                             </tr>
                         );
