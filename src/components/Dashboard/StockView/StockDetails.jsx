@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import fetchStockDetails from "../../../../pyserver/MakeRequest/getStockDetails.js";
 import Loader from "../../Loader.jsx";
 
@@ -12,17 +11,15 @@ const StockDetails = ({ symbol }) => {
             try {
                 const data = await fetchStockDetails(symbol);
                 preprocessData(data);
-                console.log('changed to false in detail');
             } catch (error) {
                 setError(error.message);
             }
         }
 
         fetchData();
-    }, [symbol]); // Trigger the effect whenever the symbol changes
+    }, [symbol]);
 
     const preprocessData = (data) => {
-        // Flatten dayRange and yearRange objects
         if (data.dayRange) {
             const dayRange = data.dayRange;
             data.dayRangeLow = dayRange.low;
@@ -48,6 +45,17 @@ const StockDetails = ({ symbol }) => {
         return <Loader />;
     }
 
+    // Utility function to format large numbers
+    const formatNumber = (num) => {
+        if (num >= 10000000) {
+            return (num / 10000000).toFixed(2) + " Cr";
+        } else if (num >= 100000) {
+            return (num / 100000).toFixed(2) + " Lakh";
+        } else {
+            return num.toFixed(2);
+        }
+    };
+
     const customHeadings = {
         companyName: "Company Name",
         prevClose: "Previous Close",
@@ -64,7 +72,7 @@ const StockDetails = ({ symbol }) => {
     };
 
     return (
-        <div className=" rounded-lg shadow-lg p-6 bg-white">
+        <div className="rounded-lg shadow-lg p-6 bg-white">
             <h1 className="text-3xl font-bold mb-6">Stock Details</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {Object.entries(stockDetails).map(([key, value]) => (
@@ -72,11 +80,11 @@ const StockDetails = ({ symbol }) => {
                         <strong className="font-semibold">
                             {customHeadings[key] || key}:
                         </strong>{" "}
-                        {typeof value === "object" ? (
-                            <span className="italic">{JSON.stringify(value)}</span>
-                        ) : (
-                            <span>{value}</span>
-                        )}
+                        {typeof value === "number" && (key === "marketCap" || key === "issuedSize")
+                            ? formatNumber(value)
+                            : typeof value === "object"
+                            ? <span className="italic">{JSON.stringify(value)}</span>
+                            : <span>{value}</span>}
                     </div>
                 ))}
             </div>
