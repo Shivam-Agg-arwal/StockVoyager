@@ -110,7 +110,8 @@ class ApexChart extends React.Component {
           ? parseFloat(item.prevclose.replace(",", ""))
           : item.prevclose,
       ]);
-      const minTimestamp = Math.min(...data.previous_close.map((item) => item.timestamp)) * 1000;
+      const minTimestamp =
+        Math.min(...data.previous_close.map((item) => item.timestamp)) * 1000;
       const today = new Date();
       const newState = {
         series: [{ data: seriesData }],
@@ -121,8 +122,10 @@ class ApexChart extends React.Component {
             min: minTimestamp,
           },
         },
-        isFiveYearButtonVisible: today.getFullYear() - new Date(minTimestamp).getFullYear() > 5,
-        isThreeYearButtonVisible: today.getFullYear() - new Date(minTimestamp).getFullYear() > 3,
+        isFiveYearButtonVisible:
+          today.getFullYear() - new Date(minTimestamp).getFullYear() > 5,
+        isThreeYearButtonVisible:
+          today.getFullYear() - new Date(minTimestamp).getFullYear() > 3,
         isAllButtonVisible: true,
       };
       this.setState(newState);
@@ -149,25 +152,68 @@ class ApexChart extends React.Component {
     const today = new Date();
     switch (timeline) {
       case "one_month":
-        this.updateChart(new Date(today.getFullYear(), today.getMonth() - 1, today.getDate()).getTime(), today.getTime());
+        this.updateChart(
+          new Date(
+            today.getFullYear(),
+            today.getMonth() - 1,
+            today.getDate()
+          ).getTime(),
+          today.getTime()
+        );
         break;
       case "six_months":
-        this.updateChart(new Date(today.getFullYear(), today.getMonth() - 6, today.getDate()).getTime(), today.getTime());
+        this.updateChart(
+          new Date(
+            today.getFullYear(),
+            today.getMonth() - 6,
+            today.getDate()
+          ).getTime(),
+          today.getTime()
+        );
         break;
       case "one_year":
-        this.updateChart(new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()).getTime(), today.getTime());
+        this.updateChart(
+          new Date(
+            today.getFullYear() - 1,
+            today.getMonth(),
+            today.getDate()
+          ).getTime(),
+          today.getTime()
+        );
         break;
       case "three_year":
-        this.updateChart(new Date(today.getFullYear() - 3, today.getMonth(), today.getDate()).getTime(), today.getTime());
+        this.updateChart(
+          new Date(
+            today.getFullYear() - 3,
+            today.getMonth(),
+            today.getDate()
+          ).getTime(),
+          today.getTime()
+        );
         break;
       case "all":
         this.updateChart(this.state.options.xaxis.min, today.getTime());
         break;
       case "one_week":
-        this.updateChart(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).getTime(), today.getTime());
+        this.updateChart(
+          new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate() - 7
+          ).getTime(),
+          today.getTime()
+        );
         break;
       case "one_day":
-        this.updateChart(new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime() - 24 * 60 * 60 * 1000, today.getTime());
+        this.updateChart(
+          new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+          ).getTime() -
+            24 * 60 * 60 * 1000,
+          today.getTime()
+        );
         break;
       default:
         break;
@@ -230,12 +276,22 @@ class ApexChart extends React.Component {
         {currentPrice && (
           <div className="flex justify-start ml-5">
             <div className="text-start">
-              <div className="font-bold">{currentPrice.lastPrice.toFixed(2)}</div>
+              <div className="font-bold">
+                {currentPrice.lastPrice.toFixed(2)}
+              </div>
               <div className="flex gap-3">
-                <div className={currentPrice.pChange < 0 ? "text-red" : "text-green"}>
+                <div
+                  className={
+                    currentPrice.pChange < 0 ? "text-red" : "text-green"
+                  }
+                >
                   {currentPrice.pChange.toFixed(2)}
                 </div>
-                <div className={currentPrice.change < 0 ? "text-red" : "text-green"}>
+                <div
+                  className={
+                    currentPrice.change < 0 ? "text-red" : "text-green"
+                  }
+                >
                   {currentPrice.change.toFixed(2)}
                 </div>
               </div>
