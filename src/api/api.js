@@ -32,3 +32,8 @@ export const graphEndpoints={
 export const transactionEndpoints={
     DELETE_TRANSACTION_API:BASE_URL+"/transaction/deleteTransaction"
 } 
+
+export const newsEndpoints={
+    ADD_NEWS_API:BASE_URL+"/news/addNews",
+    GET_ALL_NEWS_API:BASE_URL+"/newws/getAllNews"
+} 

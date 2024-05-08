@@ -7,6 +7,7 @@ const watchlistRoutes=require('./routes/Watchlist');
 const stockRoutes=require('./routes/Stock');
 const graphRoutes=require('./routes/Graph')
 const transactionRoutes=require('./routes/Transaction')
+const newsRoutes=require('./routes/News')
 
 const {dbConnect}=require('./config/database');
 const cookieParser=require('cookie-parser');
@@ -46,6 +47,7 @@ app.use("/api/v1/watchlist",watchlistRoutes);
 app.use("/api/v1/stock",stockRoutes);
 app.use("/api/v1/graph",graphRoutes);
 app.use("/api/v1/transaction",transactionRoutes);
+app.use("/api/v1/news",newsRoutes);
 
 
 
