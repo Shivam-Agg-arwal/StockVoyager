@@ -41,7 +41,7 @@ function NewsBar() {
             <button onClick={toggleVisibility} className={` fixed right-4 bottom-4 bg-theme text-white px-4 py-2 rounded-md ${isVisible ? 'hidden' : 'block'}`}>
                 {isVisible ? 'Hide News' : 'Show News'}
             </button>
-            <div className={`border w-full md:w-1/3 lg:w-1/4 mt-10 p-5 rounded-lg fixed right-0 top-0 bottom-0 bg-white overflow-y-auto transition-transform duration-500 transform ${isVisible ? 'translate-x-0' : 'lg:translate-x-full'}`}>
+            <div className={`z-20 border md:w-1/3 lg:w-1/4 mt-10 p-5 rounded-lg fixed right-0 top-0 bottom-0 bg-white overflow-y-auto transition-transform duration-500 transform ${isVisible ? 'translate-x-0' : 'translate-x-full'} `}>
                 <button onClick={closeNewsBar} className="absolute top-2 right-2 bg-red text-white px-2 py-1 rounded-md">
                     <IoClose />
                 </button>
