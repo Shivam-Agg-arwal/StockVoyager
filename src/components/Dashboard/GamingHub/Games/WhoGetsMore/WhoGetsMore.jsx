@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 const WhoGetsMore = () => {
-  // State to store Charlie's and Josh's information
   const [charlieInfo, setCharlieInfo] = useState({});
   const [joshInfo, setJoshInfo] = useState({});
   const [charlieTotalAssets, setCharlieTotalAssets] = useState(0);
@@ -18,12 +17,10 @@ const WhoGetsMore = () => {
     // Add more questions as needed
   ];
 
-  // Function to generate random values within realistic constraints
   const generateRandomValue = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
 
-  // Function to calculate total assets based on provided information
   const calculateTotalAssets = (info) => {
     const { startAge, currentAge, rpa, monthlyInstallment, lumpsumAmount } =
       info;
@@ -34,18 +31,28 @@ const WhoGetsMore = () => {
     return totalAssets;
   };
 
-  // Function to generate Charlie's and Josh's information
   const generateInformation = () => {
     const startAge = generateRandomValue(20, 40);
-    const currentAge = generateRandomValue(startAge, 60);
-    const rpa = generateRandomValue(10000, 50000);
+    const currentAge = generateRandomValue(startAge + 2, 60);
+    const rpa = generateRandomValue(100, 800) / 100; // Convert to decimal between 1% and 8%
     const monthlyInstallment = generateRandomValue(500, 2000);
     const lumpsumAmount = generateRandomValue(10000, 100000);
-    return { startAge, currentAge, rpa, monthlyInstallment, lumpsumAmount };
+  
+    // Check if generated values resemble real-world values
+    if (rpa < 0 || rpa > 8 || monthlyInstallment < 0 || lumpsumAmount < 0) {
+      return generateInformation(); // Re-generate if values are unrealistic
+    }
+  
+    return {
+      startAge,
+      currentAge,
+      rpa,
+      monthlyInstallment,
+      lumpsumAmount
+    };
   };
 
   useEffect(() => {
-    // Generate Charlie's and Josh's information when the component mounts
     const charlie = generateInformation();
     const josh = generateInformation();
     setCharlieInfo(charlie);
@@ -53,12 +60,10 @@ const WhoGetsMore = () => {
   }, [currentQuestionIndex]);
 
   useEffect(() => {
-    // Calculate total assets for Charlie and Josh
     setCharlieTotalAssets(calculateTotalAssets(charlieInfo));
     setJoshTotalAssets(calculateTotalAssets(joshInfo));
   }, [charlieInfo, joshInfo]);
 
-  // Function to handle user's choice
   const handleUserChoice = (chosenTrader) => {
     setSelectedOption(chosenTrader);
     if (chosenTrader === "Charlie") {
@@ -78,7 +83,6 @@ const WhoGetsMore = () => {
     }
   };
 
-  // Function to handle clicking the "Next" button
   const handleNextQuestion = () => {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     setWinner(null);
@@ -100,10 +104,8 @@ const WhoGetsMore = () => {
             />
             <h1 className="text-2xl text-center">Charlie</h1>
             <p className="text-lg text-center">
-              Charlie is {charlieInfo.currentAge - charlieInfo.startAge} years
-              old. He started trading at the age of {charlieInfo.startAge} and
-              currently, he is {charlieInfo.currentAge} years old. His Rate of
-              Personal Assets (RPA) is ${charlieInfo.rpa} per year. He invests $
+              Charlie has been trading for {charlieInfo.currentAge - charlieInfo.startAge} years. He started trading at the age of {charlieInfo.startAge} and
+              Currently, he is {charlieInfo.currentAge} years old. His Rate per Annum (RPA) is {charlieInfo.rpa}%. He invests $
               {charlieInfo.monthlyInstallment} monthly and has a lump sum amount
               of ${charlieInfo.lumpsumAmount}.
             </p>
@@ -114,8 +116,8 @@ const WhoGetsMore = () => {
             <p className="text-lg text-center">
               Josh, who is {joshInfo.currentAge - joshInfo.startAge} years old,
               began trading at the age of {joshInfo.startAge} and is currently{" "}
-              {joshInfo.currentAge} years old. His Rate of Personal Assets (RPA)
-              is ${joshInfo.rpa} annually. He contributes $
+              {joshInfo.currentAge} years old. His Rate per Annum (RPA)
+              is {joshInfo.rpa}%. He contributes $
               {joshInfo.monthlyInstallment} monthly and holds a lump sum of $
               {joshInfo.lumpsumAmount}.
             </p>
@@ -144,15 +146,14 @@ const WhoGetsMore = () => {
             </h2>
             <p className="text-md text-center">
               The reason {winner} has more money now is because their total
-              assets are calculated based on their Rate of Personal Assets
-              (RPA), monthly investments, and lump sum amount. The total assets
+              assets are calculated based on their Rate per Annum (RPA), monthly investments, and lump sum amount. The total assets
               are the sum of RPA multiplied by the number of years, monthly
               investments multiplied by 12 months and the number of years, and
               the lump sum amount.
             </p>
             <p className="text-md text-center">
               For {winner}, the total assets are $
-              {winner === "Charlie" ? charlieTotalAssets : joshTotalAssets},
+              {winner === "Charlie" ? charlieTotalAssets.toFixed(2) : joshTotalAssets.toFixed(2)},
               while the other trader's total assets are $
               {winner === "Charlie" ? joshTotalAssets : charlieTotalAssets}.
               Therefore, {winner} has more money now.
