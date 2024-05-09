@@ -1,43 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import jsonData from './../../../data/example-news.json';
+import { IoClose } from "react-icons/io5";
 
 function NewsBar() {
-    const extractedData = jsonData.data.map(item => {
-        return {
-            uuid: item.uuid,
-            title: item.title,
-            image_url: item.image_url,
-            url: item.url
-        };
-    });
+    const [isVisible, setIsVisible] = useState(false);
 
-    // Render the first news item with a highlighted image
-    const firstNews = extractedData[0];
-    const highlightedNews = (
-        <div className="relative hidden lg:block">
-            <img src={firstNews.image_url} alt={firstNews.title} className="w-full h-auto rounded-lg" />
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black opacity-75 text-white p-2 px-3 rounded-lg">
-                <h3 className="text-md font-semibold">{firstNews.title}</h3>
-            </div>
-        </div>
-    );
+    const extractedData = jsonData.data.map(item => ({
+        uuid: item.uuid,
+        title: item.title,
+        image_url: item.image_url,
+        url: item.url
+    }));
 
-    // Render the rest of the news items in a list format
-    const restNews = extractedData.slice(1).map(news => (
-        <div key={news.uuid} className="flex items-center my-2 rounded-md">
-            <img src={news.image_url} alt={news.title} className=" border-4 w-12 h-12 rounded-full mr-2" />
-            <a href={news.url} className="text-blue-500 hover:underline">
-                <h3 className="text-base font-medium">{news.title}</h3>
-            </a>
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
+
+    const closeNewsBar = () => {
+        setIsVisible(false);
+    };
+
+    const allNews = extractedData.map((news, index) => (
+        <div key={index} className="mb-8 lg:flex lg:items-center lg:mb-6">
+          <img
+            src={news.image_url}
+            alt={news.title}
+            className="w-full lg:w-48 rounded-lg mb-4 lg:mb-0 lg:mr-4 lg:flex-shrink-0"
+          />
+          <div className="flex-grow">
+            <h3 className="text-lg font-semibold mb-2">{news.title}</h3>
+            {/* Add additional information if available, e.g., news description */}
+            {/* <p className="text-sm text-gray-600">{news.description}</p> */}
+          </div>
         </div>
-    ));
+      ));
 
     return (
-        <div className="border w-full md:w-1/4 lg:w-1/5 mt-10 h-full p-5 rounded-lg hidden md:block">
-            <h1 className='text-2xl underline text-center mb-5'>Daily Stock News</h1>
-            {highlightedNews}
-            <div className="mt-4">
-                {restNews}
+        <div>
+            {/* Button for toggling visibility, shown only on larger screens */}
+            <button onClick={toggleVisibility} className={` fixed right-4 bottom-4 bg-theme text-white px-4 py-2 rounded-md ${isVisible ? 'hidden' : 'block'}`}>
+                {isVisible ? 'Hide News' : 'Show News'}
+            </button>
+            <div className={`z-20 border md:w-1/3 lg:w-1/4 mt-10 p-5 rounded-lg fixed right-0 top-0 bottom-0 bg-white overflow-y-auto transition-transform duration-500 transform ${isVisible ? 'translate-x-0' : 'translate-x-full'} `}>
+                <button onClick={closeNewsBar} className="absolute top-2 right-2 bg-red text-white px-2 py-1 rounded-md">
+                    <IoClose />
+                </button>
+                <h1 className="text-2xl underline text-center mb-6">Daily Stock News</h1>
+                <div className="mt-4">{allNews}</div>
             </div>
         </div>
     );

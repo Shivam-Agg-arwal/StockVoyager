@@ -58,11 +58,11 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
       {/* Collapsible Sidebar */}
       <div className={`fixed top-0 right-0 h-full bg-white shadow-lg transition-all duration-300 ${isOpen ? 'w-1/4' : 'w-0'}`}>
         {isOpen && (
-          <button className="absolute bottom-20 right-4 text-white bg-theme hover:bg-opacity-75 px-4 py-2 rounded-md" onClick={toggleSolution}>
+          <button className="absolute bottom-28 right-4 text-white bg-theme hover:bg-opacity-75 px-4 py-2 rounded-full" onClick={toggleSolution}>
             Solution
           </button>
         )}
-        <button className="absolute bottom-4 right-4 text-white bg-theme hover:bg-opacity-75 px-4 py-2 rounded-md" onClick={toggleSidebar}>
+        <button className="absolute bottom-16 right-4 text-white bg-theme hover:bg-opacity-75 px-6 py-2 rounded-full" onClick={toggleSidebar}>
           Hint
         </button>
         <div className="p-8">
