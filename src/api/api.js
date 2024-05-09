@@ -35,5 +35,5 @@ export const transactionEndpoints={
 
 export const newsEndpoints={
     ADD_NEWS_API:BASE_URL+"/news/addNews",
-    GET_ALL_NEWS_API:BASE_URL+"/newws/getAllNews"
+    GET_ALL_NEWS_API:BASE_URL+"/news/getAllNews"
 } 
