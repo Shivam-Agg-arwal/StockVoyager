@@ -24,6 +24,7 @@ const Trading = () => {
 
     return (
         <div className="max-w-[1280px] w-9/12 mx-auto my-6">
+
             <h2 className="text-4xl mx-auto text-center font-bold my-2">TRADE CENTER</h2>
             <label
                 htmlFor="default-search"
