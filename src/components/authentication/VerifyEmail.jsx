@@ -13,7 +13,7 @@ const VerifyEmail = () => {
     const {signupData}=useSelector((state)=>state.auth);
 
     const {
-        SIGNUP_API
+        SIGNUP_API, SENDOTP_API
       } = authenticationEndpoints;
     
 

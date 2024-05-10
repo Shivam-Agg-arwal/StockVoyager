@@ -123,7 +123,7 @@ class ApexChart extends React.Component {
           },
         },
         isFiveYearButtonVisible:
-          today.getFullYear() - new Date(minTimestamp).getFullYear() > 5,
+          today.getFullYear() - new Date(minTimestamp).getFullYear() > 4.9,
         isThreeYearButtonVisible:
           today.getFullYear() - new Date(minTimestamp).getFullYear() > 3,
         isAllButtonVisible: true,
@@ -221,7 +221,7 @@ class ApexChart extends React.Component {
   }
 
   renderButtons() {
-    const { isAllButtonVisible, isThreeYearButtonVisible } = this.state;
+    const { isAllButtonVisible, isThreeYearButtonVisible, isFiveYearButtonVisible } = this.state;
     return (
       <div className="toolbar text-sm flex justify-center">
         <button
@@ -261,7 +261,7 @@ class ApexChart extends React.Component {
             className="m-1 bg-theme px-2 rounded-md text-sm hover:opacity-70"
             onClick={() => this.updateData("all")}
           >
-            All
+            {isFiveYearButtonVisible ? '5Y' : 'All'}
           </button>
         )}
       </div>
