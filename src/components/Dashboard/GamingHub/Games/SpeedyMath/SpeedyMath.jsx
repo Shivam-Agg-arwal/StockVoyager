@@ -12,75 +12,35 @@ const SpeedyMath = () => {
     const [optionState, setOptionState] = useState(new Array(3).fill(null));
 
     const [Investment,setInvestment]=useState(0);
-    // /constt;
-
-
-    function numberToWords(num) {
-        const units = ['', 'thousand', 'lakh', 'crore']; // Add more as needed
-    
-        // Function to convert a three-digit number to words
-        function convertThreeDigit(num) {
-            const ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-            const tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-            const teens = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-    
-            let result = '';
-            if (num >= 100) {
-                result += ones[Math.floor(num / 100)] + ' hundred ';
-                num %= 100;
-            }
-            if (num >= 20) {
-                result += tens[Math.floor(num / 10)] + ' ';
-                num %= 10;
-            } else if (num >= 10) {
-                result += teens[num - 10];
-                num = 0;
-            }
-            if (num > 0) {
-                result += ones[num];
-            }
-            return result.trim();
+    function formatIndianNumber(num) {
+        if (num === undefined || isNaN(num)) {
+            return 'Invalid number';
         }
     
-        // Break the number into segments
-        const segments = [];
-        while (num > 0) {
-            segments.push(num % 1000);
-            num = Math.floor(num / 1000);
-        }
+        const numString = num.toString();
+        const length = numString.length;
+        let formattedNumber = '';
     
-        // Convert each segment to words
-        let result = '';
-        for (let i = segments.length - 1; i >= 0; i--) {
-            const segment = segments[i];
-            if (segment !== 0) {
-                result += convertThreeDigit(segment) + ' ' + units[i] + ' ';
+        let i = 0;
+        while (i < length) {
+            if (length - i > 3) {
+                formattedNumber += numString[i] + numString[i + 1] + ','; // Add two digits and a comma
+                i += 2; // Move to the next set of two digits
+            } else {
+                formattedNumber += numString[i]; // Add the remaining digits
+                i++;
             }
         }
-
-        let sentence=result.trim();
-        const words = sentence.split(' ');
-        
-        // Capitalize the first letter of each word
-        const capitalizedWords = words.map(word => {
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        });
     
-        // Join the words back into a sentence
-        return capitalizedWords.join(' ');
+        return formattedNumber;
     }
-    
-    // Example usage:
-    console.log(numberToWords(500032)); // Output: "5 lakh 32"
     
 
     const lumpsumOptions = [
-        1000, 5000, 10000, 20000, 25000, 50000, 75000, 100000, 200000, 250000,
-        500000, 1000000, 2000000,
+        1000, 5000, 10000, 20000, 25000, 50000, 75000, 100000, 200000,
     ];
     const sipOptions = [
-        100, 500, 1000, 2000, 2500, 3000, 4000, 5000, 7000, 10000, 15000, 20000,
-        25000, 30000, 40000, 50000, 75000, 100000,
+        100, 500, 1000, 2000, 2500, 3000, 4000, 5000, 7000, 10000,
     ];
     const rateOptions = [
         7, 7.5, 8, 9, 10, 10.5, 11, 12, 12.5, 13, 14, 14.5, 15, 16, 18, 20,
@@ -210,7 +170,7 @@ const SpeedyMath = () => {
                                     HandleClick(1, i);
                                 }}
                             >
-                                {numberToWords(Math.floor(finalValue))}
+                                {formatIndianNumber(Math.floor(finalValue))}
                             </div>
                         );
                     } else {
@@ -224,7 +184,7 @@ const SpeedyMath = () => {
                                     optionState[i] ? "text-[#ff0000]" : ""
                                 }`}
                             >
-                                {numberToWords(Math.floor(optionMul[i] * finalValue))}
+                                {formatIndianNumber(Math.floor(optionMul[i] * finalValue))}
                             </div>
                         );
                     }
