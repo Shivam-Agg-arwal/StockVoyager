@@ -8,11 +8,12 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
 
   // Function to generate hints and solutions
   const generateHintsAndSolutions = () => {
+    console.log(words);
     const newHints = {};
     const newSolutions = {};
     words.forEach((item, index) => {
-      const word = item.word;
-      const wordLength = word.length;
+      const word = { word: item.word, explanation: item.explanation };
+      const wordLength = word.word.length;
       const numCharactersToShow = Math.ceil(wordLength * 0.3);
       const selectedIndexes = new Set();
 
@@ -22,15 +23,13 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
       }
 
       // Replace characters at non-selected indexes with underscores
-      const hint = word
+      const hint = `${word.word
         .split("")
-        .map((char, index) =>
-          selectedIndexes.has(index) ? char : "-"
-        )
-        .join("");
+        .map((char, index) => (selectedIndexes.has(index) ? char : "-"))
+        .join("")} = ${word.explanation}`;
 
       newHints[index] = hint;
-      newSolutions[index] = word;
+      newSolutions[index] = `${word.word} : ${word.explanation}`;
     });
     setHints(newHints);
     setSolutions(newSolutions);
@@ -42,7 +41,7 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
   }, [words]);
 
   const toggleSidebar = () => {
-    setIsOpen(prevIsOpen => !prevIsOpen);
+    setIsOpen((prevIsOpen) => !prevIsOpen);
   };
 
   const toggleSolution = () => {
@@ -54,28 +53,39 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
   };
 
   return (
-    <div className="relative">
-      {/* Collapsible Sidebar */}
-      <div className={`fixed top-0 right-0 h-full bg-white shadow-lg transition-all duration-300 ${isOpen ? 'w-1/4' : 'w-0'}`}>
-        {isOpen && (
-          <button className="absolute bottom-28 right-4 text-white bg-theme hover:bg-opacity-75 px-4 py-2 rounded-full" onClick={toggleSolution}>
-            Solution
-          </button>
-        )}
-        <button className="absolute bottom-16 right-4 text-white bg-theme hover:bg-opacity-75 px-6 py-2 rounded-full" onClick={toggleSidebar}>
-          Hint
+    <div
+      className={`fixed top-0 right-0 h-full bg-white shadow-lg transition-all duration-300 ${
+        isOpen ? "w-1/4" : "w-0"
+      }`}
+    >
+      {isOpen && (
+        <button
+          className="absolute bottom-28 right-4 text-white bg-theme hover:bg-opacity-75 px-4 py-2 rounded-full"
+          onClick={toggleSolution}
+        >
+          Solution
         </button>
-        <div className="p-8">
-          {/* Sidebar content */}
-          <h2 className="text-xl font-semibold mb-4">{showSolution ? 'Solution' : 'Hint'}</h2>
-          <ul className="flex flex-col gap-5">
-            {words.map((item, index) => (
-              <li key={index} className="mb-">
-                {showSolution ? `${index+1}: ${solutions[index]}` : `${index+1}: ${hints[index]}` }
-              </li>
-            ))}
-          </ul>
-        </div>
+      )}
+      <button
+        className="absolute bottom-16 right-4 text-white bg-theme hover:bg-opacity-75 px-6 py-2 rounded-full"
+        onClick={toggleSidebar}
+      >
+        Hint
+      </button>
+      <div className="p-8 overflow-y-auto max-h-full">
+        {/* Sidebar content */}
+        <h2 className="text-xl font-semibold mb-4">
+          {showSolution ? "Solution" : "Hint"}
+        </h2>
+        <ul className="flex flex-col gap-5">
+          {words.map((item, index) => (
+            <li key={index} className="mb-">
+              {showSolution
+                ? `${index + 1}: ${solutions[index]}`
+                : `${index + 1}: ${hints[index]}`}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
