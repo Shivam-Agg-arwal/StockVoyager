@@ -36,27 +36,29 @@ export const Login = () => {
 
 	const onSubmit = async (data) => {
 		try {
-			// console.log(data);
 			const formData = new FormData();
 			formData.append('email', data.username);
 			formData.append('password', data.password);
-
-			const response=await axios.post(LOGIN_API,formData);
+	
+			const response = await axios.post(LOGIN_API, formData);
 			console.log(response);
-			if(response.data.success){
-				toast.success('Login was successfull');
+			if (response.data.success) {
+				toast.success(response.data.toastMessage);
 				dispatch(setToken(response.data.token));
 				dispatch(setUser(response.data.user));
-				localStorage.setItem("token", JSON.stringify(response.data.token))
-				localStorage.setItem("user", JSON.stringify(response.data.user))
+				localStorage.setItem("token", JSON.stringify(response.data.token));
+				localStorage.setItem("user", JSON.stringify(response.data.user));
 				navigate('/dashboard/profile');
 			}
-			
-
 		} catch (error) {
-			toast.error('Login failed');
+			if (error.response && error.response.data && error.response.data.toastMessage) {
+				toast.error(error.response.data.toastMessage);
+			} else {
+				toast.error("Login failed");
+			}
 		}
-	};
+	}; 
+	
 
 	return (
 		<div className="flex justify-center items-center md:w-full md:h-full">

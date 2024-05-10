@@ -26,23 +26,32 @@ function UpdatePassword() {
 			const response = await axios.post(RESETPASSWORD_API, formData);
 			console.log(response);
 			if (response.data.success) {
-				toast.success("Password Updated Suuccessfully");
+				toast.success(response.data.toastMessage);
 				navigate("/login");
-			} else {
-				toast.error("Password Updation Failed : ");
-				navigate("/forgot-password");
 			}
 		} catch (error) {
-			toast.error("Password Updation  Failed");
+			if (
+				error.response &&
+				error.response.data &&
+				error.response.data.toastMessage
+			) {
+				toast.error(error.response.data.toastMessage);
+			} else {
+				toast.error("Password Updation  Failed");
+			}
 		}
 		toast.dismiss(loadingToast);
 	};
 	return (
 		<>
 			<div className="flex items-center justify-center w-full h-screen ">
-				
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-md mx-fit border p-14 rounded-lg">
-					<h1 className="text-3xl underline text-center">Update Password</h1>
+				<form
+					onSubmit={handleSubmit(onSubmit)}
+					className="flex flex-col gap-4 max-w-md mx-fit border p-14 rounded-lg"
+				>
+					<h1 className="text-3xl underline text-center">
+						Update Password
+					</h1>
 					<div className="mb-4">
 						<label
 							htmlFor="newPassword"

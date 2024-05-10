@@ -10,32 +10,37 @@ import axios from "axios";
 const VerifyEmail = () => {
     const navigate = useNavigate();
     const [otp, setOtp] = useState('');
-    const {signupData}=useSelector((state)=>state.auth);
+    const { signupData } = useSelector((state) => state.auth);
 
     const {
         SIGNUP_API, SENDOTP_API
-      } = authenticationEndpoints;
-    
+    } = authenticationEndpoints;
 
 
-    const handleSubmit =async () => {
+
+    const handleSubmit = async () => {
         // Handle submission of OTP
-        console.log("signupData",signupData);
-        const formData = new FormData();
-        formData.append('email', signupData.email);
-        formData.append('firstName', signupData.firstName);
-        formData.append('lastName', signupData.lastName);
-        formData.append('password', signupData.password);
-        formData.append('confirmPassword', signupData.confirmPassword);
-        formData.append('otp', otp);
-        console.log(...formData);
-        const response = await axios.post(SIGNUP_API, formData);
-        if(response.data.success){
-            navigate('/login');
-            toast.success('SignUp was successfull');
+        try {
+            const formData = new FormData();
+            formData.append('email', signupData.email);
+            formData.append('firstName', signupData.firstName);
+            formData.append('lastName', signupData.lastName);
+            formData.append('password', signupData.password);
+            formData.append('confirmPassword', signupData.confirmPassword);
+            formData.append('otp', otp);
+            console.log(...formData);
+            const response = await axios.post(SIGNUP_API, formData);
+            if (response.data.success) {
+                navigate('/login');
+                toast.success(response.data.toastMessage);
+            }
         }
-        else{
-            toast.error('SignUp Failed');
+        catch (error) {
+            if (error.response && error.response.data && error.response.data.toastMessage) {
+                toast.error(error.response.data.toastMessage);
+            } else {
+                toast.error("Signup failed");
+            }
         }
     };
 
@@ -54,7 +59,7 @@ const VerifyEmail = () => {
         }
     };
 
-    
+
     return (
         <div className="flex items-center justify-center h-screen w-full">
             <div className="flex flex-col border-2 border-black p-5 gap-2">
@@ -66,15 +71,15 @@ const VerifyEmail = () => {
                 </div>
 
                 <div className="text-lg">
-                <OtpInput
-                    value={otp}
-                    onChange={setOtp}
-                    numInputs={6}
-                    renderSeparator={<span> <pre>  </pre></span>}
-                    renderInput={(props) => <input {...props} className="border rounded-sm" />}
+                    <OtpInput
+                        value={otp}
+                        onChange={setOtp}
+                        numInputs={6}
+                        renderSeparator={<span> <pre>  </pre></span>}
+                        renderInput={(props) => <input {...props} className="border rounded-sm" />}
 
-                    id="otpstyle"
-                />
+                        id="otpstyle"
+                    />
                 </div>
 
                 <div className="p-1">
