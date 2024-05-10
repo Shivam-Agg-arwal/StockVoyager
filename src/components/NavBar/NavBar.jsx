@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../slices/profileSlice';
+import logo from '../../assets/logo/StockVoyageNavbar.jpg'
 
 function NavBar() {
   const {user}=useSelector((state)=>state.profile);
@@ -9,7 +10,9 @@ function NavBar() {
     <>
       <div className='flex justify-between px-3 md:px-6 py-1 md:py-2 border-b-[1px] border-b-grey gap-1'>
         <div className='flex justify-between  md:w-2/3'>
-          <div className='flex justify-center items-center mr-2'>LOGO</div>
+          <div className='flex justify-center items-center mr-2'>
+            <img src={logo} width={200}/>
+          </div>
           <div className=''>
             
             <form className="flex items-center max-w-sm mx-auto">   
