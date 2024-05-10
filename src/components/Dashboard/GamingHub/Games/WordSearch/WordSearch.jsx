@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { easyWords, mediumWords, hardWords } from "../../../../../data/stockWords";
+import {
+  easyWords,
+  mediumWords,
+  hardWords,
+} from "../../../../../data/stockWords";
 import SlidingPanel from "./SlidingPanel";
 
 const WordSearch = ({ difficulty }) => {
@@ -20,17 +24,16 @@ const WordSearch = ({ difficulty }) => {
     }
   }, [difficulty]);
 
-
   const gridSize = () => {
     switch (difficulty) {
       case "easy":
-        return 10;
+        return 14;
       case "medium":
-        return 15;
+        return 18;
       case "hard":
-        return 20;
+        return 24;
       default:
-        return 10;
+        return 14;
     }
   };
 
@@ -63,7 +66,8 @@ const WordSearch = ({ difficulty }) => {
       for (let row = 0; row < gridSize(); row++) {
         for (let col = 0; col <= gridSize() - searchWord.length; col++) {
           if (
-            grid[row].slice(col, col + searchWord.length).join("") === searchWord
+            grid[row].slice(col, col + searchWord.length).join("") ===
+            searchWord
           ) {
             setMessage(selectedWord.explanation);
             found = true;
@@ -125,8 +129,8 @@ const WordSearch = ({ difficulty }) => {
   // Function to set the selected words in the grid
   const setWords = () => {
     try {
-      const newGrid = Array.from({ length: gridSize() }).map(() =>
-        Array.from({ length: gridSize() }).fill("") // Fill the grid with empty strings initially
+      const newGrid = Array.from({ length: gridSize() }).map(
+        () => Array.from({ length: gridSize() }).fill("") // Fill the grid with empty strings initially
       );
 
       const occupiedPositions = new Set(); // Set to store occupied positions
@@ -206,18 +210,18 @@ const WordSearch = ({ difficulty }) => {
   const generateSelectedWords = () => {
     try {
       let words = [];
-      let l = 0
+      let l = 0;
       switch (difficulty) {
         case "easy":
           words = easyWords;
-          l = 5
+          l = 5;
           break;
         case "medium":
           words = mediumWords;
-          l = 8
+          l = 8;
           break;
         case "hard":
-          l = 10
+          l = 10;
           words = hardWords;
           break;
         default:
@@ -225,7 +229,6 @@ const WordSearch = ({ difficulty }) => {
       }
 
       const selected = [];
-
 
       while (selected.length < l) {
         const randomIndex = Math.floor(Math.random() * words.length);
@@ -333,7 +336,9 @@ const WordSearch = ({ difficulty }) => {
             type="text"
             value={searchWord}
             onChange={(e) =>
-              setSearchWord(e.target.value.replace(/[^A-Za-z]/g, "").toUpperCase())
+              setSearchWord(
+                e.target.value.replace(/[^A-Za-z]/g, "").toUpperCase()
+              )
             }
             onKeyPress={handleKeyPress}
             placeholder="Enter a word to search"
