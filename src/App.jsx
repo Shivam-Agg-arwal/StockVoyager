@@ -22,7 +22,7 @@ import GamingHub from "./components/Dashboard/GamingHub/GamingHub";
 import SpeedyMath from "./components/Dashboard/GamingHub/Games/SpeedyMath/SpeedyMath";
 import FinancialQuiz from "./components/Dashboard/GamingHub/Games/FinancialQuiz/FinancialQuiz";
 import WhoGetsMore from "./components/Dashboard/GamingHub/Games/WhoGetsMore/WhoGetsMore";
-import WordSearch from "./components/Dashboard/GamingHub/Games/WordSearch/WordSearch";
+import WordSearchMain from "./components/Dashboard/GamingHub/Games/WordSearch/WordSearchMain";
 
 export default function App() {
     const { user } = useSelector((state) => state.profile);
@@ -72,7 +72,7 @@ export default function App() {
                         
                         <Route
                             path="/dashboard/gamingHub/wordSearch"
-                            element={<WordSearch />}
+                            element={<WordSearchMain />}
                         />
                         
 
