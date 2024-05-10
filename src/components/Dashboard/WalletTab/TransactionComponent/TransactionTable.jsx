@@ -9,68 +9,13 @@ import { formatDateWithOffset } from "../../../../utils/dateFormatter";
 
 
 const TransactionTable = () => {
-    const [transactions,setTransactions] = useState([
-        {
-            id: 1,
-            stockSymbol: "AAPL",
-            stockName: "Apple Inc.",
-            orderType: "Buy",
-            quantity: 100,
-            price: 150.25,
-            tradeValue: 15025,
-            orderDate: "2024-04-25",
-        },
-        {
-            id: 2,
-            stockSymbol: "GOOG",
-            stockName: "Alphabet Inc.",
-            orderType: "Sell",
-            quantity: 50,
-            price: 2750.75,
-            tradeValue: 137537.5,
-            orderDate: "2024-04-26",
-        },
-        {
-            id: 3,
-            stockSymbol: "MSFT",
-            stockName: "Microsoft Corporation",
-            orderType: "Buy",
-            quantity: 75,
-            price: 300.5,
-            tradeValue: 22537.5,
-            orderDate: "2024-04-27",
-        },
-        {
-            id: 4,
-            stockSymbol: "TSLA",
-            stockName: "Tesla, Inc.",
-            orderType: "Sell",
-            quantity: 25,
-            price: 850.75,
-            tradeValue: 21268.75,
-            orderDate: "2024-04-28",
-        },
-        {
-            id: 5,
-            stockSymbol: "AMZN",
-            stockName: "Amazon.com, Inc.",
-            orderType: "Buy",
-            quantity: 150,
-            price: 3300.25,
-            tradeValue: 495037.5,
-            orderDate: "2024-04-29",
-        },
-        // Add more entries as needed
-    ]);
+    const [transactions,setTransactions] = useState([]);
 
     const {DELETE_TRANSACTION_API}=transactionEndpoints;
     const [page,setPage]=useState(1);
-    const pageSize=4;
+    const pageSize=7;
 
     const [totalPages,setTotalPages]=useState(0);
-
-
-
 
     const {user}=useSelector((state)=>state.profile);
     const {token}=useSelector((state)=>state.auth);
@@ -121,7 +66,8 @@ const TransactionTable = () => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {transactions.slice((page-1)*pageSize, Math.min(page*pageSize, transactions.length)).map((transaction) => {
+
+                    {transactions.length>0? transactions.slice((page-1)*pageSize, Math.min(page*pageSize, transactions.length)).map((transaction) => {
                         return (
                             <tr key={transaction.id}>
                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -138,7 +84,7 @@ const TransactionTable = () => {
                                 </td>
                             </tr>
                         );
-                    })}
+                    }) : <div> No Transactions made !</div>}
                 </tbody>
             </table>
             <div className="flex flex-row gap-2 items-center">
