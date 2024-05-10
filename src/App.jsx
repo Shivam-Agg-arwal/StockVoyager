@@ -48,7 +48,7 @@ export default function App() {
                     <Route element={<Dashboard />}>
                         <Route
                             path="/dashboard/profile"
-                            element={<ProfileTab />}
+                            element={<WalletTab />}
                         />
                         <Route
                             path="/dashboard/gamingHub"
@@ -87,10 +87,6 @@ export default function App() {
                         <Route
                             path="/dashboard/setting"
                             element={<Settings />}
-                        />
-                        <Route
-                            path="/dashboard/wallet"
-                            element={<WalletTab />}
                         />
                         <Route
                             path="/dashboard/tradeCenter"

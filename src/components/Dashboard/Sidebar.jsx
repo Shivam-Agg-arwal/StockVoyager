@@ -35,7 +35,7 @@ const Sidebar = () => {
 		<div className="flex flex-col bg-white relative w-[60px] min-h-screen h-auto justify-between items-center border-grey border-r-2 md:py-4">
 			<div className="flex flex-col justify-evenly flex-grow max-h-56 ">
 				<div className="flex flex-col justify-between flex-grow gap-6">
-					<div
+					{/* <div
 						className={`${location.pathname === "/dashboard/profile"
 							? "text-blue"
 							: "text-grey"
@@ -45,9 +45,21 @@ const Sidebar = () => {
 						}}
 					>
 						<MdDashboard />
-					</div>
-
+					</div> */}
 					<div className="flex flex-col gap-6">
+
+						<div
+							className={`${location.pathname === "/dashboard/profile"
+								? "text-blue"
+								: "text-grey"
+								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
+							onClick={() => {
+								navigate("/dashboard/profile");
+							}}
+						>
+							<MdDashboard />
+						</div>
+					
 					
 						<div
 							className={`${location.pathname === "/dashboard/tradeCenter"
@@ -84,17 +96,6 @@ const Sidebar = () => {
 							<CiStopwatch />
 						</div>
 
-						<div
-							className={`${location.pathname === "/dashboard/wallet"
-								? "text-blue"
-								: "text-grey"
-								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
-							onClick={() => {
-								navigate("/dashboard/wallet");
-							}}
-						>
-							<SlWallet />
-						</div>
 						<div
 							className={`${location.pathname === "/dashboard/gamingHub"
 								? "text-blue"
