@@ -56,19 +56,19 @@ export default function SellingModal({ stockData, setSellingModal }) {
             const response=await axios.post(SELL_STOCK_API,formdata);
             console.log(response);
             if(response.data.success){
-                toast.success("Stocks sold sucessfully ");
+                toast.success(response.data.toastMessage);
                 console.log(response.data.data);
                 dispatch(setUser(response.data.data))
                 localStorage.setItem('user', JSON.stringify(response.data.data));
                 setSellingModal(null);
-            }
-            else{
-                toast.error("Stock selling failed");
-            }
-
+            }    
         } catch (error) {
-            console.log("failed to SELL the share ", error);
-        }
+            if (error.response && error.response.data && error.response.data.toastMessage) {
+                toast.error(error.response.data.toastMessage);
+			} else {
+                toast.error("Stock selling failed");
+			}
+		}
     };
 
     return (

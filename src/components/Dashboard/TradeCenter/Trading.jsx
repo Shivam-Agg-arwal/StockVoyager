@@ -1,7 +1,6 @@
 import React from "react";
 import { symbolMapping } from "../../../data/Symbol";
 import { GiTakeMyMoney } from "react-icons/gi";
-import { useState } from "react";
 import { WiLightning } from "react-icons/wi";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
