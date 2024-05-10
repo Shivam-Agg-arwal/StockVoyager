@@ -3,14 +3,14 @@ import React, { useState, useEffect } from "react";
 const SlidingPanel = ({ words, onSolutionButtonClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSolution, setShowSolution] = useState(false);
-  const [hints, setHints] = useState({});
-  const [solutions, setSolutions] = useState({});
+  const [hints, setHints] = useState([]);
+  const [solutions, setSolutions] = useState([]);
+  const [indexCounter, setIndexCounter] = useState(0);
 
   // Function to generate hints and solutions
   const generateHintsAndSolutions = () => {
-    console.log(words);
-    const newHints = {};
-    const newSolutions = {};
+    const newHints = [];
+    const newSolutions = [];
     words.forEach((item, index) => {
       const word = { word: item.word, explanation: item.explanation };
       const wordLength = word.word.length;
@@ -28,8 +28,8 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
         .map((char, index) => (selectedIndexes.has(index) ? char : "-"))
         .join("")} = ${word.explanation}`;
 
-      newHints[index] = hint;
-      newSolutions[index] = `${word.word} : ${word.explanation}`;
+      newHints.push(hint);
+      newSolutions.push(`${word.word} : ${word.explanation}`);
     });
     setHints(newHints);
     setSolutions(newSolutions);
@@ -46,9 +46,10 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
 
   const toggleSolution = () => {
     // Only toggle solution if the sidebar is open
-    if (isOpen) {
-      setShowSolution((prevShowSolution) => !prevShowSolution);
+    if (isOpen && indexCounter < words.length) {
+      setShowSolution(true);
       onSolutionButtonClick(); // Call the onSolutionButtonClick function
+      setIndexCounter((prevCounter) => prevCounter + 1); // Increment the index counter
     }
   };
 
@@ -80,9 +81,7 @@ const SlidingPanel = ({ words, onSolutionButtonClick }) => {
         <ul className="flex flex-col gap-5">
           {words.map((item, index) => (
             <li key={index} className="mb-">
-              {showSolution
-                ? `${index + 1}: ${solutions[index]}`
-                : `${index + 1}: ${hints[index]}`}
+              {index <= indexCounter - 1 ? `${index + 1}: ${solutions[index]}` : `${index + 1}: ${hints[index]}`}
             </li>
           ))}
         </ul>

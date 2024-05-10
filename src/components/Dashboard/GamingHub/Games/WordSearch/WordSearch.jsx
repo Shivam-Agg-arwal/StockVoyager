@@ -13,6 +13,7 @@ const WordSearch = ({ difficulty }) => {
   const [initialGridSet, setInitialGridSet] = useState(false);
   const [foundWords, setFoundWords] = useState([]);
   const [selectedWords, setSelectedWords] = useState([]);
+  const [indexCounter, setIndexCounter] = useState(0);
 
   useEffect(() => {
     try {
@@ -37,7 +38,6 @@ const WordSearch = ({ difficulty }) => {
     }
   };
 
-  // Function to check if word exists in the grid
   const checkWord = () => {
     try {
       if (!searchWord) {
@@ -62,7 +62,6 @@ const WordSearch = ({ difficulty }) => {
       let found = false;
       let foundCoordinates = [];
 
-      // Horizontal search
       for (let row = 0; row < gridSize(); row++) {
         for (let col = 0; col <= gridSize() - searchWord.length; col++) {
           if (
@@ -81,7 +80,6 @@ const WordSearch = ({ difficulty }) => {
         if (found) break;
       }
 
-      // Vertical search
       for (let col = 0; col < gridSize() && !found; col++) {
         for (let row = 0; row <= gridSize() - searchWord.length; row++) {
           if (
@@ -103,7 +101,6 @@ const WordSearch = ({ difficulty }) => {
       }
 
       if (found) {
-        // Highlight the found word
         const updatedGrid = [...grid];
         foundCoordinates.forEach(([row, col]) => {
           updatedGrid[row][col] = (
@@ -126,20 +123,17 @@ const WordSearch = ({ difficulty }) => {
     }
   };
 
-  // Function to set the selected words in the grid
   const setWords = () => {
     try {
       const newGrid = Array.from({ length: gridSize() }).map(
-        () => Array.from({ length: gridSize() }).fill("") // Fill the grid with empty strings initially
+        () => Array.from({ length: gridSize() }).fill("")
       );
 
-      const occupiedPositions = new Set(); // Set to store occupied positions
+      const occupiedPositions = new Set();
 
-      // Iterate through selectedWords and set them in the grid
       selectedWords.forEach(({ word }) => {
         let direction = Math.random() < 0.5 ? "horizontal" : "vertical";
 
-        // Find a random starting position for the word
         let row, col;
         let foundPosition = false;
         while (!foundPosition) {
@@ -151,7 +145,6 @@ const WordSearch = ({ difficulty }) => {
             col = Math.floor(Math.random() * gridSize());
           }
 
-          // Check if the positions are already occupied
           let positionsOccupied = false;
           for (let i = 0; i < word.length; i++) {
             const newRow = direction === "horizontal" ? row : row + i;
@@ -163,7 +156,6 @@ const WordSearch = ({ difficulty }) => {
           }
 
           if (!positionsOccupied) {
-            // If positions are not occupied, set the word in the grid and mark positions as occupied
             for (let i = 0; i < word.length; i++) {
               const newRow = direction === "horizontal" ? row : row + i;
               const newCol = direction === "horizontal" ? col + i : col;
@@ -175,11 +167,9 @@ const WordSearch = ({ difficulty }) => {
         }
       });
 
-      // Fill the rest of the grid with random letters
       for (let row = 0; row < gridSize(); row++) {
         for (let col = 0; col < gridSize(); col++) {
           if (newGrid[row][col] === "") {
-            // If the cell is empty, assign a random letter
             newGrid[row][col] = String.fromCharCode(
               65 + Math.floor(Math.random() * 26)
             );
@@ -187,7 +177,7 @@ const WordSearch = ({ difficulty }) => {
         }
       }
 
-      setGrid(newGrid); // Update the grid state with the selected words and random letters
+      setGrid(newGrid);
     } catch (error) {
       console.error("Error setting words:", error);
     }
@@ -260,15 +250,12 @@ const WordSearch = ({ difficulty }) => {
 
   const handleSolutionButtonClick = () => {
     try {
-      // This function will be called when the solution button in the SlidingPanel component is clicked
-      console.log("Solution button clicked");
-
-      // Mark all solution words in the grid
       const updatedGrid = [...grid];
-      selectedWords.forEach(({ word }) => {
+      const updatedIndexCounter = indexCounter + 1;
+  
+      selectedWords.slice(0, updatedIndexCounter).forEach(({ word }) => {
         for (let row = 0; row < gridSize(); row++) {
           for (let col = 0; col < gridSize(); col++) {
-            // Check horizontally
             if (col + word.length <= gridSize()) {
               const horizontalWord = updatedGrid[row]
                 .slice(col, col + word.length)
@@ -283,8 +270,7 @@ const WordSearch = ({ difficulty }) => {
                 }
               }
             }
-
-            // Check vertically
+  
             if (row + word.length <= gridSize()) {
               let verticalWord = "";
               for (let i = row; i < row + word.length; i++) {
@@ -303,13 +289,14 @@ const WordSearch = ({ difficulty }) => {
           }
         }
       });
-
-      setGrid(updatedGrid); // Update the grid state with marked solution words
-      setMessage("The Game is finished!!!");
+  
+      setGrid(updatedGrid);
+      setIndexCounter(updatedIndexCounter);
     } catch (error) {
       console.error("Error handling solution button click:", error);
     }
   };
+  
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen">
@@ -355,6 +342,7 @@ const WordSearch = ({ difficulty }) => {
         <SlidingPanel
           words={selectedWords}
           onSolutionButtonClick={handleSolutionButtonClick}
+          indexCounter={indexCounter}
         />
       </div>
     </div>
