@@ -7,34 +7,34 @@ import axios from "axios";
 const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [emailSent, setEmailSent] = useState(false);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
-    const {RESETPASSTOKEN_API}=authenticationEndpoints;
+    const { RESETPASSTOKEN_API } = authenticationEndpoints;
 
-    const submitHandler = async(e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        sendMail();        
+        sendMail();
     };
 
-    const sendMail = async() => {
+    const sendMail = async () => {
         // Implement resend email functionality here
         try {
-			const formData = new FormData();
-			formData.append('email',email);
+            const formData = new FormData();
+            formData.append("email", email);
             console.log(RESETPASSTOKEN_API);
-            const loadingToast=toast.loading('Sending Mail...');
-			const response=await axios.post(RESETPASSTOKEN_API,formData);
+            const loadingToast = toast.loading("Sending Mail...");
+            const response = await axios.post(RESETPASSTOKEN_API, formData);
             console.log(response);
-			if(response.data.success){
-				toast.success('Mail Sent Suuccessfully');
-			}
-            else{
-                toast.error('Reset Email Sending Failed : ');
+            if (response.data.success) {
+                toast.success(response.data.toastMessage);
             }
             toast.dismiss(loadingToast);
-
-		} catch (error) {
-			toast.error('Reset Email Sending Failed');
+        } catch (error) {
+			if (error.response && error.response.data && error.response.data.toastMessage) {
+				toast.error(error.response.data.toastMessage);
+			} else {
+				toast.error("Reset email sending failed");
+			}
 		}
         setEmailSent(true);
     };
@@ -56,7 +56,12 @@ const ForgotPassword = () => {
                 {!emailSent ? (
                     <form onSubmit={submitHandler}>
                         <div className="flex gap-3">
-                            <label className="font-bold text-lg " htmlFor="email">Email Address<sup>*</sup></label>
+                            <label
+                                className="font-bold text-lg "
+                                htmlFor="email"
+                            >
+                                Email Address<sup>*</sup>
+                            </label>
                             <input
                                 type="email"
                                 id="email"
@@ -68,11 +73,23 @@ const ForgotPassword = () => {
                                 className="border border-black rounded-md"
                             />
                         </div>
-                        <button type="submit" className="text-black bg-yellow-50 py-3 w-full font-bold rounded-lg">Reset Your Password</button>
+                        <button
+                            type="submit"
+                            className="text-black bg-yellow-50 py-3 w-full font-bold rounded-lg"
+                        >
+                            Reset Your Password
+                        </button>
                     </form>
                 ) : (
                     <div>
-                        <button className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey" onClick={()=>{sendMail()}}>Resend Email</button>
+                        <button
+                            className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
+                            onClick={() => {
+                                sendMail();
+                            }}
+                        >
+                            Resend Email
+                        </button>
                     </div>
                 )}
             </div>

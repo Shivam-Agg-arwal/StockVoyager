@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { stockOperationsEndpoints } from "../../../api/api";
 import fetchCurrentPrice from "../../../../pyserver/MakeRequest/getStockCurrentPrice";
 
 const StockIndices = ({ symbol }) => {

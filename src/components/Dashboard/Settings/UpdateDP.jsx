@@ -36,7 +36,7 @@ const UpdateDP = () => {
 
             const response = await axios.post(UPDATE_DP_API, formData);
             if (response.data.success) {
-                toast.success("Updated successfully");
+                toast.success(response.data.toastMessage);
                 dispatch(setUser(response.data.data));
                 localStorage.setItem(
                     "user",
@@ -45,9 +45,12 @@ const UpdateDP = () => {
                 removeHandle();
             }
         } catch (error) {
-            toast.error("Updation failed");
-            console.log(error);
-        }
+			if (error.response && error.response.data && error.response.data.toastMessage) {
+				toast.error(error.response.data.toastMessage);
+			} else {
+				toast.error("Updation failed");
+			}
+		}
         toast.dismiss(loadingToast);
     };
 

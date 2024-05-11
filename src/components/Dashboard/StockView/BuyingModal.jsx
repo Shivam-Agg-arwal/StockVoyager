@@ -51,19 +51,20 @@ export default function BuyingModal({ stockData, setbuyingmodal }) {
             const response=await axios.post(BUY_STOCK_API,formdata);
             console.log(response);
             if(response.data.success){
-                toast.success("Stock bought sucessfully ");
+                toast.success(response.data.toastMessage);
                 console.log(response.data.data);
                 dispatch(setUser(response.data.data))
                 localStorage.setItem('user', JSON.stringify(response.data.data));
                 setbuyingmodal(null);
-            }
-            else{
-                toast.error("Stock buying failed");
-            }
-
-        } catch (error) {
-            console.log("failed to buy the share ", error);
+            }   
         }
+        catch (error) {
+			if (error.response && error.response.data && error.response.data.toastMessage) {
+				toast.error(error.response.data.toastMessage);
+			} else {
+				toast.error("Stock Buying failed");
+			}
+		}
     };
 
     return (

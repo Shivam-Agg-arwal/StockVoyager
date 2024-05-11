@@ -14,6 +14,7 @@ exports.updateDisplayPicture = async (req, res) => {
             1000,
             1000
         );
+
         await User.findByIdAndUpdate(
             { _id: userId },
             { image: image.secure_url }
@@ -25,15 +26,19 @@ exports.updateDisplayPicture = async (req, res) => {
             .populate("transactions")
             .populate("watchList")
             .populate("portfolioGraph");
+
+
         return res.status(200).json({
             success: true,
             message: `Image Updated successfully`,
             data: updatedUser,
+            toastMessage:"Your Profile Image was updated Successfully",
         });
     } catch (error) {
         return res.status(500).json({
             success: false,
             message: error.message,
+            toastMessage:"Technical Error ! ",
         });
     }
 };
@@ -50,6 +55,7 @@ exports.updateProfile = async (req, res) => {
             return res.status(500).json({
                 success: false,
                 message: "User id field could not be fetched",
+                toastMessage:"Technical Error : Try by login again ",
             });
         }
 
@@ -60,6 +66,7 @@ exports.updateProfile = async (req, res) => {
             return res.status(500).json({
                 success: false,
                 message: "User not found",
+                toastMessage:"Tehnical Error!",
             });
         }
         const profileDetails = await Profile.findById(
@@ -96,13 +103,15 @@ exports.updateProfile = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            data:updatedUser,
+            toastMessage:"Your profile was updated successfully",
+            data: updatedUser,
         });
     } catch (error) {
         console.log("profile updattion failed", error);
         return res.status(500).json({
             success: false,
             message: "Profile updated failed",
+            toastMessage:"echnical Error !",
         });
     }
 };

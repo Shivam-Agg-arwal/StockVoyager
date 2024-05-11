@@ -6,7 +6,6 @@ exports.buyStock = async (req, res) => {
     try {
         // Extract data from request body
         const { symbol, cprice, quantity } = req.body;
-        console.log(quantity);
         const userID = req.user.id;
 
         // Check if user ID is available
@@ -14,6 +13,7 @@ exports.buyStock = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "User id field could not be fetched",
+                toastMessage: "Technical Error ! Try to login again ",
             });
         }
 
@@ -23,6 +23,8 @@ exports.buyStock = async (req, res) => {
                 success: false,
                 message:
                     "Either symbol, current price, or quantity was not found",
+
+                toastMessage: "Fill all entries carefully  .",
             });
         }
 
@@ -37,6 +39,7 @@ exports.buyStock = async (req, res) => {
             return res.status(404).json({
                 success: false,
                 message: "User not found",
+                toastMessage: " Technical Error .",
             });
         }
 
@@ -55,14 +58,12 @@ exports.buyStock = async (req, res) => {
 
         // Add transaction to user
         userDetails.transactions.push(transactionDetails._id);
-        // console.log(userDetails);
 
         // Check if the stock already exists in the user's portfolio
         const stockInfo = userDetails.portfolio.find(
             (stock) => stock.stockSymbol === symbol
         );
         const symbolExists = !!stockInfo;
-        // console.log(stockInfo);
 
         if (symbolExists) {
             // Update existing stock
@@ -74,8 +75,6 @@ exports.buyStock = async (req, res) => {
                 },
                 { new: true }
             );
-            
-            console.log(updatedStock.quantity);
 
             // Update user's array of stocks
             const stockIndex = userDetails.portfolio.findIndex(
@@ -112,6 +111,7 @@ exports.buyStock = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Stock purchase successful",
+            toastMessage: "Stock bought successfully .",
             data: updatedUser,
         });
     } catch (error) {
@@ -121,6 +121,7 @@ exports.buyStock = async (req, res) => {
             success: false,
             message: "Stock buying failed",
             error: error.message,
+            toastMessage: "Technical Error !",
         });
     }
 };
@@ -136,6 +137,7 @@ exports.sellStock = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "User id field could not be fetched",
+                toastMessage: "Technical Error ! Try to login again ",
             });
         }
 
@@ -145,6 +147,8 @@ exports.sellStock = async (req, res) => {
                 success: false,
                 message:
                     "Either symbol, current price, or quantity was not found",
+
+                toastMessage: "Fill all entries carefully .",
             });
         }
 
@@ -183,7 +187,6 @@ exports.sellStock = async (req, res) => {
             (stock) => stock.stockSymbol === symbol
         );
         const symbolExists = !!stockInfo;
-        console.log(stockInfo);
 
         if (symbolExists) {
             if (stockInfo.quantity > quantity) {
@@ -192,7 +195,10 @@ exports.sellStock = async (req, res) => {
                     stockInfo._id,
                     {
                         quantity: stockInfo.quantity - quantity,
-                        buy_cost: stockInfo.buy_cost *((stockInfo.quantity-quantity)/stockInfo.quantity),
+                        buy_cost:
+                            stockInfo.buy_cost *
+                            ((stockInfo.quantity - quantity) /
+                                stockInfo.quantity),
                     },
                     { new: true }
                 );
@@ -216,6 +222,7 @@ exports.sellStock = async (req, res) => {
             return res.status(500).json({
                 success: false,
                 message: "User dont have the stock to sell",
+                toastMessage: "You dont have stock to sell .",
             });
         }
 
@@ -237,6 +244,7 @@ exports.sellStock = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Stock sell successful",
+            toastMessage: "Stock sold successfully.",
             data: updatedUser,
         });
     } catch (error) {
@@ -245,6 +253,7 @@ exports.sellStock = async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Stock selling failed",
+            toastMessage: "Technical Error .",
             error: error.message,
         });
     }
