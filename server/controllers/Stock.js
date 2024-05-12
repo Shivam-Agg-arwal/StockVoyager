@@ -58,6 +58,7 @@ exports.buyStock = async (req, res) => {
 
         // Add transaction to user
         userDetails.transactions.push(transactionDetails._id);
+        userDetails.boughtAmt+=tradeamt;
 
         // Check if the stock already exists in the user's portfolio
         const stockInfo = userDetails.portfolio.find(
@@ -168,6 +169,8 @@ exports.sellStock = async (req, res) => {
 
         // Calculate total trade amount
         const tradeamt = cprice * quantity;
+        userDetails.boughtAmt-=tradeamt;
+
 
         // Create transaction
         const transactionDetails = await Transaction.create({

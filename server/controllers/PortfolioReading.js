@@ -58,3 +58,41 @@ exports.addToGraph = async (req, res) => {
     }
 };
 
+
+exports.updateEveryonesGraph = async (req, res) => {
+    try {
+        const users=await User.find({},{boughtAmt:true,portfolioBalance:true,portfolioGraph:true});
+
+
+        for (let user of users){
+            const buy_value=user.boughtAmt;
+            const curr_value=user.portfolioBalance;
+            
+            const graph = await PortfolioGraphReading.create({
+                buying_value: buy_value,
+                curr_value: curr_value
+            });
+    
+    
+            user.portfolioGraph.push(graph._id);
+            await user.save();
+        }
+
+
+        return res.status(200).json({
+            success: true,
+            message: "Readings Added",
+            toastMessage: "Timestamps Recorded",
+        })
+
+    } catch (error) {
+        console.log("Graph updation failed", error);
+        return res.status(500).json({
+            success: false,
+            message: "Graph updated failed",
+            toastMessage: "Technical Error: Try again after some time ",
+            error: error
+        });
+    }
+};
+

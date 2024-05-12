@@ -37,3 +37,11 @@ export const newsEndpoints={
     ADD_NEWS_API:BASE_URL+"/news/addNews",
     GET_ALL_NEWS_API:BASE_URL+"/news/getAllNews"
 } 
+
+
+
+export const adminRoutes={
+    UPDATE_ALL_STOCK_CURR_PRICE_API:BASE_URL+"/stockPrice/updateCurrPrice",
+    UPDATE_EVERYONE_PORTFOLIO_AMT_API:BASE_URL+"/stockPrice/updatePortfolioAmt",
+    UPDATE_ALL_GRAPH_API:BASE_URL+"/graph/updateEveryoneGraph",
+}

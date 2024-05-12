@@ -1,10 +1,14 @@
-const express=require('express');
-const router=express.Router();
+const express = require("express");
+const router = express.Router();
 
-const {addToGraph}=require('../controllers/PortfolioReading');
+const {
+    addToGraph,
+    updateEveryonesGraph,
+} = require("../controllers/PortfolioReading");
 
-const{auth}=require('../middlewares/auth');
+const { auth } = require("../middlewares/auth");
 
-router.post('/addToGraph',auth,addToGraph);
+router.post("/addToGraph", auth, addToGraph);
+router.post("/updateEveryoneGraph", updateEveryonesGraph);
 
-module.exports=router;
+module.exports = router;
