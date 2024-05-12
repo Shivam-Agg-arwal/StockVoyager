@@ -5,13 +5,14 @@ import process from 'process'; // Import the process module
 import fetchCurrentPrice from "./../../../../pyserver/MakeRequest/getStockCurrentPrice.js"
 import { symbolMapping } from "./../../../data/Symbol.js"
 
+
 const responseFilePath = 'responseFile.txt';
 
 async function fetchPricesForSymbols() {
   try {
     let responses = [];
     let promises = [];
-
+    const num_request = 11
     console.time("Total time for 10 batches");
 
     // Register a handler for the SIGINT event
@@ -33,7 +34,7 @@ async function fetchPricesForSymbols() {
       promises.push(fetchCurrentPrice(symbol));
 
       // If 10 promises have been created or it's the last iteration, await them
-      if ((i + 1) % 8 === 0 || i === symbolMapping.length - 1) {
+      if ((i + 1) % num_request === 0 || i === symbolMapping.length - 1) {
         // Execute promises in parallel
         const settledPromises = await Promise.allSettled(promises);
 
@@ -48,7 +49,7 @@ async function fetchPricesForSymbols() {
         promises = [];
 
         // If 10 batches have been processed, end the timer
-        if (Math.ceil((i + 1) / 8) === 10) {
+        if (Math.ceil((i + 1) / num_request) === 10) {
           console.timeEnd("Total time for 10 batches");
 
           // Save responses to file
