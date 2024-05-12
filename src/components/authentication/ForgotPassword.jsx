@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                         </div>
                         <button
                             type="submit"
-                            className="text-black bg-yellow-50 py-3 w-full font-bold rounded-lg"
+                            className="text-white bg-theme py-3 w-full rounded-lg mt-5"
                         >
                             Reset Your Password
                         </button>
@@ -83,7 +83,7 @@ const ForgotPassword = () => {
                 ) : (
                     <div>
                         <button
-                            className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey"
+                            className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey text-white"
                             onClick={() => {
                                 sendMail();
                             }}
@@ -93,7 +93,7 @@ const ForgotPassword = () => {
                     </div>
                 )}
             </div>
-            <div className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey">
+            <div className="cursor-pointer w-fit h-fit p-2 bg-theme rounded-md hover:bg-grey text-white">
                 Back to login
             </div>
         </div>

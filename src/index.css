@@ -90,3 +90,8 @@
 @keyframes l5-2 {
   100% {top:-0.1px}
 }
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
