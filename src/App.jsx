@@ -9,7 +9,7 @@ import ResetSuccess from "./components/authentication/ResetSuccess";
 import VerifyEmail from "./components/authentication/VerifyEmail";
 import NavBar from "./components/NavBar/NavBar";
 import Dashboard from "./components/Dashboard/Dashboard";
-import ProfileTab from "./components/Dashboard/ProfileTab";
+import Calculator from "./components/Dashboard/Calculator/Calculator";
 import Portfolio from "./components/Dashboard/Portfolio";
 import WatchList from "./components/Dashboard/WatchList";
 import Settings from "./components/Dashboard/Settings";
@@ -91,6 +91,10 @@ export default function App() {
                         <Route
                             path="/dashboard/tradeCenter"
                             element={<Trading />}
+                        />
+                        <Route
+                            path="/dashboard/investmentCalculator"
+                            element={<Calculator/>}
                         />
                         <Route
                             path="/dashboard/stockView/:symbol"

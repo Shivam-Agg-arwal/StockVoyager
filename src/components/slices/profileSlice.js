@@ -5,6 +5,8 @@ const initialState={
     user:localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):null,
     searchQuery:"",
     loading:null,
+    stockTitleLoading:false,
+    stockDetailLoading:false,
 }
 
 export const profileSlice=createSlice({
@@ -18,12 +20,16 @@ export const profileSlice=createSlice({
             state.loading=value.payload
         },
         setSearchQuery(state,value){
-            console.log("muje hi bula lia ",value.payload);
             state.searchQuery=value.payload
-
+        },
+        setStockTitleLoading(state,value){
+            state.stockTitleLoading=value.payload
+        },
+        setStockDetailsLoading(state,value){
+            state.stockDetailLoading=value.payload
         }
     }
 })
 
-export const {setUser,setLoading,setSearchQuery}=profileSlice.actions;
+export const {setUser,setLoading,setSearchQuery,setStockDetailsLoading,setStockTitleLoading}=profileSlice.actions;
 export default profileSlice.reducer;

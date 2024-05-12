@@ -5,6 +5,7 @@ import { CiStopwatch } from "react-icons/ci";
 import { FaHandHoldingDollar } from "react-icons/fa6";
 import { MdOutlineSettings } from "react-icons/md";
 import { SlWallet } from "react-icons/sl";
+import { GiCalculator } from "react-icons/gi";
 import { GiGamepad } from "react-icons/gi";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -35,17 +36,6 @@ const Sidebar = () => {
 		<div className="flex flex-col bg-white relative w-[60px] min-h-screen h-auto justify-between items-center border-grey border-r-2 md:py-4">
 			<div className="flex flex-col justify-evenly flex-grow max-h-56 ">
 				<div className="flex flex-col justify-between flex-grow gap-6">
-					{/* <div
-						className={`${location.pathname === "/dashboard/profile"
-							? "text-blue"
-							: "text-grey"
-							} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
-						onClick={() => {
-							navigate("/dashboard/profile");
-						}}
-					>
-						<MdDashboard />
-					</div> */}
 					<div className="flex flex-col gap-6">
 
 						<div
@@ -118,6 +108,17 @@ const Sidebar = () => {
 							}}
 						>
 							<MdOutlineSettings />
+						</div>
+						<div
+							className={`${location.pathname === "/dashboard/investmentCalculator"
+								? "text-blue"
+								: "text-grey"
+								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
+							onClick={() => {
+								navigate("/dashboard/investmentCalculator");
+							}}
+						>
+							<GiCalculator />
 						</div>
 					</div>
 				</div>
