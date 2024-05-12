@@ -97,6 +97,17 @@ const Sidebar = () => {
 						>
 							<GiGamepad />
 						</div>
+						<div
+							className={`${location.pathname === "/dashboard/investmentCalculator"
+								? "text-blue"
+								: "text-grey"
+								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
+							onClick={() => {
+								navigate("/dashboard/investmentCalculator");
+							}}
+						>
+							<GiCalculator />
+						</div>
 
 						<div
 							className={`${location.pathname === "/dashboard/setting"
@@ -108,17 +119,6 @@ const Sidebar = () => {
 							}}
 						>
 							<MdOutlineSettings />
-						</div>
-						<div
-							className={`${location.pathname === "/dashboard/investmentCalculator"
-								? "text-blue"
-								: "text-grey"
-								} text-3xl cursor-pointer transition-colors duration-300 hover:text-theme`}
-							onClick={() => {
-								navigate("/dashboard/investmentCalculator");
-							}}
-						>
-							<GiCalculator />
 						</div>
 					</div>
 				</div>
