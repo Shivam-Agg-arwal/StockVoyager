@@ -1,77 +1,79 @@
 import fs from 'fs';
-import util from 'util'
-import process from 'process'; // Import the process module
-
-import fetchCurrentPrice from "./../../../../pyserver/MakeRequest/getStockCurrentPrice.js"
-import { symbolMapping } from "./../../../data/Symbol.js"
-
+import { symbolMapping } from "./../../../data/Symbol.js";
+import fetchCurrentPrice from "./../../../../pyserver/MakeRequest/getStockCurrentPrice.js";
+import cron from 'node-cron';
 
 const responseFilePath = 'responseFile.txt';
 
-async function fetchPricesForSymbols() {
-  try {
-    let responses = [];
-    let promises = [];
-    const num_request = 11
-    console.time("Total time for 10 batches");
+let isFetchingData = false; // Flag to indicate whether data fetching is in progress
+let stopFlag = false; // Flag to indicate whether to stop the function
 
-    // Register a handler for the SIGINT event
-    process.on('SIGINT', async () => {
-      console.log('\nSIGINT received. Saving responses to file...');
-      await saveResponsesToFile(responses);
-      process.exit(); // Exit the process after saving responses
-    });
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-    // Loop through symbolMapping and create promises for each request
-    for (let i = 0; i < symbolMapping.length; i++) {
-      const symbol = symbolMapping[i].SYMBOL;
-      const name = symbolMapping[i].COMPANY_NAME;
-      
-      // Log symbol, name, and number
-      console.log(`Fetching data for stock ${i + 1}: Symbol: ${symbol}, Name: ${name}`);
+function getRandomDelay(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
-      // Make API request for current price and push the promise to the array
-      promises.push(fetchCurrentPrice(symbol));
-
-      // If 10 promises have been created or it's the last iteration, await them
-      if ((i + 1) % num_request === 0 || i === symbolMapping.length - 1) {
-        // Execute promises in parallel
-        const settledPromises = await Promise.allSettled(promises);
-
-        // Add responses of fulfilled promises to the responses array
-        settledPromises.forEach(promise => {
-          if (promise.status === 'fulfilled') {
-            responses.push(promise.value);
-          }
-        });
-
-        // Clear the promises array for the next batch
-        promises = [];
-
-        // If 10 batches have been processed, end the timer
-        if (Math.ceil((i + 1) / num_request) === 10) {
-          console.timeEnd("Total time for 10 batches");
-
-          // Save responses to file
-          await saveResponsesToFile(responses);
-          break; // Exit the loop after saving responses
+async function fetchAndSaveData() {
+    try {
+        if (isFetchingData) {
+            console.log('Data fetching is already in progress. Skipping...');
+            return; // Exit if data fetching is already in progress
         }
-      }
+        isFetchingData = true; // Set flag to indicate data fetching is in progress
+
+        let responses = [];
+
+        // Start time of the task
+        const startTime = new Date().getTime();
+
+        // Loop through symbolMapping and create promises for each request
+        for (let i = 0; i < symbolMapping.length; i++) {
+            if (stopFlag) {
+                console.log('Stopping fetchAndSaveData function...');
+                break; // Exit the loop if stopFlag is true
+            }
+
+            const symbol = symbolMapping[i].SYMBOL;
+            const name = symbolMapping[i].COMPANY_NAME;
+            
+            // Log symbol, name, and number
+            console.log(`Fetching data for stock ${i + 1}: Symbol: ${symbol}, Name: ${name}`);
+
+            // Make API request for current price
+            const response = await fetchCurrentPrice(symbol);
+            responses.push(response);
+            
+            // Random delay of 3-5 seconds
+            await delay(getRandomDelay(3, 5) * 1000);
+
+            // Check if it's time to stop
+            const currentTime = new Date().getTime();
+            if (currentTime - startTime >= 60000) { // Stop after 1 minute
+                console.log('Time limit reached. Stopping fetchAndSaveData function...');
+                stopFlag = true;
+            }
+        }
+
+        // Save responses to file
+        fs.writeFileSync(responseFilePath, JSON.stringify(responses, null, 2));
+        console.log('Responses stored in responseFile.txt');
+    } catch (error) {
+        console.error('Error:', error);
+    } finally {
+        isFetchingData = false; // Reset flag after data fetching is completed
     }
-  } catch (error) {
-    console.error('Error:', error);
-  }
 }
 
-// Function to save responses to file
-async function saveResponsesToFile(responses) {
-  try {
-    fs.writeFileSync(responseFilePath, JSON.stringify(responses, null, 2));
-    console.log('Responses stored in responseFile.txt');
-  } catch (error) {
-    console.error('Error writing responses to file:', error);
-  }
-}
-
-// Call the main function
-fetchPricesForSymbols();
+// Define the time to run the task (3:08 pm to 3:09 pm)
+const startTime = '19';
+const endTime = '20';
+const task = cron.schedule(`${startTime}-${endTime} 15 * * *`, async () => {
+    console.log(`Task started at 3:${startTime} pm`);
+    await fetchAndSaveData();
+    console.log(`Task completed at 3:${endTime} pm`);
+    console.log('Stopping the task...');
+    task.stop(); // Stop the cron task after completion
+});
