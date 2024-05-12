@@ -79,18 +79,27 @@ class ApexChart extends React.Component {
           isThreeYearButtonVisible: false,
           isFiveYearButtonVisible: false,
         },
+        yAxisRange: {
+          min: null,
+          max: null,
+        },
       },
       selection: "one_year",
+      error: null,
     };
   }
 
   async componentDidMount() {
-    await this.fetchDataAndUpdateState(this.state.selection);
-    this.fetchCurrentStockPrice();
-    this.refreshDataTimer = setInterval(() => {
-      this.fetchDataAndUpdateState(this.state.selection);
+    try {
+      await this.fetchDataAndUpdateState(this.state.selection);
       this.fetchCurrentStockPrice();
-    }, 15 * 60 * 1000);
+      this.refreshDataTimer = setInterval(() => {
+        this.fetchDataAndUpdateState(this.state.selection);
+        this.fetchCurrentStockPrice();
+      }, 15 * 60 * 1000);
+    } catch (error) {
+      this.setState({ error: error.message });
+    }
   }
 
   componentWillUnmount() {
@@ -127,11 +136,16 @@ class ApexChart extends React.Component {
         isThreeYearButtonVisible:
           today.getFullYear() - new Date(minTimestamp).getFullYear() > 3,
         isAllButtonVisible: true,
+        yAxisRange: {
+          min: Math.min(...seriesData.map((item) => item[1])),
+          max: Math.max(...seriesData.map((item) => item[1])),
+        },
       };
       this.setState(newState);
       this.updateData(timeline);
     } catch (error) {
       console.error("Error:", error.message);
+      throw error;
     }
   }
 
@@ -141,11 +155,25 @@ class ApexChart extends React.Component {
       this.setState({ currentPrice });
     } catch (error) {
       console.error("Error fetching current price:", error);
+      throw error;
     }
   }
 
   updateChart(startDate, endDate) {
+    // Update the x-axis range
     ApexCharts.exec("area-datetime", "zoomX", startDate, endDate);
+
+    // Update the state to trigger re-render and adjust the y-axis range
+    this.setState(prevState => ({
+      options: {
+        ...prevState.options,
+        yaxis: {
+          ...prevState.options.yaxis,
+          min: prevState.yAxisRange.min,
+          max: prevState.yAxisRange.max,
+        },
+      },
+    }));
   }
 
   updateData(timeline) {
@@ -269,9 +297,10 @@ class ApexChart extends React.Component {
   }
 
   render() {
-    const { currentPrice } = this.state;
+    const { currentPrice, error } = this.state;
     return (
       <div>
+        {error && <div className="error-message">{error}</div>}
         {this.renderButtons()}
         {currentPrice && (
           <div className="flex justify-start ml-5">
