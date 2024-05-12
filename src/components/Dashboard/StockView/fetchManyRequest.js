@@ -68,8 +68,8 @@ async function fetchAndSaveData() {
 }
 
 // Define the time to run the task (3:08 pm to 3:09 pm)
-const startTime = '19';
-const endTime = '20';
+const startTime = '40';
+const endTime = '41';
 const task = cron.schedule(`${startTime}-${endTime} 15 * * *`, async () => {
     console.log(`Task started at 3:${startTime} pm`);
     await fetchAndSaveData();

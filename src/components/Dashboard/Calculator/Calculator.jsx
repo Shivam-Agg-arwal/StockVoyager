@@ -16,6 +16,7 @@ const calculateInvestment = (years, principal, isSIP, rpa) => {
     }
     return ans;
 };
+
 function formatIndianNumber(num) {
     if (num === undefined || isNaN(num)) {
         return 'Invalid number';
@@ -25,19 +26,34 @@ function formatIndianNumber(num) {
     const length = numString.length;
     let formattedNumber = '';
 
-    let i = 0;
-    while (i < length) {
-        if (length - i > 3) {
-            formattedNumber += numString[i] + numString[i + 1] + ','; // Add two digits and a comma
-            i += 2; // Move to the next set of two digits
-        } else {
-            formattedNumber += numString[i]; // Add the remaining digits
-            i++;
+    let commaCount = 0; // Variable to keep track of comma insertion
+    let i = length - 1;
+    for (; i >= 0; i--) {
+        commaCount++;
+        if(commaCount == 4){
+            formattedNumber = ',' + formattedNumber;
+            commaCount = 0;
+            break;
         }
+        formattedNumber = numString[i] + formattedNumber;
+    }
+    
+    for (; i >= 0; i--) {
+        commaCount++;
+        if(commaCount == 3){
+            formattedNumber = ',' + formattedNumber;
+            commaCount = 0;
+        }
+        formattedNumber = numString[i] + formattedNumber;
     }
 
     return formattedNumber;
 }
+
+
+
+
+
 const Calculator = () => {
     const [isSIP, setIsSIP] = useState(true);
     const [investment, setInvestment] = useState(1000);
