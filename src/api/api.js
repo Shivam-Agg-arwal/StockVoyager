@@ -39,7 +39,6 @@ export const newsEndpoints={
 } 
 
 
-
 export const adminRoutes={
     UPDATE_ALL_STOCK_CURR_PRICE_API:BASE_URL+"/stockPrice/updateCurrPrice",
     UPDATE_EVERYONE_PORTFOLIO_AMT_API:BASE_URL+"/stockPrice/updatePortfolioAmt",
