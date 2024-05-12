@@ -21,272 +21,309 @@ const WordSearch = ({ difficulty }) => {
 
 
   useEffect(() => {
-    setGrid(generateInitialGrid());
-    setSelectedWords(generateSelectedWords());
+    try {
+      if (!difficulty) throw new Error("Difficulty level not provided.");
+      setGrid(generateInitialGrid());
+      setSelectedWords(generateSelectedWords());
+    } catch (error) {
+      console.error(error.message);
+    }
   }, [difficulty]);
 
   useEffect(() => {
-    setFound(`Found: ${foundWords.length}/${selectedWords.length}`);
+    try {
+      setFound(`Found: ${foundWords.length}/${selectedWords.length}`);
+    } catch (error) {
+      console.error(error.message);
+    }
   }, [foundWords, selectedWords]);
 
   const gridSize = () => {
-    switch (difficulty) {
-      case "easy":
-        return 14;
-      case "medium":
-        return 18;
-      case "hard":
-        return 24;
-      default:
-        return 14;
+    try {
+      if (!difficulty) throw new Error("Difficulty level not provided.");
+      switch (difficulty) {
+        case "easy":
+          return 14;
+        case "medium":
+          return 18;
+        case "hard":
+          return 24;
+        default:
+          return 14;
+      }
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
   const checkWord = () => {
-    if (!searchWord) {
-      setMessage("Please enter a word to search.");
-      return;
-    }
-  
-    const selectedWord = selectedWords.find(
-      (item) => item.word === searchWord.toUpperCase()
-    );
-  
-    if (!selectedWord) {
-      setMessage(`Word "${searchWord}" is not a stock term.`);
-      return;
-    }
-  
-    if (foundWords.includes(searchWord.toUpperCase())) {
-      setMessage(`Word "${searchWord}" already found.`);
-      return;
-    }
-  
-    let found = false;
-    let foundCoordinates = [];
-  
-    for (let row = 0; row < gridSize(); row++) {
-      for (let col = 0; col <= gridSize() - searchWord.length; col++) {
-        if (
-          grid[row].slice(col, col + searchWord.length).join("") ===
-          searchWord
-        ) {
-          setMessage(selectedWord.explanation);
-          found = true;
-          foundCoordinates = Array.from(
-            { length: searchWord.length },
-            (_, i) => [row, col + i]
-          );
-          break;
-        }
+    try {
+      if (!searchWord) {
+        throw new Error("Please enter a word to search.");
       }
-      if (found) break;
-    }
-  
-    for (let col = 0; col < gridSize() && !found; col++) {
-      for (let row = 0; row <= gridSize() - searchWord.length; row++) {
-        if (
-          grid
-            .slice(row, row + searchWord.length)
-            .map((row) => row[col])
-            .join("") === searchWord
-        ) {
-          setMessage(selectedWord.explanation);
-          found = true;
-          foundCoordinates = Array.from(
-            { length: searchWord.length },
-            (_, i) => [row + i, col]
-          );
-          break;
-        }
+
+      const selectedWord = selectedWords.find(
+        (item) => item.word === searchWord.toUpperCase()
+      );
+
+      if (!selectedWord) {
+        throw new Error(`Word "${searchWord}" is not a stock term.`);
       }
-      if (found) break;
-    }
-  
-    if (found) {
-      const updatedGrid = [...grid];
-      foundCoordinates.forEach(([row, col]) => {
-        updatedGrid[row][col] = (
-          <div className="bg-theme text-white h-full w-full text-center">
-            {updatedGrid[row][col]}
-          </div>
-        );
-      });
-      setGrid(updatedGrid);
-      setFoundWords([...foundWords, searchWord.toUpperCase()]);
-      setFoundManually(foundManually+1);
-  
-      if (foundWords.length === 9) {
-        setMessage("Congrats you found all the words!");
+
+      if (foundWords.includes(searchWord.toUpperCase())) {
+        throw new Error(`Word "${searchWord}" already found.`);
       }
-    } else {
-      setMessage(`Word "${searchWord}" not found.`);
-    }
-  
-  };
 
-  const setWords = () => {
-    const newGrid = Array.from({ length: gridSize() }).map(() =>
-      Array.from({ length: gridSize() }).fill("")
-    );
+      let found = false;
+      let foundCoordinates = [];
 
-    const occupiedPositions = new Set();
-
-    selectedWords.forEach(({ word }) => {
-      let direction = Math.random() < 0.5 ? "horizontal" : "vertical";
-
-      let row, col;
-      let foundPosition = false;
-      while (!foundPosition) {
-        if (direction === "horizontal") {
-          row = Math.floor(Math.random() * gridSize());
-          col = Math.floor(Math.random() * (gridSize() - word.length + 1));
-        } else {
-          row = Math.floor(Math.random() * (gridSize() - word.length + 1));
-          col = Math.floor(Math.random() * gridSize());
-        }
-
-        let positionsOccupied = false;
-        for (let i = 0; i < word.length; i++) {
-          const newRow = direction === "horizontal" ? row : row + i;
-          const newCol = direction === "horizontal" ? col + i : col;
-          if (occupiedPositions.has(`${newRow},${newCol}`)) {
-            positionsOccupied = true;
+      for (let row = 0; row < gridSize(); row++) {
+        for (let col = 0; col <= gridSize() - searchWord.length; col++) {
+          if (
+            grid[row].slice(col, col + searchWord.length).join("") ===
+            searchWord
+          ) {
+            setMessage(selectedWord.explanation);
+            found = true;
+            foundCoordinates = Array.from(
+              { length: searchWord.length },
+              (_, i) => [row, col + i]
+            );
             break;
           }
         }
+        if (found) break;
+      }
 
-        if (!positionsOccupied) {
+      for (let col = 0; col < gridSize() && !found; col++) {
+        for (let row = 0; row <= gridSize() - searchWord.length; row++) {
+          if (
+            grid
+              .slice(row, row + searchWord.length)
+              .map((row) => row[col])
+              .join("") === searchWord
+          ) {
+            setMessage(selectedWord.explanation);
+            found = true;
+            foundCoordinates = Array.from(
+              { length: searchWord.length },
+              (_, i) => [row + i, col]
+            );
+            break;
+          }
+        }
+        if (found) break;
+      }
+
+      if (found) {
+        const updatedGrid = [...grid];
+        foundCoordinates.forEach(([row, col]) => {
+          updatedGrid[row][col] = (
+            <div className="bg-theme text-white h-full w-full text-center">
+              {updatedGrid[row][col]}
+            </div>
+          );
+        });
+        setGrid(updatedGrid);
+        setFoundWords([...foundWords, searchWord.toUpperCase()]);
+        setFoundManually(foundManually+1);
+
+        if (foundWords.length === 9) {
+          setMessage("Congrats you found all the words!");
+        }
+      } else {
+        setMessage(`Word "${searchWord}" not found.`);
+      }
+    } catch (error) {
+      console.error(error.message);
+      setMessage(error.message);
+    }
+  };
+
+  const setWords = () => {
+    try {
+      const newGrid = Array.from({ length: gridSize() }).map(() =>
+        Array.from({ length: gridSize() }).fill("")
+      );
+
+      const occupiedPositions = new Set();
+
+      selectedWords.forEach(({ word }) => {
+        let direction = Math.random() < 0.5 ? "horizontal" : "vertical";
+
+        let row, col;
+        let foundPosition = false;
+        while (!foundPosition) {
+          if (direction === "horizontal") {
+            row = Math.floor(Math.random() * gridSize());
+            col = Math.floor(Math.random() * (gridSize() - word.length + 1));
+          } else {
+            row = Math.floor(Math.random() * (gridSize() - word.length + 1));
+            col = Math.floor(Math.random() * gridSize());
+          }
+
+          let positionsOccupied = false;
           for (let i = 0; i < word.length; i++) {
             const newRow = direction === "horizontal" ? row : row + i;
             const newCol = direction === "horizontal" ? col + i : col;
-            newGrid[newRow][newCol] = word[i];
-            occupiedPositions.add(`${newRow},${newCol}`);
+            if (occupiedPositions.has(`${newRow},${newCol}`)) {
+              positionsOccupied = true;
+              break;
+            }
           }
-          foundPosition = true;
-        }
-      }
-    });
 
-    for (let row = 0; row < gridSize(); row++) {
-      for (let col = 0; col < gridSize(); col++) {
-        if (newGrid[row][col] === "") {
-          newGrid[row][col] = String.fromCharCode(
-            65 + Math.floor(Math.random() * 26)
-          );
+          if (!positionsOccupied) {
+            for (let i = 0; i < word.length; i++) {
+              const newRow = direction === "horizontal" ? row : row + i;
+              const newCol = direction === "horizontal" ? col + i : col;
+              newGrid[newRow][newCol] = word[i];
+              occupiedPositions.add(`${newRow},${newCol}`);
+            }
+            foundPosition = true;
+          }
+        }
+      });
+
+      for (let row = 0; row < gridSize(); row++) {
+        for (let col = 0; col < gridSize(); col++) {
+          if (newGrid[row][col] === "") {
+            newGrid[row][col] = String.fromCharCode(
+              65 + Math.floor(Math.random() * 26)
+            );
+          }
         }
       }
+
+      setGrid(newGrid);
+    } catch (error) {
+      console.error(error.message);
     }
-
-    setGrid(newGrid);
   };
 
   const generateInitialGrid = () => {
-    const initialGrid = Array.from({ length: gridSize() }).map(() =>
-      Array.from({ length: gridSize() }).map(() =>
-        String.fromCharCode(65 + Math.floor(Math.random() * 26))
-      )
-    );
-    return initialGrid;
+    try {
+      const initialGrid = Array.from({ length: gridSize() }).map(() =>
+        Array.from({ length: gridSize() }).map(() =>
+          String.fromCharCode(65 + Math.floor(Math.random() * 26))
+        )
+      );
+      return initialGrid;
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const generateSelectedWords = () => {
-    let words = [];
-    let l = 0;
-    switch (difficulty) {
-      case "easy":
-        words = easyWords;
-        l = 5;
-        break;
-      case "medium":
-        words = mediumWords;
-        l = 8;
-        break;
-      case "hard":
-        l = 10;
-        words = hardWords;
-        break;
-      default:
-        words = easyWords;
-    }
-
-    const selected = [];
-
-    while (selected.length < l) {
-      const randomIndex = Math.floor(Math.random() * words.length);
-      const { word, explanation } = words[randomIndex];
-      if (!selected.find((item) => item.word === word)) {
-        selected.push({ word, explanation });
+    try {
+      let words = [];
+      let l = 0;
+      switch (difficulty) {
+        case "easy":
+          words = easyWords;
+          l = 5;
+          break;
+        case "medium":
+          words = mediumWords;
+          l = 8;
+          break;
+        case "hard":
+          l = 10;
+          words = hardWords;
+          break;
+        default:
+          words = easyWords;
       }
+
+      const selected = [];
+
+      while (selected.length < l) {
+        const randomIndex = Math.floor(Math.random() * words.length);
+        const { word, explanation } = words[randomIndex];
+        if (!selected.find((item) => item.word === word)) {
+          selected.push({ word, explanation });
+        }
+      }
+      return selected;
+    } catch (error) {
+      console.error(error.message);
     }
-    return selected;
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      checkWord();
+    try {
+      if (e.key === "Enter") {
+        checkWord();
+      }
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
   useEffect(() => {
-    setWords();
+    try {
+      setWords();
+    } catch (error) {
+      console.error(error.message);
+    }
   }, [selectedWords]);
 
   const handleSolutionButtonClick = () => {
-    const currentWord = selectedWords[indexCounter].word.toUpperCase();
-  
-    if (!foundWords.includes(currentWord)) {
-      setMessage(`${selectedWords[indexCounter].explanation}`);
-      setFoundByButton(foundByButton + 1);
-      setFoundWords([...foundWords, currentWord.toUpperCase()]);
-  
-      const updatedGrid = [...grid];
-  
-      selectedWords.slice(0, indexCounter + 1).forEach(({ word }) => {
-        for (let row = 0; row < gridSize(); row++) {
-          for (let col = 0; col < gridSize(); col++) {
-            if (col + word.length <= gridSize()) {
-              const horizontalWord = updatedGrid[row]
-                .slice(col, col + word.length)
-                .join("");
-              if (horizontalWord === word) {
-                for (let i = col; i < col + word.length; i++) {
-                  updatedGrid[row][i] = (
-                    <div className="bg-theme text-white h-full w-full text-center">
-                      {updatedGrid[row][i]}
-                    </div>
-                  );
+    try {
+      const currentWord = selectedWords[indexCounter].word.toUpperCase();
+
+      if (!foundWords.includes(currentWord)) {
+        setMessage(`${selectedWords[indexCounter].explanation}`);
+        setFoundByButton(foundByButton + 1);
+        setFoundWords([...foundWords, currentWord.toUpperCase()]);
+
+        const updatedGrid = [...grid];
+
+        selectedWords.slice(0, indexCounter + 1).forEach(({ word }) => {
+          for (let row = 0; row < gridSize(); row++) {
+            for (let col = 0; col < gridSize(); col++) {
+              if (col + word.length <= gridSize()) {
+                const horizontalWord = updatedGrid[row]
+                  .slice(col, col + word.length)
+                  .join("");
+                if (horizontalWord === word) {
+                  for (let i = col; i < col + word.length; i++) {
+                    updatedGrid[row][i] = (
+                      <div className="bg-theme text-white h-full w-full text-center">
+                        {updatedGrid[row][i]}
+                      </div>
+                    );
+                  }
                 }
               }
-            }
-  
-            if (row + word.length <= gridSize()) {
-              let verticalWord = "";
-              for (let i = row; i < row + word.length; i++) {
-                verticalWord += updatedGrid[i][col];
-              }
-              if (verticalWord === word) {
+
+              if (row + word.length <= gridSize()) {
+                let verticalWord = "";
                 for (let i = row; i < row + word.length; i++) {
-                  updatedGrid[i][col] = (
-                    <div className="bg-theme text-white h-full w-full text-center">
-                      {updatedGrid[i][col]}
-                    </div>
-                  );
+                  verticalWord += updatedGrid[i][col];
+                }
+                if (verticalWord === word) {
+                  for (let i = row; i < row + word.length; i++) {
+                    updatedGrid[i][col] = (
+                      <div className="bg-theme text-white h-full w-full text-center">
+                        {updatedGrid[i][col]}
+                      </div>
+                    );
+                  }
                 }
               }
             }
           }
-        }
-      });
-  
-      setGrid(updatedGrid);
-    } else {
-      setMessage(`Word "${currentWord}" has already been found.`);
+        });
+
+        setGrid(updatedGrid);
+      } else {
+        setMessage(`Word "${currentWord}" has already been found.`);
+      }
+      setIndexCounter(indexCounter + 1); // Update the index counter regardless
+    } catch (error) {
+      console.error(error.message);
     }
-    setIndexCounter(indexCounter + 1); // Update the index counter regardless
   };
-  
-  
 
   return (
     <div className="flex flex-col items-center justify-center h-screen w-screen">
@@ -340,4 +377,4 @@ const WordSearch = ({ difficulty }) => {
   );
 };
 
-export default WordSearch
+export default WordSearch;
