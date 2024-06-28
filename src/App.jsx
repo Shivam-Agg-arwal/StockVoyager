@@ -23,6 +23,7 @@ import SpeedyMath from "./components/Dashboard/GamingHub/Games/SpeedyMath/Speedy
 import FinancialQuiz from "./components/Dashboard/GamingHub/Games/FinancialQuiz/FinancialQuiz";
 import WhoGetsMore from "./components/Dashboard/GamingHub/Games/WhoGetsMore/WhoGetsMore";
 import WordSearchMain from "./components/Dashboard/GamingHub/Games/WordSearch/WordSearchMain";
+// import Tempu from './components/Dashboard/GamingHub/tempu'
 
 export default function App() {
     const { user } = useSelector((state) => state.profile);
@@ -34,6 +35,7 @@ export default function App() {
                 <Route path="/" element={<Signup />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
+                {/* <Route path="/hello" element={<Tempu/>} /> */}
                 <Route path="/resetsuccess" element={<ResetSuccess />} />
                 {signupData && (
                     <Route path="/verifyotp" element={<VerifyEmail />} />

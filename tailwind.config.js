@@ -7,7 +7,7 @@ export default {
   theme: {
     colors: {
       'theme' : '#006BED',
-      'white': '#FFF7FC',
+      'white': '#fefffe',
       'light': '#F5F6FA',
       'black': '#000814',
       'blue' : '#0096FF',
@@ -15,7 +15,9 @@ export default {
       'btnyellow' : '#fd0',
       'superred' : '#008000',
       'red' : '#FF0000',
-      'green': '#808080'
+      'green': '#808080',
+      'bgWhite':'#f4f6fb',
+      'btnBlue':'#007aff',
     },
     extend: {},
   },

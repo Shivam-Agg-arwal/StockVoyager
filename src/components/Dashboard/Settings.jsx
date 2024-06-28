@@ -5,7 +5,8 @@ import UpdateDetails from "./Settings/UpdateDetails";
 
 const Settings = () => {
     return (
-        <div className="flex flex-col gap-4 p-5 max-w-[1280px] w-full mx-auto">
+        <div className="w-full bg-bgWhite">
+            <div className="flex flex-col gap-4 p-5 max-w-[1280px] w-full mx-auto">
             <div className="bg-white rounded-md shadow-md p-4">
                 <UpdateDP />
             </div>
@@ -15,6 +16,7 @@ const Settings = () => {
             <div className="bg-white rounded-md shadow-md p-4">
                 <ChangePassword />
             </div>
+        </div>
         </div>
     );
 };
