@@ -23,6 +23,7 @@ import SpeedyMath from "./components/Dashboard/GamingHub/Games/SpeedyMath/Speedy
 import FinancialQuiz from "./components/Dashboard/GamingHub/Games/FinancialQuiz/FinancialQuiz";
 import WhoGetsMore from "./components/Dashboard/GamingHub/Games/WhoGetsMore/WhoGetsMore";
 import WordSearchMain from "./components/Dashboard/GamingHub/Games/WordSearch/WordSearchMain";
+// import RangeSlider from "./components/Dashboard/RangeSlider";
 // import Tempu from './components/Dashboard/GamingHub/tempu'
 
 export default function App() {
@@ -35,7 +36,7 @@ export default function App() {
                 <Route path="/" element={<Signup />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
-                {/* <Route path="/hello" element={<Tempu/>} /> */}
+                {/* <Route path="/hello" element={<RangeSlider/>} /> */}
                 <Route path="/resetsuccess" element={<ResetSuccess />} />
                 {signupData && (
                     <Route path="/verifyotp" element={<VerifyEmail />} />
