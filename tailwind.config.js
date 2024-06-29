@@ -18,6 +18,7 @@ export default {
       'green': '#808080',
       'bgWhite':'#f4f6fb',
       'btnBlue':'#007aff',
+      'settingBlack':'#9b9ca6'
     },
     extend: {},
   },

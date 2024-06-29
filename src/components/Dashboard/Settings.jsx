@@ -6,17 +6,18 @@ import UpdateDetails from "./Settings/UpdateDetails";
 const Settings = () => {
     return (
         <div className="w-full bg-bgWhite">
-            <div className="flex flex-col gap-4 p-5 max-w-[1280px] w-full mx-auto">
-            <div className="bg-white rounded-md shadow-md p-4">
-                <UpdateDP />
+
+            <div className="mx-auto w-9/12 bg-white rounded-xl my-10 shadow-md flex flex-row justify-between p-10">
+                <div className="flex flex-col gap-4 w-[48%]">
+                    <UpdateDP />
+                    <ChangePassword />
+                </div>
+                <div className="w-[48%]">
+                    <UpdateDetails />
+                </div>
+
+
             </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-                <UpdateDetails />
-            </div>
-            <div className="bg-white rounded-md shadow-md p-4">
-                <ChangePassword />
-            </div>
-        </div>
         </div>
     );
 };

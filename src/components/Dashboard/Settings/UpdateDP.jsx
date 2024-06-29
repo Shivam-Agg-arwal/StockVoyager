@@ -4,6 +4,9 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { updationEndpoints } from "../../../api/api";
 import { setUser } from "../../slices/profileSlice";
+import { AiFillDelete } from "react-icons/ai";
+import { FaPencilAlt } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 const UpdateDP = () => {
     const { user } = useSelector((state) => state.profile);
@@ -45,12 +48,16 @@ const UpdateDP = () => {
                 removeHandle();
             }
         } catch (error) {
-			if (error.response && error.response.data && error.response.data.toastMessage) {
-				toast.error(error.response.data.toastMessage);
-			} else {
-				toast.error("Updation failed");
-			}
-		}
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.toastMessage
+            ) {
+                toast.error(error.response.data.toastMessage);
+            } else {
+                toast.error("Updation failed");
+            }
+        }
         toast.dismiss(loadingToast);
     };
 
@@ -60,30 +67,22 @@ const UpdateDP = () => {
     };
 
     return (
-        <div className="flex items-center w-full mt-4">
-            <img
-                src={chosenImage ? chosenImage : user.image}
-                alt="Profile"
-                className="rounded-full border border-black w-24 h-24 mr-4"
-            />
-            <div>
-                <h2 className="text-2xl font-semibold mb-2">Change Profile Picture</h2>
-                <div className="flex gap-2">
-                    {file && (
-                        <button
-                            onClick={handleUpdation}
-                            className="w-fit p-2 bg-theme text-white rounded-md font-bold hover:scale-95 transition-all duration-200"
-                        >
-                            Update Image
-                        </button>
-                    )}
+        <div className="flex flex-col w-full mt-4">
+            <div className="mb-5 font-semibold ">Profile Picture</div>
+            <div className="flex items-start border-[1px] border-settingBlack rounded-lg p-5 relative">
+                <div className="relative group">
+                    <img
+                        src={chosenImage ? chosenImage : user.image}
+                        alt="Profile"
+                        className="rounded-lg border-black border-[1px] w-28  aspect-square group-hover:opacity-75"
+                    ></img>
                     {!file && (
                         <>
                             <label
                                 htmlFor="uploadimage"
-                                className="w-fit p-2 bg-theme text-white rounded-md font-bold hover:scale-95 transition-all duration-200 cursor-pointer"
+                                className=" p-2 text-black rounded-md text-2xl bg-bgWhite bg-opacity-40  hover:scale-95 transition-all duration-200 cursor-pointer group-hover:opacity-100 opacity-0 absolute top-6 left-6"
                             >
-                                Choose Image
+                                <FaPencilAlt />
                             </label>
                             <input
                                 type="file"
@@ -97,10 +96,29 @@ const UpdateDP = () => {
                     {file && (
                         <button
                             onClick={removeHandle}
-                            className="w-fit p-2 bg-theme text-white rounded-md font-bold hover:scale-95 transition-all duration-200"
+                            className="p-2 text-black rounded-md text-2xl bg-bgWhite bg-opacity-40  hover:scale-95 transition-all duration-200 cursor-pointer group-hover:opacity-100 opacity-0 absolute top-6 left-6"
                         >
-                            Remove
+                            <MdDelete />
                         </button>
+                    )}
+                </div>
+                <div className="w-full">
+                    <div className="ml-4">
+                        <h2 className="text-xl font-semibold">
+                            {user.firstName} {user.lastName}
+                        </h2>
+                        <div className="italic text-sm ">{user.emailID}</div>
+                    </div>
+
+                    {file && (
+                        <div className="flex flex-row items-end justify-end">
+                            <button
+                                onClick={handleUpdation}
+                                className="bg-btnBlue shadow-md text-bgWhite rounded-md py-2 px-10 w-fit transition duration-300 hover:bg-blue-600"
+                            >
+                                Update
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>

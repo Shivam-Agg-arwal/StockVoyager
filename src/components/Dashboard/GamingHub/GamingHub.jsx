@@ -37,7 +37,6 @@ const GamingHub = () => {
                     <video
                         ref={videoRef}
                         width="100%"
-                        controls
                         autoPlay
                         muted
                         playsInline
