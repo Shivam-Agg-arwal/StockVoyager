@@ -9,6 +9,9 @@ import { watchlistEndpoints } from "../../api/api";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { setUser } from "../slices/profileSlice";
+import { FaArrowTrendDown } from "react-icons/fa6";
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { IoMdRefresh } from "react-icons/io";
 
 const WatchList = () => {
     const { user } = useSelector((state) => state.profile);
@@ -120,104 +123,116 @@ const WatchList = () => {
     }
 
     return (
-        <div className="w-full min-h-screen bg-gradient-to-b from-blue-300 to-blue-500 py-8">
-            <div className="mx-auto max-w-lg">
-                <div className="p-4 rounded-md bg-white shadow-md my-4 flex flex-col items-center">
-                    <div className="font-bold text-2xl underline mb-4">
-                        Watchlist
+        <div className="w-full min-h-screen py-8 bg-bgWhite">
+            <div className="mx-auto w-8/12">
+                <div className=" rounded-md bg-white shadow-md my-4 flex flex-col p-10">
+                    <div className="flex flex-row justify-between mr-5">
+                    <div className="text-xl font-semibold mb-4">Watchlist</div>
+                    <div>
+                        <IoMdRefresh className="text-2xl font-bold hover:scale-90 cursor-pointer hover:opacity-95 text-btnBlue" onClick={refreshData}/>
                     </div>
-                    <table className="w-full">
-                        <thead>
-                            <tr className="text-gray-700 text-left font-semibold text-lg">
-                                <th className="px-4 py-2 text-center">
-                                    Company
-                                </th>
-                                <th className="px-4 py-2 text-center">Value</th>
-                                <th className="px-4 py-2 text-center">
-                                    Change
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {watchlistData.length > 0 ? (
-                                watchlistData
-                                    .slice(0, 20)
-                                    .map((item, index) => (
-                                        <tr
-                                            key={index}
-                                            className="border-b text-center"
-                                        >
-                                            <td className="px-4 py-2 flex flex-row gap-2 items-center">
-                                                <FaStar
-                                                    className="cursor-pointer text-[#e2d849]"
-                                                    onClick={() => {
-                                                        RemoveFromWatchlist(
-                                                            item.symbol
-                                                        );
-                                                    }}
-                                                />
-                                                <div>
-                                                    <div className="font-semibold">
+                    </div>
+                    <div className="rounded-md border-settingBlack border-[1px] p-2  w-full m-5">
+                        <table className="w-full">
+                            <thead>
+                                <tr className="text-gray-700 text-left font-semibold text-lg">
+                                    <th className="px-4 py-2 text-center">
+                                        Company
+                                    </th>
+                                    <th className="px-4 py-2 text-center">
+                                        Value
+                                    </th>
+                                    <th className="px-4 py-2 text-center">
+                                        Change
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody className="">
+                                {watchlistData.length > 0 ? (
+                                    watchlistData
+                                        .slice(0, 20)
+                                        .map((item, index) => (
+                                            <tr
+                                                key={index}
+                                                className=" my-4 py-8 text-center "
+                                            >
+                                                <td className="px-4 py-2 flex flex-row gap-2 items-center">
+                                                    <FaStar
+                                                        className="cursor-pointer text-[#ffea00] text-lg mr-5"
+                                                        onClick={() => {
+                                                            RemoveFromWatchlist(
+                                                                item.symbol
+                                                            );
+                                                        }}
+                                                    />
+                                                    <div>
+                                                        <div className="font-bold">
+                                                            <div
+                                                                className="cursor-pointer text-left"
+                                                                onClick={() => {
+                                                                    navigate(
+                                                                        `/dashboard/stockView/${item.symbol}`
+                                                                    );
+                                                                }}
+                                                            >
+                                                                {item.symbol}
+                                                            </div>
+                                                        </div>
                                                         <div
-                                                            className="cursor-pointer"
+                                                            className="text-sm cursor-pointer capitalize"
                                                             onClick={() => {
                                                                 navigate(
                                                                     `/dashboard/stockView/${item.symbol}`
                                                                 );
                                                             }}
                                                         >
-                                                            {item.symbol}
+                                                            {item.companyName}
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td className="px-4 py-2 font-semibold">
+                                                    ₹ {item.lastPrice}
+                                                </td>
+                                                <td className="px-4 py-2">
                                                     <div
-                                                        className="text-sm cursor-pointer"
-                                                        onClick={() => {
-                                                            navigate(
-                                                                `/dashboard/stockView/${item.symbol}`
-                                                            );
-                                                        }}
+                                                        className={`font-semibold ${
+                                                            parseFloat(
+                                                                item.pChange
+                                                            ) >= 0
+                                                                ? "text-green"
+                                                                : "text-red"
+                                                        }`}
                                                     >
-                                                        {item.companyName}
+                                                        <div className="flex flex-row gap-2 items-center justify-center">
+                                                        <div>
+                                                            <div>
+                                                                {item.change}
+                                                            </div>
+                                                            <div className="text-xs">
+                                                                {item.pChange}%
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            {parseFloat(
+                                                                item.pChange
+                                                            ) >= 0 ? (
+                                                                <FaArrowTrendUp />
+                                                            ) : (
+                                                                <FaArrowTrendDown />
+                                                            )}
+                                                        </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td className="px-4 py-2">
-                                                {item.lastPrice}
-                                            </td>
-                                            <td className="px-4 py-2">
-                                                <div
-                                                    className={`font-semibold ${
-                                                        parseFloat(
-                                                            item.pChange
-                                                        ) > 0
-                                                            ? "text-green"
-                                                            : parseFloat(
-                                                                  item.pChange
-                                                              ) < 0
-                                                            ? "text-red"
-                                                            : "text-superred"
-                                                    }`}
-                                                >
-                                                    <div>{item.change}</div>
-                                                    <div>{item.pChange}%</div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
-                            ) : (
-                                <tr>
-                                    <td>No Stock Added To Watchlist</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                    <div className="text-center py-4">
-                        <button
-                            className="bg-theme hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 ease-in-out transform hover:scale-105"
-                            onClick={refreshData}
-                        >
-                            Refresh
-                        </button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                ) : (
+                                    <tr>
+                                        <td>No Stock Added To Watchlist</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

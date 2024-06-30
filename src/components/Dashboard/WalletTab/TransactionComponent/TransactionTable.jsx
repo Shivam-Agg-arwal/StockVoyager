@@ -9,6 +9,7 @@ import {
     MdKeyboardDoubleArrowRight,
     MdKeyboardArrowLeft,
     MdKeyboardArrowRight,
+    MdDelete,
 } from "react-icons/md";
 import { formatDateWithOffset } from "../../../../utils/dateFormatter";
 
@@ -126,16 +127,16 @@ const TransactionTable = () => {
                                                 transaction.orderDate
                                             )}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                                        <td className="px-6 py-4">
                                             <button
-                                                className="text-red-600 hover:text-red-900 cursor-pointer"
+                                                className="cursor-pointer flex flex-row items-center justify-center"
                                                 onClick={() =>
                                                     deleteTransaction(
                                                         transaction._id
                                                     )
                                                 }
                                             >
-                                                Delete
+                                                <MdDelete className="text-lg font-bold hover:scale-90"/>
                                             </button>
                                         </td>
                                     </tr>

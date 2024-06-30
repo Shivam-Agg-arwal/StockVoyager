@@ -16,8 +16,8 @@ const WalletSection = () => {
           WALLET
         </div>
         <div className='flex gap-2 my-4'>
-          <WalletCard icon="Portfolio Amount" balance={user.portfolioBalance}/>
-          <WalletCard icon="Wallet Amount" balance={user.walletBalance}/>
+          <WalletCard icon="Portfolio Amount" balance={(user.portfolioBalance).toFixed(2)}/>
+          <WalletCard icon="Wallet Amount" balance={(user.walletBalance).toFixed(2)}/>
           <WalletCard icon="Credit" balance="10"/>
 
         </div>

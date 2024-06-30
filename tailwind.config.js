@@ -15,7 +15,7 @@ export default {
       'btnyellow' : '#fd0',
       'superred' : '#008000',
       'red' : '#FF0000',
-      'green': '#808080',
+      'green': '#2AAA8A',
       'bgWhite':'#f4f6fb',
       'btnBlue':'#007aff',
       'settingBlack':'#9b9ca6'
