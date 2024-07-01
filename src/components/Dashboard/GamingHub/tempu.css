@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;600&display=swap");
-body {
-}
+
 body section {
     font-family: "Oswald", sans-serif;
     width: 90%;
@@ -22,6 +21,8 @@ body section .row {
     margin: 100px 0;
     transition: ease all 2.3s;
     perspective: 1200px;
+    border-radius: 15px; /* Added */
+    overflow: hidden; /* Added */
 }
 .card:hover .cover {
     transform: rotateX(0deg) rotateY(-180deg);
@@ -50,6 +51,7 @@ body section .row {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    border-radius: 15px; /* Added */
 }
 .card .cover:before {
     content: "";
@@ -64,6 +66,7 @@ body section .row {
     transition: ease all 2.3s;
     transform-style: preserve-3d;
     transform: translateZ(0px);
+    border-radius: 15px; /* Added */
 }
 .card .cover:after {
     content: "";
@@ -75,6 +78,7 @@ body section .row {
     z-index: 2;
     transition: ease all 1.3s;
     background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px; /* Added */
 }
 
 .card .cover h1 {
@@ -112,6 +116,7 @@ body section .row {
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 15px; /* Added */
 }
 .card .card-back a {
     transform-style: preserve-3d;

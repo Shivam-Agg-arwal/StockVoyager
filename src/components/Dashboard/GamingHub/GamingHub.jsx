@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import GamingCentre from "./GamingCentre";
-import './GamingHub.css';
+import "./GamingHub.css";
 
 const GamingHub = () => {
     const [showContent, setShowContent] = useState(false);
@@ -23,15 +23,18 @@ const GamingHub = () => {
                 }
             };
 
-            videoElement.addEventListener('timeupdate', handleTimeUpdate);
+            videoElement.addEventListener("timeupdate", handleTimeUpdate);
             return () => {
-                videoElement.removeEventListener('timeupdate', handleTimeUpdate);
+                videoElement.removeEventListener(
+                    "timeupdate",
+                    handleTimeUpdate
+                );
             };
         }
     }, []);
 
     return (
-        <div className="w-full min-h-screen gradient-background">
+        <div className="w-full  bg-bgWhite">
             {!showContent ? (
                 <div className="video-container">
                     <video
@@ -41,16 +44,21 @@ const GamingHub = () => {
                         muted
                         playsInline
                     >
-                        <source src="https://res.cloudinary.com/du41brgak/video/upload/v1719473394/Gamer_StockVoyager/ljatsojujyzhq7m1ota0.mp4" type="video/mp4" />
+                        <source
+                            src="https://res.cloudinary.com/du41brgak/video/upload/v1719473394/Gamer_StockVoyager/ljatsojujyzhq7m1ota0.mp4"
+                            type="video/mp4"
+                        />
                         Your browser does not support the video tag.
                     </video>
                 </div>
             ) : (
-                <div className="bulge-in">
-                    <div className="text-center font-bold text-8xl w-full">
-                        GAMING HUB
+                <div className="bulge-in bg-bgWhite">
+                    <div className="w-11/12 bg-white rounded-md shadow-md mx-auto my-10 h-2/3">
+                        <div className="text-center font-bold text-8xl w-full">
+                            GAMING HUB
+                        </div>
+                        <GamingCentre />
                     </div>
-                    <GamingCentre />
                 </div>
             )}
         </div>

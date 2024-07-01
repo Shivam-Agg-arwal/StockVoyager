@@ -18,18 +18,15 @@
 }
 .video-container {
     position: relative;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
+    /* width: calc(100%-60px); */
+    height: calc(100%-70px);
+    /* overflow: hidden; */
 }
 
-.video-container video {
-    width: 100%;
-    height: auto;
-    max-height: 100%;
-    display: block;
-    object-fit: contain; /* Ensures the video maintains aspect ratio */
-}
-.gradient-background {
-    background: linear-gradient(to bottom right, #ddb4f6, #d0b9f7, #c2bdf8, #b5c2f9, #a8c7fa, #9acbfb, #8dd0fc);
-}
+/* .video-container video { */
+    /* width: 100%; */
+    /* height: auto; */
+    /* max-height: 100%; */
+    /* display: block; */
+    /* object-fit: contain; Ensures the video maintains aspect ratio/ */
+/* } */

@@ -44,7 +44,7 @@ const gameData = [
 
 const GamingCentre = () => {
     return (
-        <div className='w-full h-screen my-auto'>
+        <div className='w-full my-auto'>
             <section className='my-auto mx-auto'>
                 <div className="flex flex-row gap-4 w-full h-full">
                     {gameData.map((gcard) => (

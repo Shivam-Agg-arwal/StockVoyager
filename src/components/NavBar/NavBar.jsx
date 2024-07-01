@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../slices/profileSlice";
 import logo from "../../assets/logo/StockVoyageNavbar.jpg";
 import { setSearchQuery } from "../slices/profileSlice";
 
