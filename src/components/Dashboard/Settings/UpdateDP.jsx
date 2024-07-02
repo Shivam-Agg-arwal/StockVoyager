@@ -42,7 +42,7 @@ const UpdateDP = () => {
                 toast.success(response.data.toastMessage);
                 dispatch(setUser(response.data.data));
                 localStorage.setItem(
-                    "user",
+                    "StockVoyager_user",
                     JSON.stringify(response.data.data)
                 );
                 removeHandle();

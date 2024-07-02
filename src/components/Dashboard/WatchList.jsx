@@ -89,7 +89,7 @@ const WatchList = () => {
             if (response.data.success) {
                 dispatch(setUser(response.data.data));
                 localStorage.setItem(
-                    "user",
+                    "StockVoyager_user",
                     JSON.stringify(response.data.data)
                 );
                 toast.success(response.data.toastMessage);
@@ -116,7 +116,7 @@ const WatchList = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-screen">
+            <div className="flex w-full flex-row items-center justify-center">
                 <Loader />
             </div>
         );
@@ -127,10 +127,15 @@ const WatchList = () => {
             <div className="mx-auto w-8/12">
                 <div className=" rounded-md bg-white shadow-md my-4 flex flex-col p-10">
                     <div className="flex flex-row justify-between mr-5">
-                    <div className="text-xl font-semibold mb-4">Watchlist</div>
-                    <div>
-                        <IoMdRefresh className="text-2xl font-bold hover:scale-90 cursor-pointer hover:opacity-95 text-btnBlue" onClick={refreshData}/>
-                    </div>
+                        <div className="text-xl font-semibold mb-4">
+                            Watchlist
+                        </div>
+                        <div>
+                            <IoMdRefresh
+                                className="text-2xl font-bold hover:scale-90 cursor-pointer hover:opacity-95 text-btnBlue"
+                                onClick={refreshData}
+                            />
+                        </div>
                     </div>
                     <div className="rounded-md border-settingBlack border-[1px] p-2  w-full m-5">
                         <table className="w-full">
@@ -204,23 +209,28 @@ const WatchList = () => {
                                                         }`}
                                                     >
                                                         <div className="flex flex-row gap-2 items-center justify-center">
-                                                        <div>
                                                             <div>
-                                                                {item.change}
+                                                                <div>
+                                                                    {
+                                                                        item.change
+                                                                    }
+                                                                </div>
+                                                                <div className="text-xs">
+                                                                    {
+                                                                        item.pChange
+                                                                    }
+                                                                    %
+                                                                </div>
                                                             </div>
-                                                            <div className="text-xs">
-                                                                {item.pChange}%
+                                                            <div>
+                                                                {parseFloat(
+                                                                    item.pChange
+                                                                ) >= 0 ? (
+                                                                    <FaArrowTrendUp />
+                                                                ) : (
+                                                                    <FaArrowTrendDown />
+                                                                )}
                                                             </div>
-                                                        </div>
-                                                        <div>
-                                                            {parseFloat(
-                                                                item.pChange
-                                                            ) >= 0 ? (
-                                                                <FaArrowTrendUp />
-                                                            ) : (
-                                                                <FaArrowTrendDown />
-                                                            )}
-                                                        </div>
                                                         </div>
                                                     </div>
                                                 </td>

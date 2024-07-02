@@ -46,8 +46,8 @@ export const Login = () => {
 				toast.success(response.data.toastMessage);
 				dispatch(setToken(response.data.token));
 				dispatch(setUser(response.data.user));
-				localStorage.setItem("token", JSON.stringify(response.data.token));
-				localStorage.setItem("user", JSON.stringify(response.data.user));
+				localStorage.setItem("StockVoyager_token", JSON.stringify(response.data.token));
+				localStorage.setItem("StockVoyager_user", JSON.stringify(response.data.user));
 				navigate('/dashboard/profile');
 			}
 		} catch (error) {

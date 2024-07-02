@@ -1,49 +1,7 @@
 import React, { useState, useEffect } from "react";
-import fetchStockDetails from "../../../../pyserver/MakeRequest/getStockDetails.js";
 import Loader from "../../Loader.jsx";
 
-const StockDetails = ({ symbol }) => {
-    const [stockDetails, setStockDetails] = useState(null);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const data = await fetchStockDetails(symbol);
-                preprocessData(data);
-            } catch (error) {
-                setError(error.message);
-            }
-        }
-
-        fetchData();
-    }, [symbol]);
-
-    const preprocessData = (data) => {
-        if (data.dayRange) {
-            const dayRange = data.dayRange;
-            data.dayRangeLow = dayRange.low;
-            data.dayRangeHigh = dayRange.high;
-            delete data.dayRange;
-        }
-
-        if (data.yearRange) {
-            const yearRange = data.yearRange;
-            data.yearRangeLow = yearRange.low;
-            data.yearRangeHigh = yearRange.high;
-            delete data.yearRange;
-        }
-
-        setStockDetails(data);
-    };
-
-    if (error) {
-        return <div className="text-red-600">Error: {error}</div>;
-    }
-
-    if (!stockDetails) {
-        return <Loader />;
-    }
+const StockDetails = ({ symbol,stockDetails }) => {
 
     // Utility function to format large numbers
     const formatNumber = (num) => {
@@ -58,13 +16,13 @@ const StockDetails = ({ symbol }) => {
 
     const customHeadings = {
         companyName: "Company Name",
-        prevClose: "Previous Close",
-        dayRangeLow: "Day Range Low",
-        dayRangeHigh: "Day Range High",
-        yearRangeLow: "Year Range Low",
-        yearRangeHigh: "Year Range High",
+        prevClose: "Prev. Close",
+        dayRangeLow: "Day Low",
+        dayRangeHigh: "Day High",
+        yearRangeLow: "52 wk Low",
+        yearRangeHigh: "52 wk High",
         marketCap: "Market Cap",
-        averageVol: "Average Volume",
+        averageVol: "Volume",
         industry: "Industry",
         pdSectorPe: "PD Sector PE",
         faceValue: "Face Value",
@@ -72,19 +30,21 @@ const StockDetails = ({ symbol }) => {
     };
 
     return (
-        <div className="rounded-lg shadow-lg p-6 bg-white">
-            <h1 className="text-3xl font-bold mb-6">Stock Details</h1>
+        <div className="rounded-lg shadow-lg p-8 bg-white mt-2">
+            <h1 className="text-xl font-semibold mb-10">Stock Detail</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {Object.entries(stockDetails).map(([key, value]) => (
-                    <div key={key} className="text-lg">
-                        <strong className="font-semibold">
-                            {customHeadings[key] || key}:
+                    <div key={key} className="flex flex-row  justify-between gap-1">
+                        <strong className="text-settingBlack text-xs">
+                            {customHeadings[key] || key}
                         </strong>{" "}
+                        <div className="font-bold text-sm text-right">
                         {typeof value === "number" && (key === "marketCap" || key === "issuedSize")
                             ? formatNumber(value)
                             : typeof value === "object"
                             ? <span className="italic">{JSON.stringify(value)}</span>
                             : <span>{value}</span>}
+                        </div>
                     </div>
                 ))}
             </div>

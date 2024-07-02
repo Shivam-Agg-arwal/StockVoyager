@@ -36,7 +36,7 @@ const TransactionTable = () => {
             if (response.data.success) {
                 dispatch(setUser(response.data.data));
                 localStorage.setItem(
-                    "user",
+                    "StockVoyager_user",
                     JSON.stringify(response.data.data)
                 );
                 toast.success(response.data.toastMessage);
@@ -61,12 +61,12 @@ const TransactionTable = () => {
             : null;
         setTransactions((prevArray) => [...prevArray].reverse());
         setTotalPages(Math.ceil(transactions.length / pageSize));
-        console.log(Math.ceil(transactions.length / pageSize));
+        console.log("new pages",Math.ceil(transactions.length / pageSize));
     }, [user]);
 
     return (
-        <div className="overflow-x-auto my-4">
-            <table className="table-auto min-w-full divide-y divide-gray-200">
+        <div className="overflow-x-auto my-4 w-11/12 mx-auto ">
+            <table className="table-auto min-w-full divide-y divide-gray-200 border-settingBlack border-[1px] p-10 py-4 rounded-lg">
                 <thead className="bg-gray-50">
                     <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -127,7 +127,7 @@ const TransactionTable = () => {
                                                 transaction.orderDate
                                             )}
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 flex flex-row items-center justify-center">
                                             <button
                                                 className="cursor-pointer flex flex-row items-center justify-center"
                                                 onClick={() =>
@@ -147,7 +147,8 @@ const TransactionTable = () => {
                     )}
                 </tbody>
             </table>
-            <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-row items-end justify-end">
+            <div className="flex flex-row gap-2 items-center w-fit mt-4 rounded-md border-settingBlack border-[1px] p-2 px-5 ">
                 <MdKeyboardDoubleArrowLeft
                     onClick={() => setPage(1)}
                     className="cursor-pointer"
@@ -169,6 +170,7 @@ const TransactionTable = () => {
                     onClick={() => setPage(totalPages)}
                     className="cursor-pointer"
                 />
+            </div>
             </div>
         </div>
     );

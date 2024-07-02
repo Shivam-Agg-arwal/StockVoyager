@@ -54,7 +54,7 @@ export default function BuyingModal({ stockData, setbuyingmodal }) {
                 toast.success(response.data.toastMessage);
                 console.log(response.data.data);
                 dispatch(setUser(response.data.data))
-                localStorage.setItem('user', JSON.stringify(response.data.data));
+                localStorage.setItem('StockVoyager_user', JSON.stringify(response.data.data));
                 setbuyingmodal(null);
             }   
         }

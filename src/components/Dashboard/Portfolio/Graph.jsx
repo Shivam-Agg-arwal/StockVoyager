@@ -235,7 +235,7 @@ class ApexChart extends Component {
 			};
 
 			// Update the user data in localStorage
-			localStorage.setItem("user", JSON.stringify(updatedUser));
+			localStorage.setItem("StockVoyager_user", JSON.stringify(updatedUser));
 
 			console.log("Date marked successfully");
 		} catch (error) {
@@ -285,7 +285,7 @@ class ApexChart extends Component {
 				portfolioGraph: slicedPortfolioGraph,
 			};
 
-			localStorage.setItem("user", JSON.stringify(updatedUser));
+			localStorage.setItem("StockVoyager_user", JSON.stringify(updatedUser));
 
 			console.log("Added to graph successfully");
 		} catch (error) {

@@ -2,7 +2,7 @@ import {createSlice} from '@reduxjs/toolkit'
 import { VscLaw } from 'react-icons/vsc';
 
 const initialState={
-    user:localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):null,
+    user:localStorage.getItem("StockVoyager_user")?JSON.parse(localStorage.getItem("StockVoyager_user")):null,
     searchQuery:"",
     loading:null,
     stockTitleLoading:false,

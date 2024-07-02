@@ -7,29 +7,15 @@ import { watchlistEndpoints } from "../../../api/api";
 import axios from "axios";
 import { setUser } from "../../slices/profileSlice";
 import BuyingModal from "./BuyingModal";
-import fetchCurrentPrice from "../../../../pyserver/MakeRequest/getStockCurrentPrice";
 import Loader from "../../Loader";
 
-const StockTitle = ({ symbol }) => {
+const StockTitle = ({ symbol,stockPrice }) => {
     const { user } = useSelector((state) => state.profile);
     const dispatch = useDispatch();
     const { token } = useSelector((state) => state.auth);
     const [buyingmodal, setbuyingmodal] = useState(null);
-    const [stockPrice, setStockPrice] = useState(null);
     const [loading, setLoading] = useState(false);
-
-    const fetchPrice = async () => {
-        setLoading(true);
-        console.log("changed to tru in title");
-        const response = await fetchCurrentPrice(symbol);
-        setStockPrice(response.lastPrice);
-        console.log("changed to false in title");
-        setLoading(false);
-    };
-
-    useEffect(() => {
-        fetchPrice();
-    }, []);
+    
 
     const { ADD_TO_WATCHLIST_API, REMOVE_FROM_WATCHLIST_API } =
         watchlistEndpoints;
@@ -46,7 +32,7 @@ const StockTitle = ({ symbol }) => {
                 console.log(response.data.data);
                 dispatch(setUser(response.data.data));
                 localStorage.setItem(
-                    "user",
+                    "StockVoyager_user",
                     JSON.stringify(response.data.data)
                 );
                 toast.success(response.data.toastMessage);
@@ -79,7 +65,7 @@ const StockTitle = ({ symbol }) => {
             if (response.data.success) {
                 dispatch(setUser(response.data.data));
                 localStorage.setItem(
-                    "user",
+                    "StockVoyager_user",
                     JSON.stringify(response.data.data)
                 );
                 toast.success(response.data.toastMessage);
@@ -104,13 +90,13 @@ const StockTitle = ({ symbol }) => {
         );
     }
     return (
-        <div className="flex flex-row items-center justify-between p-4 rounded-md my-2 shadow-md w-full">
+        <div className="flex flex-row items-center justify-between p-4  my-2 shadow-lg w-full h-full bg-white rounded-lg">
             <div>
                 <div>
                     <img src="" />
                 </div>
                 <div>
-                    <div className="font-bold text-lg">{symbol}</div>
+                    <div className="font-bold">{symbol}</div>
                     <div>NSE:{symbol}</div>
                 </div>
             </div>
@@ -130,7 +116,7 @@ const StockTitle = ({ symbol }) => {
                 </div>
                 {user.watchList.includes(symbol) ? (
                     <div
-                        className="flex flex-row gap-2 items-center p-2 bg-blue text-white rounded-md px-6 cursor-pointer"
+                        className="flex flex-row gap-2 items-center p-2 bg-blue text-white rounded-md px-4 cursor-pointer"
                         onClick={RemoveFromWatchlist}
                     >
                         <CiStar />
@@ -138,7 +124,7 @@ const StockTitle = ({ symbol }) => {
                     </div>
                 ) : (
                     <div
-                        className="flex flex-row gap-2 items-center p-2 bg-blue text-white rounded-md px-6 cursor-pointer"
+                        className="flex flex-row gap-2 items-center p-2 bg-blue text-white rounded-md px-4 cursor-pointer"
                         onClick={AddtoWatchlist}
                     >
                         <FaStar />

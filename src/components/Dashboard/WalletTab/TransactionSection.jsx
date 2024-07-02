@@ -4,10 +4,10 @@ import TransactionTable from './TransactionComponent/TransactionTable'
 const TransactionSection = () => {
   return (
     <div>
-        <div className='text-4xl font-bold '>
-            All Trades
+        <div className='text-lg font-semibold mt-10 mb-4'>
+            Transactions
         </div>
-        <div>Your Portfolio trades and transactions.</div>
+        {/* <div>Your Portfolio trades and transactions.</div> */}
 
         <TransactionTable/>
     </div>

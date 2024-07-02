@@ -59,7 +59,7 @@ export default function SellingModal({ stockData, setSellingModal }) {
                 toast.success(response.data.toastMessage);
                 console.log(response.data.data);
                 dispatch(setUser(response.data.data))
-                localStorage.setItem('user', JSON.stringify(response.data.data));
+                localStorage.setItem('StockVoyager_user', JSON.stringify(response.data.data));
                 setSellingModal(null);
             }    
         } catch (error) {

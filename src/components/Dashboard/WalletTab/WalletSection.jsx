@@ -12,10 +12,10 @@ const WalletSection = () => {
   return (
     <>
       <div >
-        <div className='text-4xl font-bold '>
-          WALLET
+        <div className='text-xl font-semibold '>
+          Wallet
         </div>
-        <div className='flex gap-2 my-4'>
+        <div className='flex gap-2 my-4 w-11/12 mx-auto'>
           <WalletCard icon="Portfolio Amount" balance={(user.portfolioBalance).toFixed(2)}/>
           <WalletCard icon="Wallet Amount" balance={(user.walletBalance).toFixed(2)}/>
           <WalletCard icon="Credit" balance="10"/>

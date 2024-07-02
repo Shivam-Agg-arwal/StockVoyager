@@ -26,8 +26,7 @@ const Sidebar = () => {
 		dispatch(setToken(null));
 		dispatch(setUser(null));
 
-		localStorage.removeItem("token");
-		localStorage.removeItem("user");
+		localStorage.clear();
 		toast.success("Logged Out");
 		navigate("/login");
 	};
