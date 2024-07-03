@@ -62,9 +62,8 @@ function Signup() {
         <>
             <div className="md:w-full md:h-screen flex justify-center items-center bg-bgWhite">
                 <div className="w-7/12 mx-auto bg-white rounded-lg shadow-lg flex flex-row justify-between py-12 pl-20 pr-14">
-					{/* Left Side */}
+                    {/* Left Side */}
                     <div className="flex items-start  justify-center  w-1/2 h-full flex-col pr-4 ">
-	
                         <h1 className="text-3xl font-bold mb-1 w-full text-left mx-3">
                             Sign up
                         </h1>
@@ -89,12 +88,14 @@ function Signup() {
                                                     required: true,
                                                 })}
                                             />
-                                            {errors.firstName && (
-                                                <p className="text-[#cc0000] text-sm">
-                                                    First name is required.
-                                                </p>
-                                            )}
                                         </div>
+                                    </div>
+                                    <div className="-mt-2">
+                                        {errors.firstName && (
+                                            <p className="text-[#cc0000] text-xs">
+                                                First name is required.
+                                            </p>
+                                        )}
                                     </div>
 
                                     {/* Last Name */}
@@ -112,12 +113,14 @@ function Signup() {
                                                     required: true,
                                                 })}
                                             />
-                                            {errors.lastName && (
-                                                <p className="text-[#cc0000] text-sm">
-                                                    Last name is required.
-                                                </p>
-                                            )}
                                         </div>
+                                    </div>
+                                    <div className="-mt-2">
+                                        {errors.lastName && (
+                                            <p className="text-[#cc0000] text-xs">
+                                                Last name is required.
+                                            </p>
+                                        )}
                                     </div>
 
                                     <div className="flex flex-row gap-4 border-b-[2px] border-black items-center p-[1px] pb-0 ">
@@ -134,12 +137,14 @@ function Signup() {
                                                     required: true,
                                                 })}
                                             />
-                                            {errors.email && (
-                                                <p className="text-[#cc0000] text-sm">
-                                                    Email is required.
-                                                </p>
-                                            )}
                                         </div>
+                                    </div>
+                                    <div className="-mt-2">
+                                        {errors.email && (
+                                            <p className="text-[#cc0000] text-xs">
+                                                Email is required.
+                                            </p>
+                                        )}
                                     </div>
                                     <div className="flex flex-row gap-4 border-b-[2px] border-black items-center p-[1px] pb-0 ">
                                         <div className="flex flex-row items-center mt-1">
@@ -155,12 +160,14 @@ function Signup() {
                                                     required: true,
                                                 })}
                                             />
-                                            {errors.password && (
-                                                <p className="text-[#cc0000] text-sm">
-                                                    Password is required.
-                                                </p>
-                                            )}
                                         </div>
+                                    </div>
+                                    <div className="-mt-2">
+                                        {errors.password && (
+                                            <p className="text-[#cc0000] text-xs">
+                                                Password is required.
+                                            </p>
+                                        )}
                                     </div>
                                     <div className="flex flex-row gap-4 border-b-[2px] border-black items-center p-[1px] pb-0 ">
                                         <div className="flex flex-row items-center mt-1">
@@ -179,13 +186,14 @@ function Signup() {
                                                     }
                                                 )}
                                             />
-                                            {errors.confirmPassword && (
-                                                <p className="text-[#cc0000] text-sm">
-                                                    Confirm password is
-                                                    required.
-                                                </p>
-                                            )}
                                         </div>
+                                    </div>
+                                    <div className="-mt-2">
+                                        {errors.confirmPassword && (
+                                            <p className="text-[#cc0000] text-xs">
+                                                Confirm Password is required.
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
