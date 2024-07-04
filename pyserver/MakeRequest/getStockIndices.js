@@ -1,6 +1,6 @@
 export default async function fetchIndices() {
     try {
-        const response = await fetch('https://stock-voyager.vercel.app/get_indices', {
+        const response = await fetch('https://stockvoyager.onrender.com/get_indices', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
