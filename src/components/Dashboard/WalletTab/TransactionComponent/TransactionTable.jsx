@@ -110,10 +110,10 @@ const TransactionTable = () => {
                                                 {transaction.stockName}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                                        <td className="px-6 py-4 whitespace-nowrap flex flex-row items-center justify-center">
                                             {transaction.orderType}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                                        <td className="px-6 py-4 whitespace-nowrap ">
                                             {transaction.quantity}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">

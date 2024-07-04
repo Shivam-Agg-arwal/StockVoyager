@@ -115,7 +115,7 @@ const Calculator = () => {
                                     )
                                 );
                             }}
-                            className={`${isSIP ? "bg-[#305ef4] text-white" : "text-black bg-white"} font-bold  rounded-md py-1 px-3 transition-all duration-200`}
+                            className={`${isSIP ? "bg-[#305ef4] text-white" : "text-black bg-white"} font-bold  rounded-md py-1 px-3 transition-all duration-200 cursor-pointer`}
                         >
                             SIP
                         </div>
@@ -132,7 +132,7 @@ const Calculator = () => {
                                     )
                                 );
                             }}
-                            className={`${isSIP===false ? "text-white bg-[#305ef4]" : "text-black bg-white"} font-bold rounded-md py-1 px-3 transition-all duration-200`}
+                            className={`${isSIP===false ? "text-white bg-[#305ef4]" : "text-black bg-white"} font-bold rounded-md py-1 px-3 transition-all duration-200 cursor-pointer`}
                         >
                             Lumpsum
                         </div>

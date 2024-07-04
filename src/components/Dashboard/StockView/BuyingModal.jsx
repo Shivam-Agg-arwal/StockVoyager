@@ -28,7 +28,7 @@ export default function BuyingModal({ stockData, setbuyingmodal }) {
     const walletAmt = user.walletBalance;
     const maxQuantity = Math.floor(walletAmt / stockData.current_price);
     const dispatch = useDispatch();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const quantity = watch("quantity");
 
@@ -62,7 +62,7 @@ export default function BuyingModal({ stockData, setbuyingmodal }) {
                     JSON.stringify(response.data.data)
                 );
                 setbuyingmodal(null);
-                navigate('/dashboard/portfolio')
+                navigate("/dashboard/portfolio");
             }
         } catch (error) {
             if (
@@ -96,7 +96,12 @@ export default function BuyingModal({ stockData, setbuyingmodal }) {
                     className="mx-auto w-11/12 rounded-lg border-settingBlack border-[1px] p-3 flex flex-col gap-2"
                 >
                     <div className="flex flex-row justify-between w-full items-center">
-                        <label htmlFor="currentPrice" className="text-sm font-semibold">Current Price</label>
+                        <label
+                            htmlFor="currentPrice"
+                            className="text-sm font-semibold"
+                        >
+                            Current Price
+                        </label>
                         <input
                             type="number"
                             id="currentPrice"
@@ -108,7 +113,12 @@ export default function BuyingModal({ stockData, setbuyingmodal }) {
                         />
                     </div>
                     <div className="flex flex-row justify-between w-full items-center">
-                        <label htmlFor="quantity" className="text-sm font-semibold">Quantity</label>
+                        <label
+                            htmlFor="quantity"
+                            className="text-sm font-semibold"
+                        >
+                            Quantity
+                        </label>
                         <input
                             type="number"
                             id="quantity"
@@ -126,7 +136,9 @@ export default function BuyingModal({ stockData, setbuyingmodal }) {
                         {errors.quantity && <span>Enter a valid quantity</span>}
                     </div>
                     <div className="flex flex-row justify-between w-full items-center">
-                        <div className="text-sm font-semibold">Trade Amount :</div>
+                        <div className="text-sm font-semibold">
+                            Trade Amount :
+                        </div>
                         <span className="font-semibold mr-3">{tradeValue}</span>
                     </div>
                     <div className="flex flex-row justify-between w-full items-center">
