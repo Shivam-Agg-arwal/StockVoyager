@@ -1,7 +1,7 @@
 // getStockDetails.js
 export default async function fetchStockDetails(symbol) {
     try {
-        const response = await fetch('https://stockvoyager.onrender.com/stock_details', {
+        const response = await fetch('http://localhost:3000/stock_details', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

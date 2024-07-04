@@ -1,6 +1,6 @@
 export default async function fetchCurrentPrice(symbol) {
     try {
-        const response = await fetch('https://stockvoyager.onrender.com/stock_current_price', {
+        const response = await fetch('http://localhost:3000/stock_current_price', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

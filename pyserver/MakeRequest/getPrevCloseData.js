@@ -1,6 +1,6 @@
 export default async function fetchPrevCloseData(symbol) {
     try {
-        const response = await fetch('https://stockvoyager.onrender.com/prev_close_data', {
+        const response = await fetch('http://localhost:5000/prev_close_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

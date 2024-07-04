@@ -1,6 +1,6 @@
 export default async function fetchFilteredIndices() {
     try {
-        const response = await fetch('https://stockvoyager.onrender.com/filtered_indices', {
+        const response = await fetch('http://localhost:5000/filtered_indices', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
