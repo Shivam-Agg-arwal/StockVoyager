@@ -25,6 +25,8 @@ app.use(express.json());
 const allowedOrigins = [
     "http://localhost:3000",
     "https://stock-voyager.vercel.app",
+    "https://stock-voyager-git-main-shivam-aggarwals-projects-361e9df9.vercel.app",
+    "https://stock-voyager-4g2fidvha-shivam-aggarwals-projects-361e9df9.vercel.app"
 ];
 
 app.use(
