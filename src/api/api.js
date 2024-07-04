@@ -1,5 +1,5 @@
 
-const BASE_URL="http://localhost:5000/api/v1";
+const BASE_URL="https://stockvoyager.onrender.com/api/v1";
 
 export const authenticationEndpoints={
     LOGIN_API:BASE_URL+"/auth/login", 
