@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
 from nsepython import nse_eq
 from datetime import datetime, timedelta
 from nselib import capital_market
@@ -170,6 +170,10 @@ def indices():
 def filtered_indices():
     filtered_data = filter_indices()
     return jsonify(filtered_data)
+
+@app.route('/')
+def home():
+    return render_template('pyhtm.html')
 
 
 # Gunicorn command to run the app
