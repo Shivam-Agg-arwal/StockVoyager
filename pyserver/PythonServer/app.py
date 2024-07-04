@@ -172,5 +172,9 @@ def filtered_indices():
     return jsonify(filtered_data)
 
 
-if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+# Gunicorn command to run the app
+command = 'gunicorn -b :6000 --reload app:app'
+
+# Remove the app.run() line when deploying with Gunicorn
+# if __name__ == '__main__':
+#     app.run(port=6000, debug=True)
