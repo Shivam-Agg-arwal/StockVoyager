@@ -1,7 +1,7 @@
 // getStockDetails.js
 export default async function fetchStockDetails(symbol) {
     try {
-        const response = await fetch('http://127.0.0.1:3000/stock_details', {
+        const response = await fetch('https://stock-voyager.vercel.app/stock_details', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

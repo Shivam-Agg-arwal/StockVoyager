@@ -1,6 +1,6 @@
 export default async function fetchFilteredIndices() {
     try {
-        const response = await fetch('http://127.0.0.1:3000/filtered_indices', {
+        const response = await fetch('https://stock-voyager.vercel.app/filtered_indices', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

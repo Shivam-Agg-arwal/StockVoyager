@@ -1,6 +1,6 @@
 export default async function fetchCurrentPrice(symbol) {
     try {
-        const response = await fetch('http://127.0.0.1:3000/stock_current_price', {
+        const response = await fetch('https://stock-voyager.vercel.app/stock_current_price', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

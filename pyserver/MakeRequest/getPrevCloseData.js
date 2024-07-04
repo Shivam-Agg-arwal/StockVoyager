@@ -1,6 +1,6 @@
 export default async function fetchPrevCloseData(symbol) {
     try {
-        const response = await fetch('http://127.0.0.1:3000/prev_close_data', {
+        const response = await fetch('https://stock-voyager.vercel.app/prev_close_data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
